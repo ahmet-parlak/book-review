@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Middleware\isAdmin;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -20,9 +21,16 @@ Route::get('/', function () {
 Route::middleware([
     'auth:sanctum',
     config('jetstream.auth_session'),
-    'verified'
+    'verified',
 ])->group(function () {
-    Route::get('/dashboard', function () {
+    
+});
+
+Route::group(['middleware' => ['auth', 'isAdmin'], 'prefix' => 'admin'], function () {
+    Route::get('deneme',function(){
+        return "prefix testi";
+    });
+    Route::get('/panel', function () {
         return view('dashboard');
     })->name('dashboard');
 });
