@@ -26,6 +26,9 @@
                 @auth
                     {{-- <a href="{{ route('logout')}}">Çıkış</a> --}}
                     <div class="menu">
+                        @if (Auth::user()->type === 'admin')
+                         <a href="{{ route('dashboard') }}" class="btn btn-small btn-warning">Panel</a>
+                        @endif
                         <a href="{{ route('profile.show') }}" class="btn btn-small btn-warning">Profil</a>
                         <form method="POST" action="{{ route('logout') }}" class="d-inline">
                             @csrf
@@ -36,7 +39,6 @@
                     <a href="{{ route('login') }}" class="btn btn-small btn-warning">Giriş Yap</a>
                     <a href="{{ route('register') }}" class="btn btn-small btn-warning">Kayıt Ol</a>
                 @endauth
-
             </div>
 
 
