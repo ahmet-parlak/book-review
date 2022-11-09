@@ -2,7 +2,7 @@
 
 use App\Http\Middleware\isAdmin;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\Admin\BookController;
+use App\Http\Controllers\Admin;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -30,5 +30,7 @@ Route::group(['middleware' => ['auth', 'isAdmin'], 'prefix' => 'admin'], functio
         return view('dashboard');
     })->name('dashboard');
 
-    Route::resource('books', BookController::class);
+    Route::resource('books', Admin\BookController::class);
+    Route::resource('authors', Admin\AuthorController::class);
+    Route::resource('publishers', Admin\PublisherController::class);
 });
