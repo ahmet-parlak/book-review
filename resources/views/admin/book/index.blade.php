@@ -1,6 +1,6 @@
 <x-app-layout>
     <x-slot name="header">
-        Yönetici Paneli | Kitaplar
+        Kitaplar | Yönetim Paneli
     </x-slot>
 
 

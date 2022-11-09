@@ -20,7 +20,7 @@
                     </x-jet-nav-link>
                     @if (Auth::user()->type === 'admin')
                         <x-jet-nav-link href="{{ route('dashboard') }}" :active="request()->routeIs('dashboard')">
-                            Yönetici Paneli
+                            Yönetim Paneli
                         </x-jet-nav-link>
                     @endif
 
@@ -114,7 +114,7 @@
 
                             @if (auth()->user()->type === 'admin')
                                 <div class="block px-4 py-2 text-xs text-gray-400">
-                                    Yönetici Paneli
+                                    Yönetim Paneli
                                 </div>
 
                                 <x-jet-dropdown-link href="{{ route('books.index') }}">

@@ -1,6 +1,6 @@
 <x-app-layout>
     <x-slot name="header">
-        Yönetici Paneli
+        Yönetim Paneli
     </x-slot>
 
     <div class="m-4">
