@@ -15,7 +15,7 @@ return new class extends Migration
     {
         Schema::create('publishers', function (Blueprint $table) {
             $table->id();
-            $table->string('publisher_name');
+            $table->string('publisher_name')->unique();
             $table->longText('description')->nullable();
             $table->string('publisher_photo_path', 2048)->nullable();
             $table->timestamps();

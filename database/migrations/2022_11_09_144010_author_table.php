@@ -19,6 +19,7 @@ return new class extends Migration
             $table->string('author_name');
             $table->date('birth_date')->format('dd, mm, YY')->nullable();
             $table->longText('description')->nullable();
+            $table->string('publisher_photo_path', 2048)->nullable();
             $table->timestamps();
         });
     }

@@ -8,7 +8,7 @@
         <div class="row">
             <!--Kitaplar-->
             <div class="col-lg-4 col-md-12"><a href="{{ route('books.index') }}" class="card-link">
-                    <div class="admin-card">
+                    <div class="admin-card hover:shadow">
                         <div
                             class="p-6 max-w-sm bg-white rounded-lg border border-gray-200 shadow-md dark:bg-gray-800 dark:border-gray-700">
                             <!-- Icon-Start -->
@@ -162,7 +162,7 @@
             <!--Yazarlar-->
             <div class="col-lg-4 col-md-12">
                 <a href="{{ route('authors.index') }}" class="card-link">
-                    <div class="admin-card">
+                    <div class="admin-card hover:shadow">
                         <div
                             class="p-6 max-w-sm bg-white rounded-lg border border-gray-200 shadow-md dark:bg-gray-800 dark:border-gray-700">
                             <!-- Icon-Start -->
@@ -229,7 +229,7 @@
             <!--Yayınevleri-->
             <div class="col-lg-4 col-md-12">
                 <a href="{{ route('publishers.index') }}" class="card-link">
-                    <div class="admin-card">
+                    <div class="admin-card hover:shadow">
                         <div
                             class="p-6 max-w-sm bg-white rounded-lg border border-gray-200 shadow-md dark:bg-gray-800 dark:border-gray-700">
                             <!-- Icon-Start -->
