@@ -1,8 +1,15 @@
 <x-app-layout>
+    <x-slot name="title">
+        Yayınevi Ekle | Yönetim Paneli
+    </x-slot>
+    <x-slot name="headScripts">
+        <script>
+            console.log("asfasdf")
+        </script>
+    </x-slot>
     <x-slot name="header">
         Yayınevi Ekle
     </x-slot>
-
     <div class="row">
         <div class="col-8 offset-2">
             <div class="md:grid md:grid-cols-8 md:gap-6 ">
@@ -62,5 +69,7 @@
             </div>
         </div>
     </div>
-
+    @section('pagescript')
+        <script></script>
+    @endsection
 </x-app-layout>

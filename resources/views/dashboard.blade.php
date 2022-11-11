@@ -1,4 +1,9 @@
 <x-app-layout>
+
+    <x-slot name="title">
+        Yönetim Paneli
+    </x-slot>
+
     <x-slot name="header">
         Yönetim Paneli
     </x-slot>

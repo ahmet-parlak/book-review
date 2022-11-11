@@ -1,8 +1,10 @@
 <x-app-layout>
-    <x-slot name="header">
+    <x-slot name="title">
         Kitaplar | Yönetim Paneli
     </x-slot>
-
+    <x-slot name="header">
+        Kitaplar
+    </x-slot>
 
     <div class="overflow-x-auto relative shadow-md sm:rounded-lg">
         <div class="flex justify-between items-center pb-4 bg-white dark:bg-gray-900">

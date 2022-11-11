@@ -1,6 +1,11 @@
 <x-app-layout>
-    <x-slot name="header">
+
+    <x-slot name="title">
         Yayınevleri | Yönetim Paneli
+    </x-slot>
+
+    <x-slot name="header">
+        Yayınevi Ekle
     </x-slot>
 
 
@@ -9,8 +14,9 @@
 
             {{-- Serach&Filter Area --}}
             <div class="col-12 mt-2 text-right">
-                <a href="{{route('publishers.create')}}" type="button"
-                    class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-3 py-2 mr-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800"><i class="fa-solid fa-plus pl-0 mr-2"></i>Yayınevi
+                <a href="{{ route('publishers.create') }}" type="button"
+                    class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-3 py-2 mr-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800"><i
+                        class="fa-solid fa-plus pl-0 mr-2"></i>Yayınevi
                     Ekle</a>
             </div>
         </div>
@@ -41,7 +47,7 @@
                                 src="https://ui-avatars.com/api/?name=B&color=7F9CF5&background=EBF4FF"
                                 alt="Jese image">
                             <div class="pl-3">
-                                <div class="text-base font-semibold">{{$publisher->publisher_name}}</div>
+                                <div class="text-base font-semibold">{{ $publisher->publisher_name }}</div>
                                 <div class="font-normal text-gray-500">Yazar</div>
                             </div>
                         </th>
@@ -62,7 +68,7 @@
             </tbody>
         </table>
         <div class="p-3">
-            {{$publishers->links()}}
+            {{ $publishers->links() }}
         </div>
     </div>
 
