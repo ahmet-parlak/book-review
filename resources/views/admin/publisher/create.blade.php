@@ -3,9 +3,7 @@
         Yayınevi Ekle | Yönetim Paneli
     </x-slot>
     <x-slot name="headScripts">
-        <script>
-            console.log("asfasdf")
-        </script>
+
     </x-slot>
     <x-slot name="header">
         Yayınevi Ekle
@@ -69,7 +67,9 @@
             </div>
         </div>
     </div>
-    @section('pagescript')
-        <script></script>
-    @endsection
+
+    <x-slot name="script">
+
+    </x-slot>
+
 </x-app-layout>
