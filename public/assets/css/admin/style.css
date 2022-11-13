@@ -1,0 +1,7 @@
+textarea{
+    resize: none;
+}
+
+.btn-hover.bg-red-700:hover{
+    background: #C81E1E;
+}

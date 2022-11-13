@@ -8,4 +8,6 @@ use Illuminate\Database\Eloquent\Model;
 class Publisher extends Model
 {
     use HasFactory;
+
+    protected $fillable = ['publisher_name', 'website', 'description', 'publisher_photo_path'];
 }

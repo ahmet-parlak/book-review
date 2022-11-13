@@ -28,6 +28,9 @@
     {{-- from fontawesome --}}
     <script src="https://kit.fontawesome.com/afd7eee7f1.js" crossorigin="anonymous"></script>
 
+    <!--SweetAlert2!-->
+    <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
     <!-- Scripts -->
     @isset($headScripts)
         {{ $headScripts }}
@@ -35,6 +38,7 @@
     <!-- Styles -->
     @livewireStyles
     <link rel="stylesheet" href="{{ asset('/') }}assets/css/bootstrap.css">
+    <link rel="stylesheet" href="{{ asset('/') }}assets/css/admin/style.css">
 </head>
 
 <body class="font-sans antialiased">
@@ -50,7 +54,6 @@
                     <h2 class="font-semibold text-xl text-gray-800 leading-tight">
                         {{ $header }}
                     </h2>
-
                 </div>
             </header>
         @endif
@@ -60,6 +63,7 @@
             <div class="py-12">
                 <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
                     <div class="bg-white overflow-hidden shadow-xl sm:rounded-lg">
+
 
                         {{ $slot }}
                     </div>
@@ -75,6 +79,16 @@
     @isset($script)
         {{ $script }}
     @endisset
+    @if (session('success'))
+        <script>
+            Swal.fire({
+                icon: 'success',
+                title: '{{session('success')}}',
+                showConfirmButton: false,
+                timer: 1600
+            })
+        </script>
+    @endif
 </body>
 
 </html>

@@ -5,6 +5,8 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Publisher;
+use App\Http\Requests\PublisherCreateRequest;
+use App\Http\Requests\PublisherUpdateRequest;
 
 class PublisherController extends Controller
 {
@@ -35,9 +37,10 @@ class PublisherController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(PublisherCreateRequest $request)
     {
-        //
+        Publisher::create($request->post());
+        return redirect()->route('publishers.index')->withSuccess('Yayınevi eklendi');
     }
 
     /**
@@ -59,7 +62,9 @@ class PublisherController extends Controller
      */
     public function edit($id)
     {
-        //
+        $publisher = Publisher::find($id) ?? abort(404, 'Yayınevi Bulunamadı');
+
+        return view("admin.publisher.edit", compact('publisher'));
     }
 
     /**
@@ -69,9 +74,11 @@ class PublisherController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(PublisherUpdateRequest $request, $id)
     {
-        //
+        $publisher = Publisher::find($id) ?? abort(404, 'Yayınevi Bulunamadı');
+        Publisher::where('id', $id)->update($request->except(['_method', '_token']));
+        return redirect()->route('publishers.edit', $id)->withSuccess('Yayınevi düzenlendi');
     }
 
     /**
@@ -82,6 +89,8 @@ class PublisherController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $publisher = Publisher::find($id) ?? abort(404, 'Yayınevi Bulunamadı');
+        $publisher->delete();
+        return redirect()->route('publishers.index')->withSuccess('Yayınevi Kaldırıldı');
     }
 }

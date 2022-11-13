@@ -60,7 +60,7 @@
                             </div>
                         </td>
                         <td class="py-4 px-6">
-                            <a href="#"
+                            <a href="{{route('publishers.edit',$publisher->id)}}"
                                 class="font-medium text-blue-600 dark:text-blue-500 hover:underline">Düzenle</a>
                         </td>
                     </tr>

@@ -1,25 +1,28 @@
 <x-app-layout>
     <x-slot name="title">
-        Yayınevi Ekle | Yönetim Paneli
+        Yayınevi Düzenle | Yönetim Paneli
     </x-slot>
     <x-slot name="headScripts">
 
     </x-slot>
     <x-slot name="header">
-        Yayınevi Ekle
+        Yayınevi Düzenle
     </x-slot>
     <div class="row">
         <div class="col-8 offset-2">
             <div class="md:grid md:grid-cols-8 md:gap-6 ">
                 <div class="mt-5  md:col-span-8 md:mt-0 ">
 
-                    <form action="{{ route('publishers.store') }}" method="POST">
+                    <form action="{{ route('publishers.update', $publisher->id) }}" method="POST">
+                        @method('PUT')
                         @csrf
                         <div class="sm:overflow-hidden sm:rounded-md">
                             <div class="space-y-6 bg-white px-4 py-3 sm:p-6">
                                 <!-- #Form Info -->
-                                <p class="tracking-normal text-gray-600 md:text-lg dark:text-gray-400 mb-0 border-b-2 pl-2">Yayınevi
-                                    bilgilerini doldurup ekle butonuna basın</p>
+                                <p
+                                    class="tracking-normal text-gray-600 md:text-lg dark:text-gray-400 mb-0 border-b-2 pl-2">
+                                    Yayınevi
+                                    bilgilerini düzenleyip düzenle butonuna basın</p>
 
                                 <!--Form Info# -->
 
@@ -39,7 +42,7 @@
                                     <span
                                         class="inline-flex items-center rounded-l-md border border-r-0 border-gray-300 bg-gray-50 px-3 text-sm text-gray-500">Yayınevi:</span>
                                     <input type="text" name="publisher_name" id="publisher" autocomplete="off"
-                                        required value="{{ old('publisher_name') }}"
+                                        required value="{{ $publisher->publisher_name }}"
                                         class="block w-full flex-1 rounded-none rounded-r-md border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
                                         placeholder="">
                                 </div>
@@ -49,14 +52,14 @@
                                         class="inline-flex items-center rounded-l-md border border-r-0 border-gray-300 bg-gray-50 px-3 text-sm text-gray-500">Website:</span>
                                     <input type="text" name="website" id="publisher" autocomplete="off"
                                         class="block w-full flex-1 rounded-none rounded-r-md border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
-                                        placeholder="https://example.com" value="{{ old('website') }}">
+                                        placeholder="https://example.com" value="{{ $publisher->website }}">
                                 </div>
 
                                 <div>
                                     <div class="mt-2">
                                         <textarea id="description" name="description" rows="6"
                                             class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
-                                            placeholder="Açıklama">{{ old('description') }}</textarea>
+                                            placeholder="Açıklama">{{ $publisher->description }}</textarea>
                                     </div>
                                 </div>
 
@@ -94,10 +97,19 @@
                             </div>
                             <div class="bg-gray-50 px-4 py-3 text-right sm:px-6">
                                 <button type="submit"
-                                    class="inline-flex justify-center rounded-md border border-transparent bg-indigo-600 py-2 px-4 text-sm font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">Ekle</button>
+                                    class="inline-flex justify-center rounded-md border border-transparent bg-indigo-600 py-2 px-4 text-sm font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">Düzenle</button>
                             </div>
                         </div>
                     </form>
+                    <div class="remove-publisher bg-gray-50 px-4 py-3 text-right sm:px-6 my-3 text-center">
+                        <form id="remove-form" action="{{ route('publishers.destroy', $publisher->id) }}" method="POST">
+                            @csrf
+                            @method('DELETE')
+                            <button id="remove-btn" type="submit"
+                                class="inline-flex justify-center rounded-md border border-transparent bg-red-600 py-2 px-4 text-sm font-medium text-white shadow-sm btn-hover hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">Yayınevini
+                                Sil</button>
+                        </form>
+                    </div>
                 </div>
             </div>
         </div>
@@ -105,6 +117,11 @@
 
     <x-slot name="script">
         <script src="{{ asset('/') }}assets/js/admin/admin.js"></script>
+        <script>
+            /* Remove Alert Attr */
+            alertTitle = "Dikkat"
+            alertMessage = "\"{{$publisher->publisher_name}}\" adlı yayınevi kaldırılılacak!"
+        </script>
     </x-slot>
 
 </x-app-layout>
