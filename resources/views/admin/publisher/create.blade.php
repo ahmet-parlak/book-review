@@ -13,7 +13,7 @@
             <div class="md:grid md:grid-cols-8 md:gap-6 ">
                 <div class="mt-5  md:col-span-8 md:mt-0 ">
 
-                    <form action="{{ route('publishers.store') }}" method="POST">
+                    <form action="{{ route('publishers.store') }}" method="POST" enctype="multipart/form-data">
                         @csrf
                         <div class="sm:overflow-hidden sm:rounded-md">
                             <div class="space-y-6 bg-white px-4 py-3 sm:p-6">
@@ -25,7 +25,7 @@
 
                                 <!-- #Validation Erorrs -->
                                 @if ($errors->any())
-                                    <div class="p-4 mb-4 text-sm text-red-700 bg-red-100 rounded-lg dark:bg-red-200 dark:text-red-800"
+                                    <div class="p-4 mb-4 text-sm text-red-700 bg-red-100 rounded-lg dark:bg-red-200 dark:text-red-800 bold"
                                         role="alert">
                                         @foreach ($errors->all() as $error)
                                             <li>{{ $error }}</li>
@@ -82,7 +82,7 @@
                                                     </div>
                                                     <p class="text-xs text-gray-500" id="photo-name">2MB'ye kadar
                                                         PNG, JPG </p>
-                                                    <input id="file-upload" name="publisher_photo_path" type="file"
+                                                    <input id="file-upload" name="publisher_photo" type="file"
                                                         class="sr-only">
                                                 </label>
 

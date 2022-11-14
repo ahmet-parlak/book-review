@@ -23,7 +23,7 @@ return new class extends Migration
             $table->string('publication_year')->nullable();
             $table->string('pages')->nullable();
             $table->longText('description')->nullable();
-            $table->string('book_photo_path', 2048)->nullable();
+            $table->string('book_photo', 2048)->nullable();
             $table->enum('status',['draft','active','passive'])->default('draft');
             $table->timestamps();
         });

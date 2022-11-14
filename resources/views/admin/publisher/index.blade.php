@@ -44,7 +44,9 @@
                         <th scope="row"
                             class="flex items-center py-4 px-6 text-gray-900 whitespace-nowrap dark:text-white">
                             <img class="w-10 h-10 rounded-full"
-                                src="https://ui-avatars.com/api/?name=B&color=7F9CF5&background=EBF4FF"
+                                @if ($publisher->publisher_photo) src="{{asset('/').$publisher->publisher_photo}}"
+                                @else
+                                src="https://ui-avatars.com/api/?name={{ $publisher->publisher_name }}&color=7F9CF5&background=EBF4FF" @endif
                                 alt="Jese image">
                             <div class="pl-3">
                                 <div class="text-base font-semibold">{{ $publisher->publisher_name }}</div>
@@ -60,7 +62,7 @@
                             </div>
                         </td>
                         <td class="py-4 px-6">
-                            <a href="{{route('publishers.edit',$publisher->id)}}"
+                            <a href="{{ route('publishers.edit', $publisher->id) }}"
                                 class="font-medium text-blue-600 dark:text-blue-500 hover:underline">Düzenle</a>
                         </td>
                     </tr>

@@ -18,7 +18,7 @@ return new class extends Migration
             $table->string('publisher_name')->unique();
             $table->longText('description')->nullable();
             $table->string('website')->nullable();
-            $table->string('publisher_photo_path', 2048)->nullable();
+            $table->string('publisher_photo', 2048)->nullable();
             $table->timestamps();
         });
     }

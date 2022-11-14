@@ -15,9 +15,18 @@ file.addEventListener('change', function () {
                 photoPrev.appendChild(image);
 
             })
+        }else{
+            Swal.fire({
+                icon: 'error',
+                title: 'Hata',
+                text:'Lütfen bir resim dosyası seçin',
+                showConfirmButton: false,
+                timer: 1600
+            })
         }
     })
 })
+/* #################### */
 
 
 /* Remove Warning */
@@ -53,3 +62,4 @@ if (removeForm) {
         })
     })
 }
+/* #################### */

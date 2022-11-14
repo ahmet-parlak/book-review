@@ -27,6 +27,7 @@ class PublisherUpdateRequest extends FormRequest
             'publisher_name' => 'required|max:200',
             'description' => 'max:1000',
             'website' => 'url|nullable',
+            'publisher_photo' => 'nullable|image|max:1024|mimes:jpg,png,jpeg,svg',
         ];
     }
 
@@ -36,6 +37,7 @@ class PublisherUpdateRequest extends FormRequest
             'publisher_name' => 'Yayınevi',
             'description' => 'Açıklama',
             'website' => 'Website',
+            'publisher_photo' => 'Yayınevi Fotoğrafı',
         ];
     }
 }

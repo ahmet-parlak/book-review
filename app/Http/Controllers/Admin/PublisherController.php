@@ -17,7 +17,7 @@ class PublisherController extends Controller
      */
     public function index()
     {
-        $publishers = Publisher::paginate(5);
+        $publishers = Publisher::paginate(10);
         return view('admin.publisher.index', compact('publishers'));
     }
 
@@ -39,6 +39,18 @@ class PublisherController extends Controller
      */
     public function store(PublisherCreateRequest $request)
     {
+        //Publisher Photo Control
+        if ($request->hasFile('publisher_photo')) {
+            $photoName = md5($request->publisher_name) . rand(0, 100) . '.' . $request->publisher_photo->extension();
+            $photoPath = "storage/publishers/" . $photoName;
+            $request->publisher_photo->move(public_path('storage/publishers'), $photoName);
+
+            //Replace value of publisher_photo in form with file path
+            $request->merge([
+                'publisher_photo' => $photoPath
+            ]);
+        }
+
         Publisher::create($request->post());
         return redirect()->route('publishers.index')->withSuccess('Yayınevi eklendi');
     }
