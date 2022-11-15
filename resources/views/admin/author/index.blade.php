@@ -5,6 +5,9 @@
     <x-slot name="header">
         Yazarlar
     </x-slot>
+    <x-slot name="breadcrumb">
+        <!-- For current page -->
+    </x-slot>
 
     <div class="overflow-x-auto relative shadow-md sm:rounded-lg">
         <div class="flex justify-between items-center pb-4 bg-white dark:bg-gray-900">

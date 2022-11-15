@@ -125,7 +125,7 @@ class PublisherController extends Controller
         $values['publisher_photo'] = $photoPath;
 
         Publisher::whereId($id)->update($values);
-        return redirect()->route('publishers.edit', $id)->withSuccess('Yayınevi düzenlendi.');
+        return redirect()->route('publishers.edit', $id)->withSuccess('Yayınevi bilgileri güncellendi.');
     }
 
     /**

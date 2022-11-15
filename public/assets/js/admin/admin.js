@@ -52,6 +52,7 @@ if (removeForm) {
             showCancelButton: true,
             confirmButtonText: 'Kaldır',
             cancelButtonText: `İptal`,
+            focusCancel:true
         }).then((result) => {
             /* Read more about isConfirmed, isDenied below */
             if (result.isConfirmed) {

@@ -8,10 +8,33 @@
     <x-slot name="header">
         Yayınevi Düzenle
     </x-slot>
+    <x-slot name="breadcrumb">
+        <!--Previous Pages-->
+        <x-slot name='prev_pages'>
+            <li>
+                <div class="flex items-center">
+                    <svg class="w-6 h-6 text-gray-400" fill="currentColor" viewBox="0 0 20 20"
+                        xmlns="http://www.w3.org/2000/svg">
+                        <path fill-rule="evenodd"
+                            d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z"
+                            clip-rule="evenodd"></path>
+                    </svg>
+                    <a href="{{ route('publishers.index') }}"
+                        class="ml-1 text-sm font-medium text-gray-700 hover:text-gray-900 md:ml-2 dark:text-gray-400 dark:hover:text-white">Yayınevleri</a>
+                </div>
+            </li>
+        </x-slot>
+    </x-slot>
+
     <div class="row">
         <div class="col-8 offset-2">
             <div class="md:grid md:grid-cols-8 md:gap-6 ">
                 <div class="mt-3  md:col-span-8 md:mt-0 ">
+
+                    <!-- Header -->
+                    <div class="header text-center border-bottom">
+                        <h4 class="text-2xl font-bold dark:text-white">{{ $publisher->publisher_name }}</h4>
+                    </div>
 
                     <form action="{{ route('publishers.update', $publisher->id) }}" method="POST"
                         enctype="multipart/form-data">
@@ -20,10 +43,10 @@
                         <div class="sm:overflow-hidden sm:rounded-md">
                             <div class="space-y-6 bg-white px-4 py-3 sm:p-6">
                                 <!-- #Form Info -->
-                                <p
-                                    class="tracking-normal text-gray-600 md:text-lg dark:text-gray-400 mb-0 border-b-2 pl-2">
-                                    Yayınevi
-                                    bilgilerini düzenleyip düzenle butonuna basın</p>
+                                <div class="px-4 py-2 mb-4 text-sm text-gray-700 bg-gray-100 rounded-lg dark:bg-gray-700 dark:text-gray-300"
+                                    role="alert">
+                                    Yayınevi bilgilerini düzenleyip '<span class="text-indigo-700">Değişiklikleri Kaydet</span>' butonuna basın.
+                                </div>
 
                                 <!--Form Info# -->
 
@@ -38,7 +61,7 @@
                                 @endif
                                 <!-- Validation Erorrs# -->
 
-                                <label for="publisher" class="block text-sm font-medium text-gray-700"></label>
+                                <!-- Inputs -->
                                 <div class="mt-1 flex rounded-md shadow-sm">
                                     <span
                                         class="inline-flex items-center rounded-l-md border border-r-0 border-gray-300 bg-gray-50 px-3 text-sm text-gray-500">Yayınevi:</span>
@@ -109,7 +132,8 @@
                             </div>
                             <div class="bg-gray-50 px-4 py-3 text-center sm:px-6">
                                 <button type="submit"
-                                    class="inline-flex justify-center rounded-md border border-transparent bg-indigo-600 py-2 px-4 text-sm font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">Düzenle</button>
+                                    class="inline-flex justify-center rounded-md border border-transparent bg-indigo-600 py-2 px-4 text-sm font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">Değişiklikleri
+                                    Kaydet</button>
                             </div>
                         </div>
                     </form>
@@ -133,7 +157,7 @@
         <script>
             /* Remove Alert Attr */
             alertTitle = "Dikkat"
-            alertMessage = "\"{{ $publisher->publisher_name }}\" adlı yayınevi kaldırılılacak!"
+            alertMessage = "\'{{ $publisher->publisher_name }}\' adlı yayınevi kaldırılılacak. Bu işlem geri alınamaz!"
         </script>
     </x-slot>
 

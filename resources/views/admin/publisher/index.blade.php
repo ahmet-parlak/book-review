@@ -5,17 +5,22 @@
     </x-slot>
 
     <x-slot name="header">
-        Yayınevi Ekle
+        Yayınevleri
+    </x-slot>
+
+    <x-slot name="breadcrumb">
+        <!-- For current page -->
     </x-slot>
 
 
+
     <div class="overflow-x-auto relative shadow-md sm:rounded-lg">
-        <div class="flex justify-between items-center pb-4 bg-white dark:bg-gray-900">
+        <div class="flex justify-between items-center pb-3 bg-white dark:bg-gray-900">
 
             {{-- Serach&Filter Area --}}
             <div class="col-12 mt-2 text-right">
                 <a href="{{ route('publishers.create') }}" type="button"
-                    class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-3 py-2 mr-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800"><i
+                    class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-3 py-2 mr-2 mt-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800"><i
                         class="fa-solid fa-plus pl-0 mr-2"></i>Yayınevi
                     Ekle</a>
             </div>
@@ -44,7 +49,7 @@
                         <th scope="row"
                             class="flex items-center py-4 px-6 text-gray-900 whitespace-nowrap dark:text-white">
                             <img class="w-10 h-10 rounded-full"
-                                @if ($publisher->publisher_photo) src="{{asset('/').$publisher->publisher_photo}}"
+                                @if ($publisher->publisher_photo) src="{{ asset('/') . $publisher->publisher_photo }}"
                                 @else
                                 src="https://ui-avatars.com/api/?name={{ $publisher->publisher_name }}&color=7F9CF5&background=EBF4FF" @endif
                                 alt="Jese image">
@@ -53,10 +58,11 @@
                             </div>
                         </th>
                         <td class="py-4 px-6">
-                            <a href="{{ $publisher->website }}" target="_blank" rel="noopener noreferrer">{{ $publisher->website }}</a>
+                            <a href="{{ $publisher->website }}" target="_blank"
+                                rel="noopener noreferrer">{{ $publisher->website }}</a>
                         </td>
                         <td class="py-4 px-6">
-                            <p>{{$publisher->description}}</p>
+                            <p>{{ $publisher->description }}</p>
                         </td>
                         <td class="py-4 px-6">
                             <a href="{{ route('publishers.edit', $publisher->id) }}"
