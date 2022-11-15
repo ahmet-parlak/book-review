@@ -24,7 +24,7 @@ class PublisherCreateRequest extends FormRequest
     public function rules()
     {
         return [
-            'publisher_name' => 'required|max:200',
+            'publisher_name' => 'required|max:200|unique:App\Models\Publisher,publisher_name',
             'description' => 'max:1000',
             'website' => 'url|nullable',
             'publisher_photo' => 'nullable|image|max:1024|mimes:jpg,png,jpeg,svg',

@@ -24,13 +24,13 @@
             <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
                 <tr>
                     <th scope="col" class="py-3 px-6">
-                        Başlık
+                        Yayınevi
+                    </th>
+                    <th scope="col" class="py-3 px-6">
+                        Website
                     </th>
                     <th scope="col" class="py-3 px-6">
                         Açıklama
-                    </th>
-                    <th scope="col" class="py-3 px-6">
-                        Durum
                     </th>
                     <th scope="col" class="py-3 px-6">
                         İşlem
@@ -50,16 +50,13 @@
                                 alt="Jese image">
                             <div class="pl-3">
                                 <div class="text-base font-semibold">{{ $publisher->publisher_name }}</div>
-                                <div class="font-normal text-gray-500">Yazar</div>
                             </div>
                         </th>
                         <td class="py-4 px-6">
-                            Lorem ipsum dolor sit.
+                            <a href="{{ $publisher->website }}" target="_blank" rel="noopener noreferrer">{{ $publisher->website }}</a>
                         </td>
                         <td class="py-4 px-6">
-                            <div class="flex items-center">
-                                <div class="h-2.5 w-2.5 rounded-full bg-green-400 mr-2"></div> durum
-                            </div>
+                            <p>{{$publisher->description}}</p>
                         </td>
                         <td class="py-4 px-6">
                             <a href="{{ route('publishers.edit', $publisher->id) }}"

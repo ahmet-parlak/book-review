@@ -83,7 +83,8 @@
         <script>
             Swal.fire({
                 icon: 'success',
-                title: '{{session('success')}}',
+                title: 'Başarılı',
+                text:'{{session('success')}}',
                 showConfirmButton: false,
                 timer: 1600
             })
