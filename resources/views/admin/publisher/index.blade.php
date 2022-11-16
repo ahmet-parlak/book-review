@@ -62,7 +62,7 @@
                                 rel="noopener noreferrer">{{ $publisher->website }}</a>
                         </td>
                         <td class="py-4 px-6">
-                            <p>{{ $publisher->description }}</p>
+                            <p class="m-0">{{ Str::limit($publisher->description, 40, '...') }}</p>
                         </td>
                         <td class="py-4 px-6">
                             <a href="{{ route('publishers.edit', $publisher->id) }}"

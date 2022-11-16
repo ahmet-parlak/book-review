@@ -54,7 +54,7 @@
                             </div>
                         </th>
                         <td class="py-4 px-6">
-                            {{ $author->description }}
+                            {{ Str::limit($author->description, 40, '...') }}
                         </td>
                         <td class="py-4 px-6">
                             <div class="flex items-center">

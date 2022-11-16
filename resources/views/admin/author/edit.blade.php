@@ -1,12 +1,12 @@
 <x-app-layout>
     <x-slot name="title">
-        Yayınevi Düzenle | Yönetim Paneli
+        Yazar Düzenle | Yönetim Paneli
     </x-slot>
     <x-slot name="headScripts">
 
     </x-slot>
     <x-slot name="header">
-        Yayınevi Düzenle
+        Yazar Düzenle
     </x-slot>
     <x-slot name="breadcrumb">
         <!--Previous Pages-->
@@ -19,8 +19,8 @@
                             d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z"
                             clip-rule="evenodd"></path>
                     </svg>
-                    <a href="{{ route('publishers.index') }}"
-                        class="ml-1 text-sm font-medium text-gray-700 hover:text-gray-900 md:ml-2 dark:text-gray-400 dark:hover:text-white">Yayınevleri</a>
+                    <a href="{{ route('authors.index') }}"
+                        class="ml-1 text-sm font-medium text-gray-700 hover:text-gray-900 md:ml-2 dark:text-gray-400 dark:hover:text-white">Yazarlar</a>
                 </div>
             </li>
         </x-slot>
@@ -33,10 +33,10 @@
 
                     <!-- Header -->
                     <div class="header text-center border-bottom">
-                        <h4 class="text-2xl font-bold dark:text-white">{{ $publisher->publisher_name }}</h4>
+                        <h4 class="text-2xl font-bold dark:text-white">{{ $author->author_name }}</h4>
                     </div>
 
-                    <form id="edit-form" action="{{ route('publishers.update', $publisher->id) }}" method="POST"
+                    <form id="edit-form" action="{{ route('authors.update', $author->id) }}" method="POST"
                         enctype="multipart/form-data">
                         @method('PUT')
                         @csrf
@@ -45,7 +45,7 @@
                                 <!-- #Form Info -->
                                 <div class="px-4 py-2 mb-4 text-sm text-gray-700 bg-gray-100 rounded-lg dark:bg-gray-700 dark:text-gray-300"
                                     role="alert">
-                                    Yayınevi bilgilerini düzenleyip '<span class="text-indigo-700">Değişiklikleri
+                                    Yazar bilgilerini düzenleyip '<span class="text-indigo-700">Değişiklikleri
                                         Kaydet</span>' butonuna basın.
                                 </div>
 
@@ -65,31 +65,31 @@
                                 <!-- Inputs -->
                                 <div class="mt-1 flex rounded-md shadow-sm">
                                     <span
-                                        class="inline-flex items-center rounded-l-md border border-r-0 border-gray-300 bg-gray-50 px-3 text-sm text-gray-500">Yayınevi:</span>
-                                    <input type="text" name="publisher_name" id="publisher" autocomplete="off"
-                                        required value="{{ $publisher->publisher_name }}"
+                                        class="inline-flex items-center rounded-l-md border border-r-0 border-gray-300 bg-gray-50 px-3 text-sm text-gray-500">Yazar İsmi:</span>
+                                    <input type="text" name="author_name" id="author" autocomplete="off"
+                                        required value="{{ $author->author_name }}"
                                         class="block w-full flex-1 rounded-none rounded-r-md border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
                                         placeholder="">
                                 </div>
 
                                 <div class="mt-4 flex rounded-md shadow-sm">
                                     <span
-                                        class="inline-flex items-center rounded-l-md border border-r-0 border-gray-300 bg-gray-50 px-3 text-sm text-gray-500">Website:</span>
-                                    <input type="text" name="website" id="publisher" autocomplete="off"
+                                        class="inline-flex items-center rounded-l-md border border-r-0 border-gray-300 bg-gray-50 px-3 text-sm text-gray-500">Doğum Tarihi:</span>
+                                    <input type="date" name="birth_date" autocomplete="off"
                                         class="block w-full flex-1 rounded-none rounded-r-md border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
-                                        placeholder="https://example.com" value="{{ $publisher->website }}">
+                                        placeholder="https://example.com" value="{{ $author->birth_date }}">
                                 </div>
 
                                 <div>
                                     <div class="mt-2">
                                         <textarea id="description" name="description" rows="6"
                                             class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
-                                            placeholder="Açıklama">{{ $publisher->description }}</textarea>
+                                            placeholder="Açıklama">{{ $author->description }}</textarea>
                                     </div>
                                 </div>
 
                                 <div>
-                                    <label class="block text-base font-medium text-gray-800">Yayınevi Fotoğrafı</label>
+                                    <label class="block text-base font-medium text-gray-800">Yazar Fotoğrafı</label>
                                     <div
                                         class="mt-1 flex justify-center rounded-md border-2 border-dashed border-gray-300 px-6 pt-5 pb-6">
                                         <div class="space-y-1 text-center">
@@ -99,9 +99,9 @@
                                                 <label for="file-upload"
                                                     class="relative cursor-pointer rounded-md bg-white font-medium text-indigo-600 focus-within:outline-none focus-within:ring-2 focus-within:ring-indigo-500 focus-within:ring-offset-2 hover:text-indigo-500">
                                                     <div class="photo-preview text-center">
-                                                        @if ($publisher->publisher_photo)
+                                                        @if ($author->author_photo)
                                                             <img class="h-24 w-24 mx-auto"
-                                                                src="{{ asset('/') . $publisher->publisher_photo }}"
+                                                                src="{{ asset('/') . $author->author_photo }}"
                                                                 alt="">
                                                         @else
                                                             <svg class="mx-auto h-24 w-24 text-gray-400"
@@ -117,11 +117,11 @@
                                                     <p class="text-xs text-gray-500 mt-2 mb-1" id="photo-name">2MB'ye
                                                         kadar
                                                         PNG, JPG </p>
-                                                    @if ($publisher->publisher_photo)
+                                                    @if ($author->author_photo)
                                                         <p class="text-sm text-gray-800" id="photo-name">Güncellemek
                                                             için tıklayın </p>
                                                     @endif
-                                                    <input id="file-upload" name="publisher_photo" type="file"
+                                                    <input id="file-upload" name="author_photo" type="file"
                                                         class="sr-only">
                                                 </label>
 
@@ -138,13 +138,13 @@
                             </div>
                         </div>
                     </form>
-                    <div class="remove-publisher bg-gray-50 px-4 py-3 text-right sm:px-6 my-3 text-center">
-                        <form id="remove-form" action="{{ route('publishers.destroy', $publisher->id) }}"
+                    <div class="remove-author bg-gray-50 px-4 py-3 text-right sm:px-6 my-3 text-center">
+                        <form id="remove-form" action="{{ route('authors.destroy', $author->id) }}"
                             method="POST">
                             @csrf
                             @method('DELETE')
                             <button id="remove-btn" type="submit"
-                                class="inline-flex justify-center rounded-md border border-transparent bg-red-600 py-2 px-4 text-sm font-medium text-white shadow-sm btn-hover hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">Yayınevini
+                                class="inline-flex justify-center rounded-md border border-transparent bg-red-600 py-2 px-4 text-sm font-medium text-white shadow-sm btn-hover hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">Yazarı
                                 Kaldır</button>
                         </form>
                     </div>
@@ -157,7 +157,7 @@
         <script>
             /* Remove Alert Attr */
             alertTitle = "Dikkat"
-            alertMessage = "\'{{ $publisher->publisher_name }}\' adlı yayınevi kaldırılılacak. Bu işlem geri alınamaz!"
+            alertMessage = "\'{{ $author->author_name }}\' adlı yayınevi kaldırılılacak. Bu işlem geri alınamaz!"
 
             /* Doubleclick Prevent */
             const submitButton = document.querySelector("#save-btn"),

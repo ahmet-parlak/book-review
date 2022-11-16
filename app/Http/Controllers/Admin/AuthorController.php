@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\AuthorCreateRequest;
+use App\Http\Requests\AuthorUpdateRequest;
 use Illuminate\Http\Request;
 use App\Models\Author;
 use Intervention\Image\Facades\Image;
@@ -77,7 +78,9 @@ class AuthorController extends Controller
      */
     public function edit($id)
     {
-        //
+        $author = Author::find($id) ?? abort(404, 'Yazar Bulunamadı');
+
+        return view("admin.author.edit", compact('author'));
     }
 
     /**
@@ -87,9 +90,40 @@ class AuthorController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(AuthorCreateRequest $request, $id)
+    public function update(AuthorUpdateRequest $request, $id)
     {
-        //
+        $author = Author::find($id) ?? abort(404, 'Yazar Bulunamadı');
+
+
+        //Author Photo Control
+        $photoPath = $author->author_photo;
+
+        if ($request->hasFile('author_photo')) {
+
+            //Delete old photo from storage
+            if ($photoPath) {
+                File::delete($author->author_photo);
+                //Storage::delete(asset('/') . $author->author_photo);
+            }
+
+            $photoName = md5($request->author_name) . rand(0, 100) . '.' . $request->author_photo->extension();
+            $photoPath = "storage/authors/" . $photoName;
+
+            //Photo Save
+            Image::make(request()->file('author_photo'))->save($photoPath);
+
+            //Replace value of author_photo in form with file path
+            $request->merge([
+                'author_photo' => $photoPath
+            ]);
+        }
+
+        /* Manipulate post values (photo path) */
+        $values = $request->except(['_method', '_token']);
+        $values['author_photo'] = $photoPath;
+
+        Author::whereId($id)->update($values);
+        return redirect()->route('authors.edit', $id)->withSuccess('Yazar bilgileri güncellendi.');
     }
 
     /**

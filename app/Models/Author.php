@@ -14,4 +14,6 @@ class Author extends Model
         'description',
         'author_photo'
     ];
+
+
 }
