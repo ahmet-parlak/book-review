@@ -33,7 +33,7 @@
             <div class="md:grid md:grid-cols-8 md:gap-6 ">
                 <div class="mt-5  md:col-span-8 md:mt-0 ">
 
-                    <form action="{{ route('publishers.store') }}" method="POST" enctype="multipart/form-data">
+                    <form id="publisher-form" action="{{ route('publishers.store') }}" method="POST" enctype="multipart/form-data">
                         @csrf
                         <div class="sm:overflow-hidden sm:rounded-md">
                             <div class="space-y-6 bg-white px-4 py-3 sm:p-6">
@@ -41,7 +41,8 @@
                                 <p
                                     class="tracking-normal text-gray-600 md:text-lg dark:text-gray-400 mb-0 border-b-2 pl-2">
                                     Yayınevi
-                                    bilgilerini doldurup ekle butonuna basın</p>
+                                    bilgilerini doldurup '<span class="text-indigo-700">Yayınevi Ekle</span>' butonuna
+                                    basın</p>
 
                                 <!--Form Info# -->
 
@@ -59,7 +60,7 @@
                                 <label for="publisher" class="block text-sm font-medium text-gray-700"></label>
                                 <div class="mt-1 flex rounded-md shadow-sm">
                                     <span
-                                        class="inline-flex items-center rounded-l-md border border-r-0 border-gray-300 bg-gray-50 px-3 text-sm text-gray-500">Yayınevi:</span>
+                                        class="inline-flex items-center rounded-l-md border border-r-0 border-gray-300 bg-gray-50 px-3 text-sm text-gray-500"><sup>*</sup>Yayınevi:</span>
                                     <input type="text" name="publisher_name" id="publisher" autocomplete="off"
                                         required value="{{ old('publisher_name') }}"
                                         class="block w-full flex-1 rounded-none rounded-r-md border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
@@ -114,9 +115,10 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="bg-gray-50 px-4 py-3 text-right sm:px-6">
-                                <button type="submit"
-                                    class="inline-flex justify-center rounded-md border border-transparent bg-indigo-600 py-2 px-4 text-sm font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">Ekle</button>
+                            <div class="bg-gray-50 px-4 py-3 text-center sm:px-6">
+                                <button id="submit-btn" type="submit"
+                                    class="inline-flex justify-center rounded-md border border-transparent bg-indigo-600 py-2 px-4 text-sm font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">Yayınevi
+                                    Ekle</button>
                             </div>
                         </div>
                     </form>
@@ -126,6 +128,13 @@
     </div>
 
     <x-slot name="script">
+        <script>
+            /* Doubleclick Prevent */
+            const submitButton = document.querySelector("#submit-btn"),
+                form = document.querySelector("#publisher-form");
+        </script>
+
+
         <script src="{{ asset('/') }}assets/js/admin/admin.js"></script>
     </x-slot>
 

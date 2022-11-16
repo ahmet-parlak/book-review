@@ -36,7 +36,7 @@
                         <h4 class="text-2xl font-bold dark:text-white">{{ $publisher->publisher_name }}</h4>
                     </div>
 
-                    <form action="{{ route('publishers.update', $publisher->id) }}" method="POST"
+                    <form id="edit-form" action="{{ route('publishers.update', $publisher->id) }}" method="POST"
                         enctype="multipart/form-data">
                         @method('PUT')
                         @csrf
@@ -45,7 +45,8 @@
                                 <!-- #Form Info -->
                                 <div class="px-4 py-2 mb-4 text-sm text-gray-700 bg-gray-100 rounded-lg dark:bg-gray-700 dark:text-gray-300"
                                     role="alert">
-                                    Yayınevi bilgilerini düzenleyip '<span class="text-indigo-700">Değişiklikleri Kaydet</span>' butonuna basın.
+                                    Yayınevi bilgilerini düzenleyip '<span class="text-indigo-700">Değişiklikleri
+                                        Kaydet</span>' butonuna basın.
                                 </div>
 
                                 <!--Form Info# -->
@@ -131,7 +132,7 @@
                                 </div>
                             </div>
                             <div class="bg-gray-50 px-4 py-3 text-center sm:px-6">
-                                <button type="submit"
+                                <button id="save-btn" type="submit"
                                     class="inline-flex justify-center rounded-md border border-transparent bg-indigo-600 py-2 px-4 text-sm font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">Değişiklikleri
                                     Kaydet</button>
                             </div>
@@ -153,12 +154,18 @@
     </div>
 
     <x-slot name="script">
-        <script src="{{ asset('/') }}assets/js/admin/admin.js"></script>
         <script>
             /* Remove Alert Attr */
             alertTitle = "Dikkat"
             alertMessage = "\'{{ $publisher->publisher_name }}\' adlı yayınevi kaldırılılacak. Bu işlem geri alınamaz!"
+
+            /* Doubleclick Prevent */
+            const submitButton = document.querySelector("#save-btn"),
+                form = document.querySelector("#edit-form");
+                console.log(submitButton);
         </script>
+
+        <script src="{{ asset('/') }}assets/js/admin/admin.js"></script>
     </x-slot>
 
 </x-app-layout>

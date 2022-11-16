@@ -1,4 +1,20 @@
 
+/* Double Submit Prevent */
+
+//set form and submitButton on  view page
+
+if (form) {
+    form.addEventListener('submit', function () {
+        submitButton.addEventListener('click', function () {
+            submitButton.setAttribute("disabled");
+            setTimeout(() => {
+                submitButton.removeAttribute("disabled");
+            }, 1500);
+        });
+    })
+}
+
+
 /* Image Preview */
 const file = document.getElementById('file-upload'),
     photoPrev = document.querySelector('.photo-preview');
@@ -15,11 +31,11 @@ file.addEventListener('change', function () {
                 photoPrev.appendChild(image);
 
             })
-        }else{
+        } else {
             Swal.fire({
                 icon: 'error',
                 title: 'Hata',
-                text:'Lütfen bir resim dosyası seçin',
+                text: 'Lütfen bir resim dosyası seçin',
                 showConfirmButton: false,
                 timer: 1600
             })
@@ -43,7 +59,7 @@ if (removeForm) {
         if (typeof alertMessage === 'undefined') {
             alertTitle = ""
         }
-        
+
 
         Swal.fire({
             title: alertTitle,
@@ -52,7 +68,7 @@ if (removeForm) {
             showCancelButton: true,
             confirmButtonText: 'Kaldır',
             cancelButtonText: `İptal`,
-            focusCancel:true
+            focusCancel: true
         }).then((result) => {
             /* Read more about isConfirmed, isDenied below */
             if (result.isConfirmed) {
