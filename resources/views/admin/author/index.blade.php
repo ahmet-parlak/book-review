@@ -24,13 +24,13 @@
             <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
                 <tr>
                     <th scope="col" class="py-3 px-6">
-                        Başlık
+                        Yazar
                     </th>
                     <th scope="col" class="py-3 px-6">
                         Açıklama
                     </th>
                     <th scope="col" class="py-3 px-6">
-                        Durum
+                        Doğum Tarihi
                     </th>
                     <th scope="col" class="py-3 px-6">
                         İşlem
@@ -44,23 +44,25 @@
                         <th scope="row"
                             class="flex items-center py-4 px-6 text-gray-900 whitespace-nowrap dark:text-white">
                             <img class="w-10 h-10 rounded-full"
-                                src="https://ui-avatars.com/api/?name=B&color=7F9CF5&background=EBF4FF"
+                                @if ($author->author_photo) src="{{ asset('/') . $author->author_photo }}"
+                                 @else
+                                src="{{ asset('/') . 'storage/authors/default.png' }}" @endif
                                 alt="Jese image">
                             <div class="pl-3">
                                 <div class="text-base font-semibold">{{ $author->author_name }}</div>
-                                <div class="font-normal text-gray-500">Yazar</div>
+                                {{-- <div class="font-normal text-gray-500">Subinfo</div> --}}
                             </div>
                         </th>
                         <td class="py-4 px-6">
-                            Lorem ipsum dolor sit.
+                            {{ $author->description }}
                         </td>
                         <td class="py-4 px-6">
                             <div class="flex items-center">
-                                <div class="h-2.5 w-2.5 rounded-full bg-green-400 mr-2"></div> durum
+                                {{ $author->birth_date }}
                             </div>
                         </td>
                         <td class="py-4 px-6">
-                            <a href="#"
+                            <a href="{{ route('authors.edit', $author->id) }}"
                                 class="font-medium text-blue-600 dark:text-blue-500 hover:underline">Düzenle</a>
                         </td>
                     </tr>

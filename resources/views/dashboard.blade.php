@@ -239,7 +239,7 @@
                             class="p-6 max-w-sm bg-white rounded-lg border border-gray-200 shadow-md dark:bg-gray-800 dark:border-gray-700">
                             <!-- Icon-Start -->
                             <div class="icon offset-2 mb-2">
-                                <img src="https://static.vecteezy.com/system/resources/previews/004/578/700/original/printing-machine-operator-and-graphic-design-free-vector.jpg"
+                                <img src="{{asset('/').'storage/publishers/default.jpg'}}"
                                     style="width: 240px;" alt="" srcset="">
                             </div>
                             <!-- Icon-End -->

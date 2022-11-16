@@ -48,10 +48,10 @@
                         class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
                         <th scope="row"
                             class="flex items-center py-4 px-6 text-gray-900 whitespace-nowrap dark:text-white">
-                            <img class="w-10 h-10 rounded-full"
+                            <img class="w-10 h-10 rounded-full border"
                                 @if ($publisher->publisher_photo) src="{{ asset('/') . $publisher->publisher_photo }}"
                                 @else
-                                src="https://ui-avatars.com/api/?name={{ $publisher->publisher_name }}&color=7F9CF5&background=EBF4FF" @endif
+                                src="{{ asset('/') . 'storage/publishers/default.jpg' }}" @endif
                                 alt="Jese image">
                             <div class="pl-3">
                                 <div class="text-base font-semibold">{{ $publisher->publisher_name }}</div>

@@ -3,8 +3,11 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\AuthorCreateRequest;
 use Illuminate\Http\Request;
 use App\Models\Author;
+use Intervention\Image\Facades\Image;
+use Illuminate\Support\Facades\File;
 
 class AuthorController extends Controller
 {
@@ -35,9 +38,24 @@ class AuthorController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(AuthorCreateRequest $request)
     {
-        //
+        //Author Photo Control
+        if ($request->hasFile('author_photo')) {
+            $photoName = md5($request->author_name) . rand(0, 100) . '.' . $request->author_photo->extension();
+            $photoPath = "storage/authors/" . $photoName;
+
+            //Photo Save
+            Image::make(request()->file('author_photo'))->save($photoPath);
+
+            //Replace value of author_photo in form with file path
+            $request->merge([
+                'author_photo' => $photoPath
+            ]);
+        }
+
+        Author::create($request->post());
+        return redirect()->route('authors.index')->withSuccess('Yazar eklendi.');
     }
 
     /**
@@ -69,7 +87,7 @@ class AuthorController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(AuthorCreateRequest $request, $id)
     {
         //
     }
