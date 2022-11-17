@@ -134,6 +134,8 @@ class AuthorController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $publisher = Author::find($id) ?? abort(404, 'Yazar Bulunamadı');
+        $publisher->delete();
+        return redirect()->route('authors.index')->withSuccess('Yazar kaldırıldı.');
     }
 }

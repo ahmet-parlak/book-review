@@ -169,6 +169,8 @@ return [
     'attributes' => [
         'password' => 'Şifre',
         'current_password' => 'Mevcut Şifre',
+        'photo' => 'Fotoğraf',
+        
     ],
 
 ];
