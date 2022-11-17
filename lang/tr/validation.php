@@ -166,6 +166,9 @@ return [
     |
     */
 
-    'attributes' => [],
+    'attributes' => [
+        'password' => 'Şifre',
+        'current_password' => 'Mevcut Şifre',
+    ],
 
 ];

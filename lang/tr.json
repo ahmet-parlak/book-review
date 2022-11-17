@@ -112,7 +112,9 @@
     "API Token Permissions": "API Token Permissions",
     "Delete API Token": "Delete API Token",
     "Are you sure you would like to delete this API token?": "Are you sure you would like to delete this API token?",
-    "This password does not match our records.":"Bu şifre kayıtlarımızla eşleşmiyor.",
+    "This password does not match our records.": "Bu şifre kayıtlarımızla eşleşmiyor.",
     "The provided password does not match your current password.": "Girdiğiniz şifre mevcut şifrenizle eşleşmiyor.",
-    "The password must be at least :charcters characters.":"Şifreniz en az :charcters karakter uzunluğunda olmalı."
+    "The password must be at least :charcters characters.": "Şifreniz en az :charcters karakter uzunluğunda olmalı.",
+    "Whoops! Something went wrong.": "Oppps! Bir şeyler yanlış gitti.",
+    "The :attribute must be at least :length characters.": ":attribute minimum :length karakter uzunluğunda olmalıdır."
 }
