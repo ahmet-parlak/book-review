@@ -118,7 +118,16 @@
                                 </div>
 
                                 <x-jet-dropdown-link href="{{ route('books.index') }}">
-                                    Kitaplar
+                                    <i class="fa-solid fa-book mr-2"></i> Kitaplar
+                                </x-jet-dropdown-link>
+                                <x-jet-dropdown-link href="{{ route('authors.index') }}">
+                                    <i class="fa-solid fa-pen-fancy mr-2"></i> Yazarlar
+                                </x-jet-dropdown-link>
+                                <x-jet-dropdown-link href="{{ route('publishers.index') }}">
+                                    <i class="fa-solid fa-house mr-2"></i> Yayınevleri
+                                </x-jet-dropdown-link>
+                                <x-jet-dropdown-link href="{{ route('categories.index') }}">
+                                    <i class="fa-solid fa-tags mr-2"></i> Kategoriler
                                 </x-jet-dropdown-link>
                             @endif
 
@@ -128,7 +137,7 @@
                             </div>
 
                             <x-jet-dropdown-link href="{{ route('profile.show') }}">
-                                {{ __('Profile') }}
+                                <i class="fa-solid fa-user mr-2"></i> {{ __('Profile') }}
                             </x-jet-dropdown-link>
 
                             @if (Laravel\Jetstream\Jetstream::hasApiFeatures())
@@ -144,7 +153,7 @@
                                 @csrf
 
                                 <x-jet-dropdown-link href="{{ route('logout') }}" @click.prevent="$root.submit();">
-                                    {{ __('Log Out') }}
+                                    <i class="fa-solid fa-right-from-bracket mr-2"></i> {{ __('Log Out') }}
                                 </x-jet-dropdown-link>
                             </form>
                         </x-slot>
