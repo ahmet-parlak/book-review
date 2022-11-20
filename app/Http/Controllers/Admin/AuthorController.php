@@ -94,7 +94,6 @@ class AuthorController extends Controller
     {
         $author = Author::find($id) ?? abort(404, 'Yazar Bulunamadı');
 
-
         //Author Photo Control
         $photoPath = $author->author_photo;
 

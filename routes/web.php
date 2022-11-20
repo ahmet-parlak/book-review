@@ -33,4 +33,5 @@ Route::group(['middleware' => ['auth', 'isAdmin'], 'prefix' => 'admin'], functio
     Route::resource('books', Admin\BookController::class);
     Route::resource('authors', Admin\AuthorController::class);
     Route::resource('publishers', Admin\PublisherController::class);
+    Route::resource('categories', Admin\CategoryController::class);
 });

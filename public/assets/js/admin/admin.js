@@ -18,30 +18,32 @@ if (form) {
 /* Image Preview */
 const file = document.getElementById('file-upload'),
     photoPrev = document.querySelector('.photo-preview');
-file.addEventListener('change', function () {
-    [...this.files].map(file => {
-        if (file.name.match(/\.jpe?g|png|gif/)) {
-            document.querySelector("#photo-name").innerHTML = file.name;
-            const reader = new FileReader();
-            reader.readAsDataURL(file);
-            reader.addEventListener('load', function () {
-                const image = new Image(150, 150);
-                image.src = this.result;
-                photoPrev.removeChild(photoPrev.children[0]);
-                photoPrev.appendChild(image);
+if (file) {
+    file.addEventListener('change', function () {
+        [...this.files].map(file => {
+            if (file.name.match(/\.jpe?g|png|gif/)) {
+                document.querySelector("#photo-name").innerHTML = file.name;
+                const reader = new FileReader();
+                reader.readAsDataURL(file);
+                reader.addEventListener('load', function () {
+                    const image = new Image(150, 150);
+                    image.src = this.result;
+                    photoPrev.removeChild(photoPrev.children[0]);
+                    photoPrev.appendChild(image);
 
-            })
-        } else {
-            Swal.fire({
-                icon: 'error',
-                title: 'Hata',
-                text: 'Lütfen bir resim dosyası seçin',
-                showConfirmButton: false,
-                timer: 1600
-            })
-        }
+                })
+            } else {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Hata',
+                    text: 'Lütfen bir resim dosyası seçin',
+                    showConfirmButton: false,
+                    timer: 1600
+                })
+            }
+        })
     })
-})
+}
 /* #################### */
 
 

@@ -46,10 +46,10 @@
                 <div class="admin-card ">
                     <div
                         class="mx-auto p-6 max-w-sm bg-white rounded-lg border border-gray-200 shadow-md dark:bg-gray-800 dark:border-gray-700 hover:shadow">
-                        <a href="{{ route('authors.index') }}" class="card-link">
+                        <a href="{{ route('categories.index') }}" class="card-link">
                             <!-- Icon-Start -->
                             <div class="icon mb-2">
-                                <img class="mx-auto" src="{{ asset('/') . 'assets/vectors/categories.svg' }}"
+                                <img class="mx-auto" src="{{ asset('/') . 'assets/vectors/tags.svg' }}"
                                     alt="categories-vector" srcset="">
                             </div>
                             <!-- Icon-End -->
