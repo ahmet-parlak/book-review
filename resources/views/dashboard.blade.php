@@ -107,8 +107,8 @@
                         <a href="{{ route('publishers.index') }}" class="card-link">
                             <!-- Icon-Start -->
                             <div class="icon mb-2">
-                                <img class="mx-auto" src="{{ asset('/') . 'storage/publishers/default.jpg' }}"
-                                    style="width: 245px;" alt="publishers-vector" srcset="">
+                                <img class="mx-auto" src="{{ asset('/') . 'assets/vectors/publishers.jpg' }}"
+                                    style="width: 170px;" alt="publishers-vector" srcset="">
                             </div>
                             <!-- Icon-End -->
 

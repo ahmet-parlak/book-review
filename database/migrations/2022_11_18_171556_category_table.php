@@ -21,9 +21,9 @@ return new class extends Migration
             $table->timestamps();
         });
 
-        Schema::table('categories',function (Blueprint $table){
+        Schema::table('categories', function (Blueprint $table) {
             $table->foreign('parent_id')->references('id')->on('categories')->nullOnDelete();
-    });
+        });
     }
 
     /**
