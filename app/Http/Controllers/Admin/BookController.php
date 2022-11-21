@@ -4,10 +4,15 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use App\Http\Requests\BookCreateRequest;
 use App\Models\Book;
 use App\Models\Category;
 use App\Models\Publisher;
 use App\Models\Author;
+use App\Models\BookAuthor;
+use App\Models\BookCategory;
+use Intervention\Image\Facades\Image;
+use Illuminate\Support\Facades\File;
 
 class BookController extends Controller
 {
@@ -41,9 +46,26 @@ class BookController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(BookCreateRequest $request)
     {
-        //
+        //Book Photo Control
+        if ($request->hasFile('book_photo')) {
+            $photoName = md5($request->author_name) . rand(0, 100) . '.' . $request->book_photo->extension();
+            $photoPath = "storage/books/" . $photoName;
+
+            //Photo Save
+            Image::make(request()->file('book_photo'))->save($photoPath);
+
+            //Replace value of book_photo in form with file path
+            $request->merge([
+                'book_photo' => $photoPath
+            ]);
+        }
+
+        $book = Book::create($request->post());
+        BookAuthor::create(['book_id' => $book->id, 'author_id' => $request->author_id]);
+        BookCategory::create(['book_id' => $book->id, 'category_id' => $request->category_id]);
+        return redirect()->route('books.index')->withSuccess('Kitap eklendi.');
     }
 
     /**

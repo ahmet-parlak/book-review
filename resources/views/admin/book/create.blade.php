@@ -96,7 +96,7 @@
                                 <div class="author">
                                     <label for="author"
                                         class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"></label>
-                                    <select id="author" name="author_id"
+                                    <select id="author" name="author_id" required
                                         class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
                                         <option id="parent-option" selected value="">Yazar<sup> *</sup></option>
                                         @foreach ($authors as $author)
@@ -109,7 +109,7 @@
                                 <div class="publisher">
                                     <label for="publisher"
                                         class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"></label>
-                                    <select id="publisher" name="publisher_id"
+                                    <select id="publisher" name="publisher_id" required
                                         class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
                                         <option id="parent-option" selected value="">Yayınevi<sup> *</sup>
                                         </option>
@@ -153,7 +153,7 @@
                                     <label for="pages"
                                         class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Sayfa
                                         Sayısı</label>
-                                    <input type="number" id="pages" name="pages" required autocomplete="off"
+                                    <input type="number" id="pages" name="pages" autocomplete="off"
                                         class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
                                 </div>
 
@@ -161,7 +161,7 @@
                                     <label for="original-book-title"
                                         class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Orijinal
                                         Başlık</label>
-                                    <input type="text" id="original-book-title" name="original_title" required
+                                    <input type="text" id="original-book-title" name="original_title"
                                         autocomplete="off"
                                         class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
                                 </div>
@@ -169,7 +169,7 @@
                                 <div class="translator">
                                     <label for="translator"
                                         class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Çevirmen</label>
-                                    <input type="text" id="translator" name="original_title" required
+                                    <input type="text" id="translator" name="translator"
                                         autocomplete="off"
                                         class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
                                 </div>
@@ -183,7 +183,7 @@
                                 </div>
 
                                 <div>
-                                    <label class="block text-base font-medium text-gray-800">Fotoğraf Seçin</label>
+                                    <label class="block text-base font-medium text-gray-800">Kapak Fotoğrafı Seçin</label>
                                     <div
                                         class="mt-1 flex justify-center rounded-md border-2 border-dashed border-gray-300 px-6 pt-5 pb-6">
                                         <div class="space-y-1 text-center">

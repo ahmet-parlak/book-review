@@ -9,8 +9,17 @@ class BookCategory extends Model
 {
     use HasFactory;
 
+    public $timestamps = false;
+
+    protected $table = "book_category";
+
     protected $fillable = [
         'book_id',
-        'author_id'
+        'category_id'
     ];
+
+    public function category()
+    {
+        return $this->belongsTo(Category::class, 'category_id');
+    }
 }

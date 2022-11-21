@@ -27,10 +27,19 @@
                         Başlık
                     </th>
                     <th scope="col" class="py-3 px-6">
-                        Açıklama
+                        ISBN
                     </th>
                     <th scope="col" class="py-3 px-6">
-                        Durum
+                        Yayınevi
+                    </th>
+                    <th scope="col" class="py-3 px-6">
+                        Yayın Yılı
+                    </th>
+                    <th scope="col" class="py-3 px-6">
+                        Kategori
+                    </th>
+                    <th scope="col" class="py-3 px-6">
+                        Açıklama
                     </th>
                     <th scope="col" class="py-3 px-6">
                         İşlem
@@ -44,20 +53,32 @@
                         <th scope="row"
                             class="flex items-center py-4 px-6 text-gray-900 whitespace-nowrap dark:text-white">
                             <img class="w-10 h-10 rounded-full"
-                                src="https://ui-avatars.com/api/?name=B&color=7F9CF5&background=EBF4FF"
+                                @if ($book->book_photo) src="{{ asset('/') . $book->book_photo }}"
+                                @else
+                                src="{{ asset('/') . 'storage/books/default.png' }}" @endif
                                 alt="Jese image">
                             <div class="pl-3">
                                 <div class="text-base font-semibold">{{ $book->title }}</div>
-                                <div class="font-normal text-gray-500">Yazar</div>
+                                <div class="font-normal text-gray-500">{{ $book->bookAuthor->author->author_name }}
+                                </div>
                             </div>
                         </th>
                         <td class="py-4 px-6">
-                            Lorem ipsum dolor sit.
+                            {{ $book->isbn }}
+                        </td>
+                        <td class="py-4 px-6">
+                            {{ $book->publisher->publisher_name }}
                         </td>
                         <td class="py-4 px-6">
                             <div class="flex items-center">
-                                <div class="h-2.5 w-2.5 rounded-full bg-green-400 mr-2"></div> {{ $book->status }}
+                                {{-- <div class="h-2.5 w-2.5 rounded-full bg-green-400 mr-2"></div> --}} {{ $book->publication_year }}
                             </div>
+                        </td>
+                        <td class="py-4 px-6">
+                            {{ $book->bookCategory->category->category_name }}
+                        </td>
+                        <td class="py-4 px-6">
+                            {{ $book->description }}
                         </td>
                         <td class="py-4 px-6">
                             <a href="#"
