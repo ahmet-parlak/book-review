@@ -8,6 +8,7 @@ use App\Http\Requests\CategoryCreateRequest;
 use App\Http\Requests\CategoryUpdateRequest;
 use App\Models\Category;
 
+
 class CategoryController extends Controller
 {
     /**

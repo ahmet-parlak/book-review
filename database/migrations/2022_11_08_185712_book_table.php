@@ -19,13 +19,15 @@ return new class extends Migration
             $table->string('title');
             $table->string('original_title')->nullable();
             $table->string('translator')->nullable();
-            $table->unsignedBigInteger('publisher_id')->nullable();
-            $table->string('publication_year')->nullable();
+            $table->unsignedBigInteger('publisher_id');
+            $table->string('publication_year');
             $table->string('pages')->nullable();
             $table->longText('description')->nullable();
             $table->string('book_photo', 2048)->nullable();
-            $table->enum('status',['draft','active','passive'])->default('draft');
+            $table->enum('status', ['draft', 'active', 'passive'])->default('draft');
             $table->timestamps();
+
+            $table->foreign('publisher_id')->references('id')->on('publishers')->onDelete('cascade');
         });
     }
 

@@ -5,6 +5,9 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Book;
+use App\Models\Category;
+use App\Models\Publisher;
+use App\Models\Author;
 
 class BookController extends Controller
 {
@@ -26,7 +29,10 @@ class BookController extends Controller
      */
     public function create()
     {
-        return view("admin.book.create");
+        $categories = Category::whereParent_id(null)->with('childrenAll')->get();
+        $publishers = Publisher::get();
+        $authors = Author::get();
+        return view("admin.book.create", compact(['categories', 'publishers', 'authors']));
     }
 
     /**
