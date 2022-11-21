@@ -45,7 +45,7 @@
                             class="flex items-center py-4 px-6 text-gray-900 whitespace-nowrap dark:text-white">
                             <img class="w-10 h-10 rounded-full"
                                 @if ($author->author_photo) src="{{ asset('/') . $author->author_photo }}"
-                                 @else
+                             @else
                                 src="{{ asset('/') . 'storage/authors/default.png' }}" @endif
                                 alt="Jese image">
                             <div class="pl-3">

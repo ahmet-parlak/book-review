@@ -33,7 +33,7 @@
                         Yayınevi
                     </th>
                     <th scope="col" class="py-3 px-6">
-                        Yayın Yılı
+                        Y. Yılı
                     </th>
                     <th scope="col" class="py-3 px-6">
                         Kategori
@@ -52,7 +52,7 @@
                         class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
                         <th scope="row"
                             class="flex items-center py-4 px-6 text-gray-900 whitespace-nowrap dark:text-white">
-                            <img class="w-10 h-10 rounded-full"
+                            <img class="w-10 h-10"
                                 @if ($book->book_photo) src="{{ asset('/') . $book->book_photo }}"
                                 @else
                                 src="{{ asset('/') . 'storage/books/default.png' }}" @endif
@@ -66,8 +66,8 @@
                         <td class="py-4 px-6">
                             {{ $book->isbn }}
                         </td>
-                        <td class="py-4 px-6">
-                            {{ $book->publisher->publisher_name }}
+                        <td class="py-4 px-6" title="{{$book->publisher->publisher_name}}">
+                            {{ Str::limit($book->publisher->publisher_name, 20, '...') }}
                         </td>
                         <td class="py-4 px-6">
                             <div class="flex items-center">
@@ -78,7 +78,7 @@
                             {{ $book->bookCategory->category->category_name }}
                         </td>
                         <td class="py-4 px-6">
-                            {{ $book->description }}
+                            {{ Str::limit($book->description, 30, '...') }}
                         </td>
                         <td class="py-4 px-6">
                             <a href="#"
