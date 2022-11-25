@@ -1,5 +1,5 @@
 @foreach ($categories as $category)
-    <option value="{{ $category->id }}">
+    <option value="{{ $category->id }}" class="category-opt">
         {{ $category->category_name }}</option>
 
     @if ($category->childrenAll)

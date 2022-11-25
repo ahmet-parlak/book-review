@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Http\Requests\BookCreateRequest;
+use App\Http\Requests\BookUpdateRequest;
 use App\Models\Book;
 use App\Models\Category;
 use App\Models\Publisher;
@@ -50,7 +51,7 @@ class BookController extends Controller
     {
         //Book Photo Control
         if ($request->hasFile('book_photo')) {
-            $photoName = md5($request->author_name) . rand(0, 100) . '.' . $request->book_photo->extension();
+            $photoName = md5($request->title) . rand(0, 100) . '.' . $request->book_photo->extension();
             $photoPath = "storage/books/" . $photoName;
 
             //Photo Save
@@ -87,7 +88,12 @@ class BookController extends Controller
      */
     public function edit($id)
     {
-        //
+        $book = Book::whereId($id)->with('bookAuthor')->with('bookCategory')->first() ?? abort(404, 'Kitap Bulunamadı');
+        //return $book;
+        $categories = Category::whereParent_id(null)->with('childrenAll')->get();
+        $publishers = Publisher::get();
+        $authors = Author::get();
+        return view("admin.book.edit", compact(['book', 'categories', 'publishers', 'authors']));
     }
 
     /**
@@ -97,9 +103,43 @@ class BookController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(BookUpdateRequest $request, $id)
     {
-        //
+        //return $request;
+        $book = Book::find($id) ?? abort(404, 'Kitap Bulunamadı');
+
+        //Author Photo Control
+        $photoPath = $book->book_photo;
+
+        if ($request->hasFile('book_photo')) {
+
+            //Delete old photo from storage
+            if ($photoPath) {
+                File::delete($book->book_photo);
+                //Storage::delete(asset('/') . $author->book_photo);
+            }
+
+            $photoName = md5($request->title) . rand(0, 100) . '.' . $request->book_photo->extension();
+            $photoPath = "storage/books/" . $photoName;
+
+            //Photo Save
+            Image::make(request()->file('book_photo'))->save($photoPath);
+
+            //Replace value of book_photo in form with file path
+            $request->merge([
+                'book_photo' => $photoPath
+            ]);
+        }
+
+        /* Manipulate post values (photo path) */
+        $values = $request->except(['_method', '_token', 'author_id', 'category_id']);
+        $values['book_photo'] = $photoPath;
+
+        Book::whereId($id)->update($values);
+        BookAuthor::whereBookId($id)->update(['author_id'=>$request->author_id]);
+        BookCategory::whereBookId($id)->update(['category_id'=>$request->category_id]);
+        return redirect()->route('books.edit', $id)->withSuccess('Kitap bilgileri güncellendi.');
+
     }
 
     /**

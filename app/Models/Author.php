@@ -11,13 +11,11 @@ class Author extends Model
     use HasFactory;
     protected $fillable = [
         'author_name',
-        'birth_date',
+        'birth_year',
+        'death_year',
+        'country',
         'description',
+        'title',
         'author_photo'
     ];
-
-    public function getBirthDateAttribute($date)
-    {
-        return $date ? Carbon::parse($date)->format('d/m/Y') : null;
-    }
 }

@@ -65,19 +65,41 @@
                                 <!-- Inputs -->
                                 <div class="mt-1 flex rounded-md shadow-sm">
                                     <span
-                                        class="inline-flex items-center rounded-l-md border border-r-0 border-gray-300 bg-gray-50 px-3 text-sm text-gray-500">Yazar İsmi:</span>
-                                    <input type="text" name="author_name" id="author" autocomplete="off"
-                                        required value="{{ $author->author_name }}"
+                                        class="inline-flex items-center rounded-l-md border border-r-0 border-gray-300 bg-gray-50 px-3 text-sm text-gray-500">Yazar
+                                        İsmi:</span>
+                                    <input type="text" name="author_name" id="author" autocomplete="off" required
+                                        value="{{ $author->author_name }}"
                                         class="block w-full flex-1 rounded-none rounded-r-md border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
                                         placeholder="">
                                 </div>
 
+                                <div class="country">
+                                    <label for="country"
+                                        class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"></label>
+                                    <select id="country-select" name="country"
+                                        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                                        <option selected value="">Ülke / Milliyet</option>
+                                    </select>
+                                </div>
+
                                 <div class="mt-4 flex rounded-md shadow-sm">
                                     <span
-                                        class="inline-flex items-center rounded-l-md border border-r-0 border-gray-300 bg-gray-50 px-3 text-sm text-gray-500">Doğum Tarihi:</span>
-                                    <input type="date" name="birth_date" autocomplete="off"
+                                        class="inline-flex items-center rounded-l-md border border-r-0 border-gray-300 bg-gray-50 px-3 text-sm text-gray-500 b-year">Doğum
+                                        Yılı:</span>
+                                    <input type="number" name="birth_year" autocomplete="off" placeholder="YYYY"
+                                        max="{{ date('Y') }}"
                                         class="block w-full flex-1 rounded-none rounded-r-md border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
-                                        placeholder="https://example.com" value="{{ $author->birth_date }}">
+                                        value="{{ $author->birth_year }}">
+                                </div>
+
+                                <div class="mt-4 flex rounded-md shadow-sm">
+                                    <span
+                                        class="inline-flex items-center rounded-l-md border border-r-0 border-gray-300 bg-gray-50 px-3 text-sm text-gray-500 d-year">Ölüm
+                                        Yılı:</span>
+                                    <input type="number" name="death_year" autocomplete="off" placeholder="YYYY"
+                                        max="{{ date('Y') }}"
+                                        class="block w-full flex-1 rounded-none rounded-r-md border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+                                        value="{{ $author->death_year }}">
                                 </div>
 
                                 <div>
@@ -130,6 +152,21 @@
                                         </div>
                                     </div>
                                 </div>
+
+                                <div class="title">
+                                    <label for="title"
+                                        class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Unvan</label>
+                                    <select id="title-select" name="title"
+                                        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                                        @if ($author->title == 'translator')
+                                            <option value="author">Yazar</option>
+                                            <option value="translator" selected>Çevirmen</option>
+                                        @else
+                                            <option value="author" selected>Yazar</option>
+                                            <option value="translator">Çevirmen</option>
+                                        @endif
+                                    </select>
+                                </div>
                             </div>
                             <div class="bg-gray-50 px-4 py-3 text-center sm:px-6">
                                 <button id="save-btn" type="submit"
@@ -139,8 +176,7 @@
                         </div>
                     </form>
                     <div class="remove-author bg-gray-50 px-4 py-3 text-right sm:px-6 my-3 text-center">
-                        <form id="remove-form" action="{{ route('authors.destroy', $author->id) }}"
-                            method="POST">
+                        <form id="remove-form" action="{{ route('authors.destroy', $author->id) }}" method="POST">
                             @csrf
                             @method('DELETE')
                             <button id="remove-btn" type="submit"
@@ -156,13 +192,33 @@
     <x-slot name="script">
         <script>
             /* Remove Alert Attr */
-            alertTitle = "Dikkat"
-            alertMessage = "\'{{ $author->author_name }}\' adlı yazar kaldırılılacak. Bu işlem geri alınamaz!"
+            alertTitle = "Dikkat";
+            alertMessage = "\'{{ $author->author_name }}\' adlı yazar kaldırılılacak. Bu işlem geri alınamaz!";
+
 
             /* Doubleclick Prevent */
             const submitButton = document.querySelector("#save-btn"),
                 form = document.querySelector("#edit-form");
-                console.log(submitButton);
+            console.log(submitButton);
+
+
+            /* Country Select Box */
+            const countrySelectBox = document.querySelector("#country-select");
+            fetch("{{ asset('/') . 'assets/json/countries.json' }}")
+                .then((response) => response.json())
+                .then(function(json) {
+                    let i = 0;
+                    json.forEach(element => {
+                        const opt = document.createElement("option");
+                        opt.innerHTML = element.tr_short_name;
+                        opt.value = element.en_short_name;
+                        if (opt.value == "{{ $author->country }}") {
+                            opt.setAttribute("selected", "true");
+                        }
+                        countrySelectBox.appendChild(opt);
+
+                    });
+                });
         </script>
 
         <script src="{{ asset('/') }}assets/js/admin/admin.js"></script>

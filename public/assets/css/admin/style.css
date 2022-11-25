@@ -5,3 +5,7 @@ textarea{
 .btn-hover.bg-red-700:hover{
     background: #C81E1E;
 }
+
+span.b-year, span.d-year{
+    width: 6.7rem;
+}

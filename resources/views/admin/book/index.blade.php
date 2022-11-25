@@ -81,7 +81,7 @@
                             {{ Str::limit($book->description, 30, '...') }}
                         </td>
                         <td class="py-4 px-6">
-                            <a href="#"
+                            <a href="{{route('books.edit',$book->id)}}"
                                 class="font-medium text-blue-600 dark:text-blue-500 hover:underline">Düzenle</a>
                         </td>
                     </tr>

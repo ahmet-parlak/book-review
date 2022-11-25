@@ -1,12 +1,12 @@
 <x-app-layout>
     <x-slot name="title">
-        Kitap Ekle | Yönetim Paneli
+        Kitap Düzenle | Yönetim Paneli
     </x-slot>
     <x-slot name="headScripts">
 
     </x-slot>
     <x-slot name="header">
-        Kitap Ekle
+        Kitap Düzenle
     </x-slot>
     <x-slot name="breadcrumb">
         <!--Previous Pages-->
@@ -33,8 +33,9 @@
             <div class="md:grid md:grid-cols-8 md:gap-6 ">
                 <div class="mt-2  md:col-span-8 md:mt-0 ">
 
-                    <form id="book-form" action="{{ route('books.store') }}" method="POST"
+                    <form id="book-form" action="{{ route('books.update', $book->id) }}" method="POST"
                         enctype="multipart/form-data">
+                        @method('PUT')
                         @csrf
                         <div class="sm:overflow-hidden sm:rounded-md">
                             <div class="space-y-6 bg-white px-4 py-3 sm:p-6">
@@ -49,20 +50,22 @@
                                     </svg>
                                     <span class="sr-only">Info</span>
                                     <div>
-                                        Ekleyeceğiniz kitabın
-                                    <a class="text-yellow-600 hover:text-yellow-600 text-base"
-                                        href="{{ route('authors.create') }}" title="Yazar Ekle">Yazar</a>,
-                                    <a class="text-yellow-600 hover:text-yellow-600 text-base"
-                                        href="{{ route('publishers.create') }}" title="Yayınevi Ekle">Yayınevi</a> ve
-                                    <a class="text-yellow-600 hover:text-yellow-600 text-base"
-                                        href="{{ route('categories.create') }}" title="Kategori Ekle">Kategori</a>
-                                    bilgisi sisteme eklenmiş olmalıdr.
+                                        Düzenleyeceğiniz kitabın
+                                        <a class="text-yellow-600 hover:text-yellow-600 text-base"
+                                            href="{{ route('authors.create') }}" title="Yazar Ekle">Yazar</a>,
+                                        <a class="text-yellow-600 hover:text-yellow-600 text-base"
+                                            href="{{ route('publishers.create') }}" title="Yayınevi Ekle">Yayınevi</a>
+                                        ve
+                                        <a class="text-yellow-600 hover:text-yellow-600 text-base"
+                                            href="{{ route('categories.create') }}" title="Kategori Ekle">Kategori</a>
+                                        bilgisi sisteme eklenmiş olmalıdr.
                                     </div>
                                 </div>
                                 <p
                                     class="tracking-normal text-gray-600 md:text-lg dark:text-gray-400 mb-0 border-b-2 pl-2">
                                     Kitap
-                                    bilgilerini doldurup '<span class="text-indigo-700">Kitap Ekle</span>' butonuna
+                                    bilgilerini güncelleyip '<span class="text-indigo-700">Değişiklikleri Kaydet</span>'
+                                    butonuna
                                     basın</p>
 
                                 <!--Form Info# -->
@@ -81,7 +84,8 @@
                                 <div class="isbn">
                                     <label for="isbn"
                                         class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">ISBN<sup>*</sup></label>
-                                    <input type="text" id="isbn" name="isbn" required autocomplete="off" value="{{ old('isbn') }}"
+                                    <input type="text" id="isbn" name="isbn" required autocomplete="off"
+                                        value="{{ $book->isbn }}"
                                         class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
                                 </div>
 
@@ -89,18 +93,20 @@
                                     <label for="book-title"
                                         class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Kitap
                                         Başlığı<sup>*</sup></label>
-                                    <input type="text" id="book-title" name="title" required autocomplete="off" value="{{ old('title') }}"
+                                    <input type="text" id="book-title" name="title" required autocomplete="off"
+                                        value="{{ $book->title }}"
                                         class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
                                 </div>
 
                                 <div class="author">
                                     <label for="author"
-                                        class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"></label>
+                                        class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Yazar</label>
                                     <select id="author" name="author_id" required
                                         class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
-                                        <option id="parent-option" selected value="">Yazar<sup> *</sup></option>
                                         @foreach ($authors as $author)
-                                            <option value="{{ $author->id }}">{{ $author->author_name }}
+                                            <option value="{{ $author->id }}"
+                                                @if ($author->id == $book->bookAuthor->author->id) selected @endif>
+                                                {{ $author->author_name }}
                                             </option>
                                         @endforeach
                                     </select>
@@ -108,13 +114,15 @@
 
                                 <div class="publisher">
                                     <label for="publisher"
-                                        class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"></label>
+                                        class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Yayınevi</label>
                                     <select id="publisher" name="publisher_id" required
                                         class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
                                         <option id="parent-option" selected value="">Yayınevi<sup> *</sup>
                                         </option>
                                         @foreach ($publishers as $publisher)
-                                            <option value="{{ $publisher->id }}">{{ $publisher->publisher_name }}
+                                            <option value="{{ $publisher->id }}"
+                                                @if ($publisher->id == $book->publisher_id) selected @endif>
+                                                {{ $publisher->publisher_name }}
                                             </option>
                                         @endforeach
                                     </select>
@@ -125,19 +133,18 @@
                                         class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Yayın
                                         Yılı</label>
                                     <input type="number" id="publication_year" name="publication_year" required
-                                        autocomplete="off" value="{{ old('publication_year') }}"
+                                        autocomplete="off" value="{{ $book->publication_year }}"
                                         class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
                                 </div>
 
                                 <div class="parent-category">
                                     <label for="parent"
-                                        class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"></label>
+                                        class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Kategori</label>
                                     <select id="parent-select" name="category_id"
                                         class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
-                                        <option id="parent-option" selected value="">Kategori<sup> *</sup>
-                                        </option>
                                         @foreach ($categories as $category)
-                                            <option value="{{ $category->id }}">{{ $category->category_name }}
+                                            <option value="{{ $category->id }}" class="category-opt">
+                                                {{ $category->category_name }}
                                             </option>
                                             @if ($category->childrenAll)
                                                 @include('admin/category/components/create-category-option',
@@ -153,7 +160,8 @@
                                     <label for="pages"
                                         class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Sayfa
                                         Sayısı</label>
-                                    <input type="number" id="pages" name="pages" autocomplete="off" value="{{ old('pages') }}"
+                                    <input type="number" id="pages" name="pages" autocomplete="off"
+                                        value="{{ $book->pages }}"
                                         class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
                                 </div>
 
@@ -162,15 +170,15 @@
                                         class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Orijinal
                                         Başlık</label>
                                     <input type="text" id="original-book-title" name="original_title"
-                                        autocomplete="off" value="{{ old('original_title') }}"
+                                        autocomplete="off" value="{{ $book->original_title }}"
                                         class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
                                 </div>
 
                                 <div class="translator">
                                     <label for="translator"
                                         class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Çevirmen</label>
-                                    <input type="text" id="translator" name="translator" value="{{ old('translator') }}"
-                                        autocomplete="off"
+                                    <input type="text" id="translator" name="translator" autocomplete="off"
+                                        value="{{ $book->translator }}"
                                         class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
                                 </div>
 
@@ -178,12 +186,13 @@
                                     <div class="mt-2">
                                         <textarea id="description" name="description" rows="6"
                                             class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
-                                            placeholder="Açıklama">{{ old('description') }}</textarea>
+                                            placeholder="Açıklama">{{ $book->description }}</textarea>
                                     </div>
                                 </div>
 
                                 <div>
-                                    <label class="block text-base font-medium text-gray-800">Kapak Fotoğrafı Seçin</label>
+                                    <label class="block text-base font-medium text-gray-800">Kapak Fotoğrafı
+                                        Seçin</label>
                                     <div
                                         class="mt-1 flex justify-center rounded-md border-2 border-dashed border-gray-300 px-6 pt-5 pb-6">
                                         <div class="space-y-1 text-center">
@@ -193,14 +202,22 @@
                                                 <label for="file-upload"
                                                     class="relative cursor-pointer rounded-md bg-white font-medium text-indigo-600 focus-within:outline-none focus-within:ring-2 focus-within:ring-indigo-500 focus-within:ring-offset-2 hover:text-indigo-500">
                                                     <div class="photo-preview text-center">
-                                                        <svg class="mx-auto h-24 w-24 text-gray-400"
-                                                            stroke="currentColor" fill="none" viewBox="0 0 48 48"
-                                                            aria-hidden="true">
-                                                            <path
-                                                                d="M28 8H12a4 4 0 00-4 4v20m32-12v8m0 0v8a4 4 0 01-4 4H12a4 4 0 01-4-4v-4m32-4l-3.172-3.172a4 4 0 00-5.656 0L28 28M8 32l9.172-9.172a4 4 0 015.656 0L28 28m0 0l4 4m4-24h8m-4-4v8m-12 4h.02"
-                                                                stroke-width="2" stroke-linecap="round"
-                                                                stroke-linejoin="round" />
-                                                        </svg>
+                                                        @if ($book->book_photo)
+                                                            <img src="{{ asset('/') . $book->book_photo }}"
+                                                                alt="" width="120" height="120"
+                                                                srcset="">
+                                                        @else
+                                                            <svg class="mx-auto h-24 w-24 text-gray-400"
+                                                                stroke="currentColor" fill="none"
+                                                                viewBox="0 0 48 48" aria-hidden="true">
+                                                                <path
+                                                                    d="M28 8H12a4 4 0 00-4 4v20m32-12v8m0 0v8a4 4 0 01-4 4H12a4 4 0 01-4-4v-4m32-4l-3.172-3.172a4 4 0 00-5.656 0L28 28M8 32l9.172-9.172a4 4 0 015.656 0L28 28m0 0l4 4m4-24h8m-4-4v8m-12 4h.02"
+                                                                    stroke-width="2" stroke-linecap="round"
+                                                                    stroke-linejoin="round" />
+                                                            </svg>
+                                                        @endif
+
+
                                                     </div>
                                                     <p class="text-xs text-gray-500" id="photo-name">2MB'ye kadar
                                                         PNG, JPG </p>
@@ -219,8 +236,8 @@
 
                             <div class="bg-gray-50 px-4 py-3 text-center sm:px-6">
                                 <button id="submit-btn" type="submit"
-                                    class="inline-flex justify-center rounded-md border border-transparent bg-indigo-600 py-2 px-4 text-sm font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">Kitap
-                                    Ekle</button>
+                                    class="inline-flex justify-center rounded-md border border-transparent bg-indigo-600 py-2 px-4 text-sm font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">Değişiklikleri
+                                    Kaydet</button>
                             </div>
                         </div>
                     </form>
@@ -234,6 +251,10 @@
             /* Doubleclick Prevent */
             const submitButton = document.querySelector("#submit-btn"),
                 form = document.querySelector("#book-form");
+
+            //Select Book Current Category
+            const option = document.querySelector(".category-opt[value='{{ $book->bookCategory->category_id }}']");
+            option.setAttribute("selected", "true");
         </script>
 
 

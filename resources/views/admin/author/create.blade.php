@@ -33,7 +33,8 @@
             <div class="md:grid md:grid-cols-8 md:gap-6 ">
                 <div class="mt-5  md:col-span-8 md:mt-0 ">
 
-                    <form id="author-form" action="{{ route('authors.store') }}" method="POST" enctype="multipart/form-data">
+                    <form id="author-form" action="{{ route('authors.store') }}" method="POST"
+                        enctype="multipart/form-data">
                         @csrf
                         <div class="sm:overflow-hidden sm:rounded-md">
                             <div class="space-y-6 bg-white px-4 py-3 sm:p-6">
@@ -60,19 +61,42 @@
                                 <label for="author" class="block text-sm font-medium text-gray-700"></label>
                                 <div class="mt-1 flex rounded-md shadow-sm">
                                     <span
-                                        class="inline-flex items-center rounded-l-md border border-r-0 border-gray-300 bg-gray-50 px-3 text-sm text-gray-500"><sup>*</sup>Yazar İsmi:</span>
-                                    <input type="text" name="author_name" id="author" autocomplete="off"
-                                        required value="{{ old('author_name') }}"
+                                        class="inline-flex items-center rounded-l-md border border-r-0 border-gray-300 bg-gray-50 px-3 text-sm text-gray-500"><sup>*</sup>Yazar
+                                        İsmi:</span>
+                                    <input type="text" name="author_name" id="author" autocomplete="off" required
+                                        value="{{ old('author_name') }}"
                                         class="block w-full flex-1 rounded-none rounded-r-md border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
                                         placeholder="">
                                 </div>
 
+                                <div class="country">
+                                    <label for="country"
+                                        class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"></label>
+                                    <select id="country-select" name="country"
+                                        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                                        <option selected value="">Ülke / Milliyet</option>
+                                    </select>
+                                </div>
+
+
                                 <div class="mt-4 flex rounded-md shadow-sm">
                                     <span
-                                        class="inline-flex items-center rounded-l-md border border-r-0 border-gray-300 bg-gray-50 px-3 text-sm text-gray-500">Doğum Tarihi:</span>
-                                    <input type="date" name="birth_date" autocomplete="off"
+                                        class="inline-flex items-center rounded-l-md border border-r-0 border-gray-300 bg-gray-50 px-3 text-sm text-gray-500">Doğum
+                                        Yılı:</span>
+                                    <input type="number" name="birth_year" autocomplete="off" placeholder="YYYY"
+                                        max="{{ date('Y') }}"
                                         class="block w-full flex-1 rounded-none rounded-r-md border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
-                                        placeholder="https://example.com" value="{{ old('website') }}">
+                                        value="{{ old('birth_year') }}">
+                                </div>
+
+                                <div class="mt-4 flex rounded-md shadow-sm">
+                                    <span
+                                        class="inline-flex items-center rounded-l-md border border-r-0 border-gray-300 bg-gray-50 px-3 text-sm text-gray-500">Ölüm
+                                        Yılı:</span>
+                                    <input type="number" name="death_year" autocomplete="off" placeholder="YYYY"
+                                        max="{{ date('Y') }}"
+                                        class="block w-full flex-1 rounded-none rounded-r-md border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+                                        value="{{ old('death_year') }}">
                                 </div>
 
                                 <div>
@@ -132,6 +156,22 @@
             /* Doubleclick Prevent */
             const submitButton = document.querySelector("#submit-btn"),
                 form = document.querySelector("#author-form");
+
+
+            /* Country Select Box */
+            const countrySelectBox = document.querySelector("#country-select");
+            fetch("{{ asset('/') . 'assets/json/countries.json' }}")
+                .then((response) => response.json())
+                .then(function(json) {
+                    let i = 0;
+                    json.forEach(element => {
+                        const opt = document.createElement("option");
+                        opt.innerHTML = element.tr_short_name;
+                        opt.value = element.en_short_name;
+                        countrySelectBox.appendChild(opt);
+
+                    });
+                });
         </script>
 
 

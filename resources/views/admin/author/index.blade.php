@@ -27,10 +27,16 @@
                         Yazar
                     </th>
                     <th scope="col" class="py-3 px-6">
+                        Ülke
+                    </th>
+                    <th scope="col" class="py-3 px-6">
                         Açıklama
                     </th>
                     <th scope="col" class="py-3 px-6">
-                        Doğum Tarihi
+                        Doğum Yılı
+                    </th>
+                    <th scope="col" class="py-3 px-6">
+                        Ölüm Yılı
                     </th>
                     <th scope="col" class="py-3 px-6">
                         İşlem
@@ -54,13 +60,18 @@
                             </div>
                         </th>
                         <td class="py-4 px-6">
+                            {{ $author->country }}
+                        </td>
+                        <td class="py-4 px-6">
                             {{ Str::limit($author->description, 40, '...') }}
                         </td>
                         <td class="py-4 px-6">
-                            <div class="flex items-center">
-                                {{ $author->birth_date }}
-                            </div>
+                            {{ $author->birth_year }}
                         </td>
+                        <td class="py-4 px-6">
+                            {{ $author->death_year }}
+                        </td>
+
                         <td class="py-4 px-6">
                             <a href="{{ route('authors.edit', $author->id) }}"
                                 class="font-medium text-blue-600 dark:text-blue-500 hover:underline">Düzenle</a>

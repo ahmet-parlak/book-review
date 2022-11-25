@@ -25,8 +25,10 @@ class AuthorCreateRequest extends FormRequest
     {
         return [
             'author_name' => 'required|max:200|unique:App\Models\Author,author_name',
+            'country' => 'nullable|min:2|max:200',
             'description' => 'max:1000',
-            'birth_date' => 'date|nullable',
+            'birth_year' => 'nullable|numeric|min:1000|max:' . date("Y"),
+            'death_year' => 'nullable|numeric|min:1000|max:' . date("Y"),
             'author_photo' => 'nullable|image|max:1024|mimes:jpg,png,jpeg,svg',
         ];
     }
@@ -35,8 +37,10 @@ class AuthorCreateRequest extends FormRequest
     {
         return [
             'author_name' => 'Yazar İsmi',
+            'country' => 'Ülke',
             'description' => 'Açıklama',
-            'birth_date' => 'Doğum Tarihi',
+            'birth_year' => 'Doğum Yılı',
+            'death_year' => 'Ölüm Yılı',
             'author_photo' => 'Yazar Fotoğrafı',
         ];
     }

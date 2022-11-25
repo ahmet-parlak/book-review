@@ -28,11 +28,11 @@ class Book extends Model
 
     public function bookAuthor()
     {
-        return $this->belongsTo(BookAuthor::class, 'id', 'book_id');
+        return $this->belongsTo(BookAuthor::class, 'id', 'book_id')->with('author');
     }
 
     public function bookCategory()
     {
-        return $this->belongsTo(BookCategory::class, 'id', 'book_id');
+        return $this->belongsTo(BookCategory::class, 'id', 'book_id')->with('category');
     }
 }

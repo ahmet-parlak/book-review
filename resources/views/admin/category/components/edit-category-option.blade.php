@@ -1,6 +1,6 @@
 @foreach ($categories as $category)
     @if ($category->id != $currentCategory)
-        <option value="{{ $category->id }}" @if ($parentCategory == $category->id) selected @endif>
+        <option class="category-opt" value="{{ $category->id }}" @if ($parentCategory == $category->id) selected @endif>
             {{ $category->category_name }}</option>
     @endif
 

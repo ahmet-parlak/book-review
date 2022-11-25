@@ -23,7 +23,7 @@ return new class extends Migration
             //$table->foreignId('current_team_id')->nullable();
             $table->string('profile_photo_path', 2048)->nullable();
             $table->longText('about')->nullable();
-            $table->enum('type',['user', 'writer', 'reviewer', 'admin'])->default('user');
+            $table->enum('type',['user', 'author', 'reviewer', 'admin'])->default('user');
             $table->enum('status',['active', 'passive'])->default('active');
             $table->timestamps();
         });
