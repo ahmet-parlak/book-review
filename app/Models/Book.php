@@ -34,5 +34,8 @@ class Book extends Model
     public function bookCategory()
     {
         return $this->belongsTo(BookCategory::class, 'id', 'book_id')->with('category');
+        
+        /* Get All Categories */
+        //return $this->hasMany(BookCategory::class, 'book_id', 'id')->with('category');
     }
 }
