@@ -203,9 +203,8 @@
                                                     class="relative cursor-pointer rounded-md bg-white font-medium text-indigo-600 focus-within:outline-none focus-within:ring-2 focus-within:ring-indigo-500 focus-within:ring-offset-2 hover:text-indigo-500">
                                                     <div class="photo-preview text-center">
                                                         @if ($book->book_photo)
-                                                            <img src="{{ asset('/') . $book->book_photo }}"
-                                                                alt="" width="120" height="120"
-                                                                srcset="">
+                                                            <img src="{{ $book->book_photo }}" alt=""
+                                                                width="120" height="120" srcset="">
                                                         @else
                                                             <svg class="mx-auto h-24 w-24 text-gray-400"
                                                                 stroke="currentColor" fill="none"

@@ -24,9 +24,9 @@ return new class extends Migration
             $table->string('pages')->nullable();
             $table->longText('description')->nullable();
             $table->string('book_photo', 2048)->nullable();
+            $table->string('language')->default('tr');
             $table->enum('status', ['draft', 'active', 'passive'])->default('draft');
             $table->timestamps();
-
             $table->foreign('publisher_id')->references('id')->on('publishers')->onDelete('cascade');
         });
     }

@@ -15,4 +15,10 @@ class Publisher extends Model
         'description',
         'publisher_photo'
     ];
+
+
+    public function bookCount()
+    {
+        return $this->hasMany(Book::class, 'publisher_id')->count();
+    }
 }

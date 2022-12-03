@@ -14,6 +14,7 @@ use App\Models\BookAuthor;
 use App\Models\BookCategory;
 use Intervention\Image\Facades\Image;
 use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\Storage;
 
 class BookController extends Controller
 {
@@ -24,7 +25,7 @@ class BookController extends Controller
      */
     public function index()
     {
-        $books = Book::paginate(5);
+        $books = Book::orderBy('updated_at', 'DESC')->paginate(10);
         return view('admin.book.index', compact('books'));
     }
 
@@ -37,7 +38,7 @@ class BookController extends Controller
     {
         $categories = Category::whereParent_id(null)->with('childrenAll')->get();
         $publishers = Publisher::get();
-        $authors = Author::get();
+        $authors = Author::orderBy('updated_at', 'DESC')->limit(100)->get();
         return view("admin.book.create", compact(['categories', 'publishers', 'authors']));
     }
 
@@ -59,7 +60,7 @@ class BookController extends Controller
 
             //Replace value of book_photo in form with file path
             $request->merge([
-                'book_photo' => $photoPath
+                'book_photo' => asset('/').$photoPath
             ]);
         }
 
@@ -115,8 +116,8 @@ class BookController extends Controller
 
             //Delete old photo from storage
             if ($photoPath) {
-                File::delete($book->book_photo);
-                //Storage::delete(asset('/') . $author->book_photo);
+                File::delete(explode(asset('/'),$book->book_photo));
+                
             }
 
             $photoName = md5($request->title) . rand(0, 100) . '.' . $request->book_photo->extension();
@@ -127,13 +128,13 @@ class BookController extends Controller
 
             //Replace value of book_photo in form with file path
             $request->merge([
-                'book_photo' => $photoPath
+                'book_photo' => asset('/').$photoPath
             ]);
         }
 
         /* Manipulate post values (photo path) */
         $values = $request->except(['_method', '_token', 'author_id', 'category_id']);
-        $values['book_photo'] = $photoPath;
+        $values['book_photo'] = asset('/').$photoPath;
 
         Book::whereId($id)->update($values);
         BookAuthor::whereBookId($id)->update(['author_id'=>$request->author_id]);

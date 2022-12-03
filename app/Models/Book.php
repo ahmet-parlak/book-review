@@ -18,7 +18,8 @@ class Book extends Model
         'original_title',
         'translator',
         'description',
-        'book_photo'
+        'book_photo',
+        'language'
     ];
 
     public function publisher()

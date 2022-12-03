@@ -38,6 +38,9 @@
                         Açıklama
                     </th>
                     <th scope="col" class="py-3 px-6">
+                        Kitap Sayısı
+                    </th>
+                    <th scope="col" class="py-3 px-6">
                         İşlem
                     </th>
                 </tr>
@@ -63,6 +66,9 @@
                         </td>
                         <td class="py-4 px-6">
                             <p class="m-0">{{ Str::limit($publisher->description, 40, '...') }}</p>
+                        </td>
+                        <td class="py-4 px-6">
+                            <p class="m-0">{{ $publisher->bookCount() }}</p>
                         </td>
                         <td class="py-4 px-6">
                             <a href="{{ route('publishers.edit', $publisher->id) }}"

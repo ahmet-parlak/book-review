@@ -20,7 +20,7 @@ class CategoryController extends Controller
     {
         //return Category::whereParent_id(null)->with('childrenAll')->get();
 
-        $categories = Category::whereParent_id(null)->with('childrenAll')->paginate(5);
+        $categories = Category::whereParent_id(null)->with('childrenAll')->paginate(10);
         //return $categories;
         return view('admin.category.index', compact('categories'));
     }

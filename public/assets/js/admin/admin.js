@@ -47,7 +47,7 @@ if (file) {
 /* #################### */
 
 
-/* Remove Warning */
+/* Remove Item Warning */
 
 const removeBtn = document.getElementById("remove-btn"),
     removeForm = document.getElementById("remove-form");

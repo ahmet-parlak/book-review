@@ -50,13 +50,14 @@
                                     <span class="sr-only">Info</span>
                                     <div>
                                         Ekleyeceğiniz kitabın
-                                    <a class="text-yellow-600 hover:text-yellow-600 text-base"
-                                        href="{{ route('authors.create') }}" title="Yazar Ekle">Yazar</a>,
-                                    <a class="text-yellow-600 hover:text-yellow-600 text-base"
-                                        href="{{ route('publishers.create') }}" title="Yayınevi Ekle">Yayınevi</a> ve
-                                    <a class="text-yellow-600 hover:text-yellow-600 text-base"
-                                        href="{{ route('categories.create') }}" title="Kategori Ekle">Kategori</a>
-                                    bilgisi sisteme eklenmiş olmalıdr.
+                                        <a class="text-yellow-600 hover:text-yellow-600 text-base"
+                                            href="{{ route('authors.create') }}" title="Yazar Ekle">Yazar</a>,
+                                        <a class="text-yellow-600 hover:text-yellow-600 text-base"
+                                            href="{{ route('publishers.create') }}" title="Yayınevi Ekle">Yayınevi</a>
+                                        ve
+                                        <a class="text-yellow-600 hover:text-yellow-600 text-base"
+                                            href="{{ route('categories.create') }}" title="Kategori Ekle">Kategori</a>
+                                        bilgisi sisteme eklenmiş olmalıdr.
                                     </div>
                                 </div>
                                 <p
@@ -81,7 +82,8 @@
                                 <div class="isbn">
                                     <label for="isbn"
                                         class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">ISBN<sup>*</sup></label>
-                                    <input type="text" id="isbn" name="isbn" required autocomplete="off" value="{{ old('isbn') }}"
+                                    <input type="text" id="isbn" name="isbn" required autocomplete="off"
+                                        value="{{ old('isbn') }}"
                                         class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
                                 </div>
 
@@ -89,21 +91,32 @@
                                     <label for="book-title"
                                         class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Kitap
                                         Başlığı<sup>*</sup></label>
-                                    <input type="text" id="book-title" name="title" required autocomplete="off" value="{{ old('title') }}"
+                                    <input type="text" id="book-title" name="title" required autocomplete="off"
+                                        value="{{ old('title') }}"
                                         class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
                                 </div>
 
                                 <div class="author">
                                     <label for="author"
-                                        class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"></label>
-                                    <select id="author" name="author_id" required
+                                        class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Yazar*</label>
+                                    {{-- <select id="author" name="author_id" required
                                         class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
                                         <option id="parent-option" selected value="">Yazar<sup> *</sup></option>
                                         @foreach ($authors as $author)
                                             <option value="{{ $author->id }}">{{ $author->author_name }}
                                             </option>
                                         @endforeach
-                                    </select>
+                                    </select> --}}
+
+                                    <input id="author"
+                                        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                                        type="text" list="authors" name="author_id" />
+                                    <datalist id="authors">
+                                        @foreach ($authors as $author)
+                                            <option value="{{ $author->id }}">
+                                                {{ $author->author_name }}</option>
+                                        @endforeach
+                                    </datalist>
                                 </div>
 
                                 <div class="publisher">
@@ -153,7 +166,8 @@
                                     <label for="pages"
                                         class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Sayfa
                                         Sayısı</label>
-                                    <input type="number" id="pages" name="pages" autocomplete="off" value="{{ old('pages') }}"
+                                    <input type="number" id="pages" name="pages" autocomplete="off"
+                                        value="{{ old('pages') }}"
                                         class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
                                 </div>
 
@@ -169,8 +183,8 @@
                                 <div class="translator">
                                     <label for="translator"
                                         class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Çevirmen</label>
-                                    <input type="text" id="translator" name="translator" value="{{ old('translator') }}"
-                                        autocomplete="off"
+                                    <input type="text" id="translator" name="translator"
+                                        value="{{ old('translator') }}" autocomplete="off"
                                         class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
                                 </div>
 
@@ -183,7 +197,8 @@
                                 </div>
 
                                 <div>
-                                    <label class="block text-base font-medium text-gray-800">Kapak Fotoğrafı Seçin</label>
+                                    <label class="block text-base font-medium text-gray-800">Kapak Fotoğrafı
+                                        Seçin</label>
                                     <div
                                         class="mt-1 flex justify-center rounded-md border-2 border-dashed border-gray-300 px-6 pt-5 pb-6">
                                         <div class="space-y-1 text-center">

@@ -33,13 +33,16 @@
                         Yayınevi
                     </th>
                     <th scope="col" class="py-3 px-6">
-                        Y. Yılı
+                        <span title="Yayın Yılı">Yayın Y.</span>
                     </th>
                     <th scope="col" class="py-3 px-6">
                         Kategori
                     </th>
-                    <th scope="col" class="py-3 px-6">
+                    {{--                     <th scope="col" class="py-3 px-6">
                         Açıklama
+                    </th> --}}
+                    <th scope="col" class="py-3 px-6">
+                        <span title="Güncelleme Tarihi">Gün. Tar.</span>
                     </th>
                     <th scope="col" class="py-3 px-6">
                         İşlem
@@ -53,20 +56,23 @@
                         <th scope="row"
                             class="flex items-center py-4 px-6 text-gray-900 whitespace-nowrap dark:text-white">
                             <img class="w-10 h-10"
-                                @if ($book->book_photo) src="{{ asset('/') . $book->book_photo }}"
-                                @else
-                                src="{{ asset('/') . 'storage/books/default.png' }}" @endif
-                                alt="Jese image">
+                                @if ($book->book_photo) src="{{ $book->book_photo }}" 
+                            @else src="{{ asset('/') . 'storage/books/default.png' }}" @endif
+                                alt="{{ $book->title }}-img">
                             <div class="pl-3">
-                                <div class="text-base font-semibold">{{ $book->title }}</div>
-                                <div class="font-normal text-gray-500">{{ $book->bookAuthor->author->author_name }}
+                                <div class="text-base font-semibold" title="{{ $book->title }}">
+                                    {{ Str::limit($book->title, 20, '...') }}</div>
+                                <div class="font-normal text-gray-500">
+                                    @isset($book->bookAuthor)
+                                        {{ $book->bookAuthor->author->author_name }}
+                                    @endisset
                                 </div>
                             </div>
                         </th>
                         <td class="py-4 px-6">
                             {{ $book->isbn }}
                         </td>
-                        <td class="py-4 px-6" title="{{$book->publisher->publisher_name}}">
+                        <td class="py-4 px-6" title="{{ $book->publisher->publisher_name }}">
                             {{ Str::limit($book->publisher->publisher_name, 20, '...') }}
                         </td>
                         <td class="py-4 px-6">
@@ -74,14 +80,24 @@
                                 {{-- <div class="h-2.5 w-2.5 rounded-full bg-green-400 mr-2"></div> --}} {{ $book->publication_year }}
                             </div>
                         </td>
-                        <td class="py-4 px-6">
-                            {{ $book->bookCategory->category->category_name }}
-                        </td>
-                        <td class="py-4 px-6">
+                        @isset($book->bookCategory->category->category_name)
+                            <td class="py-4 px-6" title="{{ $book->bookCategory->category->category_name }}">
+                                {{ Str::limit($book->bookCategory->category->category_name, 10, '...') }}
+                            </td>
+                        @else
+                            <td class="py-4 px-6" title="">
+                                -
+                            </td>
+                        @endisset
+
+                        {{-- <td class="py-4 px-6">
                             {{ Str::limit($book->description, 30, '...') }}
+                        </td> --}}
+                        <td class="py-4 px-6" title="{{ explode(' ', $book->updated_at)[1] }}">
+                            {{ explode(' ', $book->updated_at)[0] }}
                         </td>
                         <td class="py-4 px-6">
-                            <a href="{{route('books.edit',$book->id)}}"
+                            <a href="{{ route('books.edit', $book->id) }}"
                                 class="font-medium text-blue-600 dark:text-blue-500 hover:underline">Düzenle</a>
                         </td>
                     </tr>

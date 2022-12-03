@@ -19,7 +19,7 @@ class AuthorController extends Controller
      */
     public function index()
     {
-        $authors = Author::paginate(5);
+        $authors = Author::orderBy('updated_at','desc')->paginate(10);
         return view('admin.author.index', compact('authors'));
     }
 

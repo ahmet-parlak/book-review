@@ -9,6 +9,12 @@
     </x-slot>
 
     <div class="m-5">
+        <div class="p-4 mb-4 font-bold tracking-wide text-center text-base text-gray-700 bg-gray-100 rounded-lg dark:bg-gray-200 dark:text-blue-800 [word-spacing:0.25em]"
+            role="alert">
+            Sistemde <span class="text-indigo-600">{{ $publishers }}</span> <span class="italic ">yayınevi</span> ve
+            <span class="text-indigo-600">{{ $authors }}</span> <span class="italic ">yazara</span> ait <span
+                class="text-indigo-600">{{ $books }}</span> <span class="italic ">kitap</span> bulunuyor.
+        </div>
 
         <div class="row offset-1">
             <!--Kitaplar-->
