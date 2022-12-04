@@ -7,6 +7,8 @@ use App\Http\Requests\AuthorCreateRequest;
 use App\Http\Requests\AuthorUpdateRequest;
 use Illuminate\Http\Request;
 use App\Models\Author;
+use App\Models\Book;
+use App\Models\BookAuthor;
 use Intervention\Image\Facades\Image;
 use Illuminate\Support\Facades\File;
 
@@ -133,8 +135,16 @@ class AuthorController extends Controller
      */
     public function destroy($id)
     {
-        $publisher = Author::find($id) ?? abort(404, 'Yazar Bulunamadı');
-        $publisher->delete();
+        $author = Author::find($id) ?? abort(404, 'Yazar Bulunamadı');
+        $books = BookAuthor::whereAuthorId($id)->get();
+        foreach ($books as $book) {
+            
+            if(BookAuthor::whereBookId($book->book_id)->count() <= 1){
+                Book::find($book->book_id)->delete();
+            }
+        }
+       
+        $author->delete();
         return redirect()->route('authors.index')->withSuccess('Yazar kaldırıldı.');
     }
 }

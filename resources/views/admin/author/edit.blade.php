@@ -193,7 +193,7 @@
         <script>
             /* Remove Alert Attr */
             alertTitle = "Dikkat";
-            alertMessage = "\'{{ $author->author_name }}\' adlı yazar kaldırılılacak. Bu işlem geri alınamaz!";
+            alertMessage = "\'{{ $author->author_name }}\' adlı yazar ve yalnızca bu yazara ait olan kitaplar kaldırılılacak. Bu işlem geri alınamaz!";
 
 
             /* Doubleclick Prevent */

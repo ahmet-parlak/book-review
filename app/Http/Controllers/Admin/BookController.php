@@ -36,9 +36,9 @@ class BookController extends Controller
      */
     public function create()
     {
-        $categories = Category::whereParent_id(null)->with('childrenAll')->get();
+        $categories = Category::whereParent_id(null)->with('childrenAll')->limit(20)->get();
         $publishers = Publisher::get();
-        $authors = Author::orderBy('updated_at', 'DESC')->limit(100)->get();
+        $authors = Author::orderBy('updated_at', 'DESC')->limit(10)->get();
         return view("admin.book.create", compact(['categories', 'publishers', 'authors']));
     }
 
@@ -60,7 +60,7 @@ class BookController extends Controller
 
             //Replace value of book_photo in form with file path
             $request->merge([
-                'book_photo' => asset('/').$photoPath
+                'book_photo' => asset('/') . $photoPath
             ]);
         }
 
@@ -90,11 +90,10 @@ class BookController extends Controller
     public function edit($id)
     {
         $book = Book::whereId($id)->with('bookAuthor')->with('bookCategory')->first() ?? abort(404, 'Kitap Bulunamadı');
-        //return $book;
-        $categories = Category::whereParent_id(null)->with('childrenAll')->get();
+        $categories = Category::whereParent_id(null)->with('childrenAll')->limit(20)->get();
         $publishers = Publisher::get();
-        $authors = Author::get();
-        return view("admin.book.edit", compact(['book', 'categories', 'publishers', 'authors']));
+        //$authors = Author::orderBy('updated_at', 'DESC')->limit(10)->get();
+        return view("admin.book.edit", compact(['book', 'categories', 'publishers']));
     }
 
     /**
@@ -109,15 +108,18 @@ class BookController extends Controller
         //return $request;
         $book = Book::find($id) ?? abort(404, 'Kitap Bulunamadı');
 
+        //Book Values
+        $values = $request->except(['_method', '_token', 'author_id', 'category_id']);
+
         //Author Photo Control
         $photoPath = $book->book_photo;
+
 
         if ($request->hasFile('book_photo')) {
 
             //Delete old photo from storage
             if ($photoPath) {
-                File::delete(explode(asset('/'),$book->book_photo));
-                
+                File::delete(explode(asset('/'), $book->book_photo));
             }
 
             $photoName = md5($request->title) . rand(0, 100) . '.' . $request->book_photo->extension();
@@ -127,20 +129,19 @@ class BookController extends Controller
             Image::make(request()->file('book_photo'))->save($photoPath);
 
             //Replace value of book_photo in form with file path
-            $request->merge([
-                'book_photo' => asset('/').$photoPath
-            ]);
+            /* $request->merge([
+                'book_photo' => asset('/') . $photoPath
+            ]); */
+            $values['book_photo'] = asset('/') . $photoPath;
         }
 
         /* Manipulate post values (photo path) */
-        $values = $request->except(['_method', '_token', 'author_id', 'category_id']);
-        $values['book_photo'] = asset('/').$photoPath;
+
 
         Book::whereId($id)->update($values);
-        BookAuthor::whereBookId($id)->update(['author_id'=>$request->author_id]);
-        BookCategory::whereBookId($id)->update(['category_id'=>$request->category_id]);
+        BookAuthor::whereBookId($id)->update(['author_id' => $request->author_id]);
+        BookCategory::whereBookId($id)->update(['category_id' => $request->category_id]);
         return redirect()->route('books.edit', $id)->withSuccess('Kitap bilgileri güncellendi.');
-
     }
 
     /**
@@ -151,6 +152,23 @@ class BookController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $book = Book::find($id) ?? abort(404, 'Kitap Bulunamadı');
+        $book->delete();
+        return redirect()->route('books.index')->withSuccess('Kitap kaldırıldı.');
+    }
+
+
+
+
+    public function fetchAuthors(Request $request)
+    {
+        $input = json_decode(array_keys($request->all())[0]);
+        $authors = Author::where('author_name', 'LIKE', '%' . $input->author . '%')->limit(5)->get();
+        $data = [];
+        foreach ($authors as $author) {
+            array_push($data, ["value" => $author->id, "author" => $author->author_name]);
+        }
+        return response()->json($data, 200);
+        //return response()->json(["state" => "succ"], 200);
     }
 }

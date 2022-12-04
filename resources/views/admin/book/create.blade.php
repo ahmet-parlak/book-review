@@ -99,22 +99,13 @@
                                 <div class="author">
                                     <label for="author"
                                         class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Yazar*</label>
-                                    {{-- <select id="author" name="author_id" required
-                                        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
-                                        <option id="parent-option" selected value="">Yazar<sup> *</sup></option>
-                                        @foreach ($authors as $author)
-                                            <option value="{{ $author->id }}">{{ $author->author_name }}
-                                            </option>
-                                        @endforeach
-                                    </select> --}}
-
-                                    <input id="author"
+                                    <input id="authorHidden" type="hidden" name="author_id" value="{{ old('author_id') }}">
+                                    <input id="author" value="" autocomplete="off"
                                         class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                                        type="text" list="authors" name="author_id" />
+                                        type="text" list="authors"/>
                                     <datalist id="authors">
                                         @foreach ($authors as $author)
-                                            <option value="{{ $author->id }}">
-                                                {{ $author->author_name }}</option>
+                                            <option value="{{ $author->author_name }}" authorValue="{{ $author->id }}"></option>
                                         @endforeach
                                     </datalist>
                                 </div>
@@ -248,7 +239,9 @@
         <script>
             /* Doubleclick Prevent */
             const submitButton = document.querySelector("#submit-btn"),
-                form = document.querySelector("#book-form");
+                form = document.querySelector("#book-form"),
+                fetchAuthorsAction = "{{ route('books.fetchauhors') }}",
+                token = "{{ csrf_token() }}";
         </script>
 
 

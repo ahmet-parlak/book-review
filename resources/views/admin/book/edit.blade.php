@@ -100,16 +100,15 @@
 
                                 <div class="author">
                                     <label for="author"
-                                        class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Yazar</label>
-                                    <select id="author" name="author_id" required
-                                        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
-                                        @foreach ($authors as $author)
-                                            <option value="{{ $author->id }}"
-                                                @if ($author->id == $book->bookAuthor->author->id) selected @endif>
-                                                {{ $author->author_name }}
-                                            </option>
-                                        @endforeach
-                                    </select>
+                                        class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Yazar*</label>
+                                    <input id="authorHidden" type="hidden" name="author_id" value="{{ $book->bookAuthor->author->id }}">
+                                    <input id="author" value="{{ $book->bookAuthor->author->author_name }}"
+                                        autocomplete="off"
+                                        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                                        type="text" list="authors" />
+                                    <datalist id="authors">
+
+                                    </datalist>
                                 </div>
 
                                 <div class="publisher">
@@ -240,6 +239,17 @@
                             </div>
                         </div>
                     </form>
+                    
+                    {{-- Remove Book --}}
+                    <div class="remove-author bg-gray-50 px-4 py-3 text-right sm:px-6 my-3 text-center">
+                        <form id="remove-form" action="{{ route('books.destroy', $book->id) }}" method="POST">
+                            @csrf
+                            @method('DELETE')
+                            <button id="remove-btn" type="submit"
+                                class="inline-flex justify-center rounded-md border border-transparent bg-red-600 py-2 px-4 text-sm font-medium text-white shadow-sm btn-hover hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">Kitabı
+                                Kaldır</button>
+                        </form>
+                    </div>
                 </div>
             </div>
         </div>
@@ -247,9 +257,15 @@
 
     <x-slot name="script">
         <script>
+            /* Remove Alert Attr */
+            alertTitle = "Dikkat";
+            alertMessage = "\'{{ $book->title }}\' adlı kitap sistemden kaldırılılacak. Bu işlem geri alınamaz!";
+
             /* Doubleclick Prevent */
             const submitButton = document.querySelector("#submit-btn"),
-                form = document.querySelector("#book-form");
+                form = document.querySelector("#book-form"),
+                fetchAuthorsAction = "{{ route('books.fetchauhors') }}",
+                token = "{{ csrf_token() }}";
 
             //Select Book Current Category
             const option = document.querySelector(".category-opt[value='{{ $book->bookCategory->category_id }}']");

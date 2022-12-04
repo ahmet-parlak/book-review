@@ -1,8 +1,5 @@
-
-/* Double Submit Prevent */
-
-//set form and submitButton on  view page
-
+/*****  Double Submit Prevent *****/
+//set form and submitButton vars on view page
 if (form) {
     form.addEventListener('submit', function () {
         submitButton.addEventListener('click', function () {
@@ -15,7 +12,8 @@ if (form) {
 }
 
 
-/* Image Preview */
+
+/*****  Image Preview *****/
 const file = document.getElementById('file-upload'),
     photoPrev = document.querySelector('.photo-preview');
 if (file) {
@@ -44,10 +42,10 @@ if (file) {
         })
     })
 }
-/* #################### */
 
 
-/* Remove Item Warning */
+
+/***** Remove Item Warning *****/
 
 const removeBtn = document.getElementById("remove-btn"),
     removeForm = document.getElementById("remove-form");
@@ -81,4 +79,54 @@ if (removeForm) {
         })
     })
 }
-/* #################### */
+
+
+
+/***** Fetch Authors for Create Book *****/
+const authorInput = document.querySelector("input[id='author']"),
+    authorInputHidden = document.querySelector("input[id='authorHidden']"),
+    dataList = document.querySelector("datalist[id='authors']");
+
+if (dataList && authorInput) {
+    authorInput.addEventListener("input", fetchAuthors);
+    authorInput.addEventListener("change", setValue);
+
+
+    function fetchAuthors(e) {
+        if (authorInput.value.length >= 3) {
+
+            const data = { author: authorInput.value };
+
+            request(JSON.stringify(data), fetchAuthorsAction, function () {
+
+                dataList.innerHTML = "";
+
+                JSON.parse(this.responseText).forEach(element => {
+
+                    const option = document.createElement("option");
+                    option.value = element.author;
+                    option.setAttribute("authorValue", element.value);
+                    dataList.appendChild(option);
+                });
+            })
+        }
+    }
+
+    function setValue() {
+        //const selectedOption = document.querySelector("option[value='" + authorInput.value + "']");
+        const selectedOption = document.querySelector(`option[value='${authorInput.value}']`);
+        authorInputHidden.value = selectedOption.getAttribute("authorvalue");
+    }
+
+}
+
+
+/* AJAX */
+function request(data, aciton, onloadFunction) {
+    const xmlhttp = new XMLHttpRequest();
+    xmlhttp.onload = onloadFunction;
+    xmlhttp.open("POST", aciton);
+    xmlhttp.setRequestHeader("X-CSRF-TOKEN", token);
+    xmlhttp.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+    xmlhttp.send(data);
+}
