@@ -26,7 +26,7 @@
                         </div>
                         <input type="search" id="default-search"
                             class="block w-100 px-5 py-3 pl-10 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                            placeholder="Ara..." minlength="3" autocomplete="off" name="search">
+                            placeholder="Ara..." minlength="3" required autocomplete="off" name="search">
                         <button type="submit"
                             class=" hidden text-white absolute right-6 bottom-4 bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Ara</button>
                     </div>
@@ -35,13 +35,13 @@
             <div class="col-2 text-center">
                 @if (request()->has('search'))
                     <a href="{{ route('authors.index') }}"
-                        class="d-inline font-semibold underline hover:text-gray-800 dark:hover:text-white">Aramayı
+                        class="text-white bg-yellow-500 hover:bg-yellow-600 focus:ring-4 focus:ring-blue-300 font-semibold rounded-lg text-sm px-3 py-2 mr-2 mb-2 dark:bg-yellow-600 dark:hover:bg-yellow-700 focus:outline-none dark:focus:ring-blue-800">Aramayı
                         Temizle</a>
                 @endif
             </div>
             <div class="col-2 mt-2 text-center">
                 <a href="{{ route('authors.create') }}" type="button"
-                    class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-3 py-2 mr-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800"><i
+                    class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-semibold rounded-lg text-sm px-3 py-2 mr-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800"><i
                         class="fa-solid fa-plus pl-0 mr-2"></i>Yazar
                     Ekle</a>
             </div>
@@ -106,6 +106,7 @@
                 @endforeach
             </tbody>
         </table>
+        {{-- Search Info --}}
         @if ($authors->total() == 0)
             <div class="flex m-4 p-4 text-base text-gray-700 bg-gray-100 rounded-lg dark:bg-gray-700 dark:text-gray-300"
                 role="alert">
@@ -121,6 +122,8 @@
                 </div>
             </div>
         @endif
+
+        {{-- Pagination --}}
         <div class="p-3">
             {{ $authors->links() }}
         </div>

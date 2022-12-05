@@ -18,8 +18,14 @@ class PublisherController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
-    {
+    public function index(Request $request)
+    {   
+
+        if ($request->has('search') && $request->input("search") != "") {
+            $publishers = Publisher::where("publisher_name", "LIKE", "%" . $request->input("search") . "%")->orderBy('updated_at', 'desc')->paginate(10)->withQueryString();
+            return view('admin.publisher.index', compact('publishers'));
+        }
+
         $publishers = Publisher::orderBy('updated_at', 'DESC')->paginate(10);
         return view('admin.publisher.index', compact('publishers'));
     }
