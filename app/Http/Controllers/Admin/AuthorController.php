@@ -19,9 +19,15 @@ class AuthorController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        $authors = Author::orderBy('updated_at','desc')->paginate(10);
+
+        if ($request->has('search') && $request->input("search") != "") {
+            $authors = Author::where("author_name", "LIKE", "%" . $request->input("search") . "%")->orderBy('updated_at', 'desc')->paginate(10);
+            return view('admin.author.index', compact('authors'));
+        }
+
+        $authors = Author::orderBy('updated_at', 'desc')->paginate(10);
         return view('admin.author.index', compact('authors'));
     }
 
@@ -138,12 +144,12 @@ class AuthorController extends Controller
         $author = Author::find($id) ?? abort(404, 'Yazar Bulunamadı');
         $books = BookAuthor::whereAuthorId($id)->get();
         foreach ($books as $book) {
-            
-            if(BookAuthor::whereBookId($book->book_id)->count() <= 1){
+
+            if (BookAuthor::whereBookId($book->book_id)->count() <= 1) {
                 Book::find($book->book_id)->delete();
             }
         }
-       
+
         $author->delete();
         return redirect()->route('authors.index')->withSuccess('Yazar kaldırıldı.');
     }

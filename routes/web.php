@@ -25,20 +25,19 @@ Route::middleware([
 ])->group(function () {
 });
 
-Route::group(['middleware' => ['auth', 'isAdmin'], 'prefix' => 'admin'], function () {
-    Route::get('panel', [Admin\Dashboard::class,'index'])->name('dashboard');
-    
-    Route::post('books/fetchAuthors', [Admin\BookController::class,'fetchAuthors'])->name('books.fetchauhors');
-    Route::resource('books', Admin\BookController::class);
-    
-    Route::resource('authors', Admin\AuthorController::class);
-    
-    Route::resource('publishers', Admin\PublisherController::class);
-    
-    Route::resource('categories', Admin\CategoryController::class);
-    
-    Route::get('fetch-books', [Admin\FetchBooks::class,'index']);
-    Route::post('fetch-books', [Admin\FetchBooks::class,'fetch'])->name('fetchbooks');
-});
 
-;
+Route::group(['middleware' => ['auth', 'isAdmin'], 'prefix' => 'admin'], function () {
+    Route::get('panel', [Admin\Dashboard::class, 'index'])->name('dashboard');
+
+    Route::post('books/fetchAuthors', [Admin\BookController::class, 'fetchAuthors'])->name('books.fetchauhors');
+    Route::resource('books', Admin\BookController::class);
+
+    Route::resource('authors', Admin\AuthorController::class);
+
+    Route::resource('publishers', Admin\PublisherController::class);
+
+    Route::resource('categories', Admin\CategoryController::class);
+
+    Route::get('fetch-books', [Admin\FetchBooks::class, 'index']);
+    Route::post('fetch-books', [Admin\FetchBooks::class, 'fetch'])->name('fetchbooks');
+});;
