@@ -12,7 +12,7 @@
     <div class="overflow-x-auto relative shadow-md sm:rounded-lg">
         <div class="flex justify-between items-center pt-2 pb-4 bg-white dark:bg-gray-900">
             {{-- Serach&Filter Area --}}
-            <div class="col-10">
+            <div class="col-8">
                 <form>
                     <label for="default-search"
                         class="mb-2 text-sm font-medium text-gray-900 sr-only dark:text-white">Ara</label>
@@ -25,12 +25,19 @@
                             </svg>
                         </div>
                         <input type="search" id="default-search"
-                            class="block w-75 px-5 py-3 pl-10 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                            class="block w-100 px-5 py-3 pl-10 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                             placeholder="Ara..." minlength="3" autocomplete="off" name="search">
                         <button type="submit"
                             class=" hidden text-white absolute right-6 bottom-4 bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Ara</button>
                     </div>
                 </form>
+            </div>
+            <div class="col-2 text-center">
+                @if (request()->has('search'))
+                    <a href="{{ route('authors.index') }}"
+                        class="d-inline font-semibold underline hover:text-gray-800 dark:hover:text-white">Aramayı
+                        Temizle</a>
+                @endif
             </div>
             <div class="col-2 mt-2 text-center">
                 <a href="{{ route('authors.create') }}" type="button"
@@ -110,7 +117,7 @@
                 </svg>
                 <span class="sr-only">Info</span>
                 <div>
-                    <span class="font-bold">{{ request()->get('search') }}</span> adında yazar bulunamadı. <a href="{{route('authors.index')}}" class="font-semibold underline hover:text-gray-800 dark:hover:text-white">Aramayı temizle</a>
+                    <span class="font-bold">{{ request()->get('search') }}</span> adında yazar bulunamadı.
                 </div>
             </div>
         @endif

@@ -23,7 +23,7 @@ class AuthorController extends Controller
     {
 
         if ($request->has('search') && $request->input("search") != "") {
-            $authors = Author::where("author_name", "LIKE", "%" . $request->input("search") . "%")->orderBy('updated_at', 'desc')->paginate(10);
+            $authors = Author::where("author_name", "LIKE", "%" . $request->input("search") . "%")->orderBy('updated_at', 'desc')->paginate(10)->withQueryString();
             return view('admin.author.index', compact('authors'));
         }
 

@@ -23,8 +23,13 @@ class BookController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
+        if ($request->has('search') && $request->input("search") != "") {
+            $books = Book::where("title", "LIKE", "%" . $request->input("search") . "%")->orderBy('updated_at', 'desc')->paginate(10)->withQueryString();
+            return view('admin.book.index', compact('books'));
+        }
+
         $books = Book::orderBy('updated_at', 'DESC')->paginate(10);
         return view('admin.book.index', compact('books'));
     }
