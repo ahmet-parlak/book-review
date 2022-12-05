@@ -26,7 +26,7 @@
                         </div>
                         <input type="search" id="default-search"
                             class="block w-100 px-5 py-3 pl-10 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                            placeholder="Ara..." value="{{ request()->get('search') }}" minlength="3"
+                            placeholder="Kitap, ISBN, yazar, yayınevi..." value="{{ request()->get('search') }}" minlength="3"
                             autocomplete="off" name="search">
                         <button type="submit"
                             class=" hidden text-white absolute right-6 bottom-4 bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Ara</button>
@@ -65,9 +65,6 @@
                     <th scope="col" class="py-3 px-6">
                         Kategori
                     </th>
-                    {{--                     <th scope="col" class="py-3 px-6">
-                        Açıklama
-                    </th> --}}
                     <th scope="col" class="py-3 px-6">
                         <span title="Güncelleme Tarihi">Gün. Tar.</span>
                     </th>
@@ -88,7 +85,7 @@
                                 alt="{{ $book->title }}-img">
                             <div class="pl-3">
                                 <div class="text-base font-semibold" title="{{ $book->title }}">
-                                    {{ Str::limit($book->title, 20, '...') }}</div>
+                                    {{ Str::limit($book->title, 25, '...') }}</div>
                                 <div class="font-normal text-gray-500">
                                     @isset($book->bookAuthor)
                                         {{ $book->bookAuthor->author->author_name }}

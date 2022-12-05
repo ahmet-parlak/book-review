@@ -12,6 +12,7 @@ use App\Models\Publisher;
 use App\Models\Author;
 use App\Models\BookAuthor;
 use App\Models\BookCategory;
+use Illuminate\Contracts\Database\Eloquent\Builder;
 use Intervention\Image\Facades\Image;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Storage;
@@ -25,8 +26,18 @@ class BookController extends Controller
      */
     public function index(Request $request)
     {
+        //If serach book
         if ($request->has('search') && $request->input("search") != "") {
-            $books = Book::where("title", "LIKE", "%" . $request->input("search") . "%")->orderBy('updated_at', 'desc')->paginate(10)->withQueryString();
+            $books = Book::where("title", "LIKE", "%" . $request->input("search") . "%")
+                ->orWhere("isbn", "LIKE", "%" . $request->input("search") . "%")
+                ->orWhereHas('publisher', function (Builder $query) use ($request) {
+                    $query->where('publisher_name', 'like', '%' . $request->input("search") . '%');
+                })
+                ->orWhereHas('author.author', function (Builder $query) use ($request) {
+                    $query->where('author_name', 'like', '%' . $request->input("search") . '%');
+                })
+                ->orderBy('updated_at', 'desc')->paginate(10)->withQueryString();
+
             return view('admin.book.index', compact('books'));
         }
 
