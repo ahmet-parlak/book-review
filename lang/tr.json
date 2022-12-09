@@ -116,5 +116,7 @@
     "The provided password does not match your current password.": "Girdiğiniz şifre mevcut şifrenizle eşleşmiyor.",
     "The password must be at least :charcters characters.": "Şifreniz en az :charcters karakter uzunluğunda olmalı.",
     "Whoops! Something went wrong.": "Oppps! Bir şeyler yanlış gitti.",
-    "The :attribute must be at least :length characters.": ":attribute minimum :length karakter uzunluğunda olmalıdır."
+    "The :attribute must be at least :length characters.": ":attribute minimum :length karakter uzunluğunda olmalıdır.",
+    "tr": "Türkçe",
+    "en": "İngilizce"
 }

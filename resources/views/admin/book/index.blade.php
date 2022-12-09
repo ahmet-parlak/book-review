@@ -10,7 +10,7 @@
     </x-slot>
 
     <div class="overflow-x-auto relative shadow-md sm:rounded-lg">
-        <div class="flex justify-between items-center pt-2 pb-4 bg-white dark:bg-gray-900">
+        <div class="flex justify-between items-center pt-4 pb-3 bg-white dark:bg-gray-900">
             {{-- Serach&Filter Area --}}
             <div class="col-8">
                 <form>
@@ -66,6 +66,9 @@
                         Kategori
                     </th>
                     <th scope="col" class="py-3 px-6">
+                        Dil
+                    </th>
+                    <th scope="col" class="py-3 px-6">
                         <span title="Güncelleme Tarihi">Gün. Tar.</span>
                     </th>
                     <th scope="col" class="py-3 px-6">
@@ -86,11 +89,12 @@
                             <div class="pl-3">
                                 <div class="text-base font-semibold" title="{{ $book->title }}">
                                     {{ Str::limit($book->title, 25, '...') }}</div>
-                                <div class="font-normal text-gray-500">
-                                    @isset($book->bookAuthor)
-                                        {{ $book->bookAuthor->author->author_name }}
-                                    @endisset
-                                </div>
+                                @isset($book->bookAuthor)
+                                    <div class="font-normal text-gray-500"
+                                        title="{{ $book->bookAuthor->author->author_name }}">
+                                        {{ Str::limit($book->bookAuthor->author->author_name, 25, '...') }}
+                                    </div>
+                                @endisset
                             </div>
                         </th>
                         <td class="py-4 px-6">
@@ -104,6 +108,8 @@
                                 {{-- <div class="h-2.5 w-2.5 rounded-full bg-green-400 mr-2"></div> --}} {{ $book->publication_year }}
                             </div>
                         </td>
+
+                        {{-- Book Category --}}
                         @isset($book->bookCategory->category->category_name)
                             <td class="py-4 px-6" title="{{ $book->bookCategory->category->category_name }}">
                                 {{ Str::limit($book->bookCategory->category->category_name, 10, '...') }}
@@ -113,6 +119,11 @@
                                 -
                             </td>
                         @endisset
+                        {{-- Book Category --}}
+
+                        <td class="py-4 px-6">
+                            {!! __($book->language) !!}
+                        </td>
 
                         {{-- <td class="py-4 px-6">
                             {{ Str::limit($book->description, 30, '...') }}
@@ -144,7 +155,7 @@
                 </div>
             </div>
         @endif
-        
+
         {{-- Pagination --}}
         <div class="p-3">
             {{ $books->links() }}

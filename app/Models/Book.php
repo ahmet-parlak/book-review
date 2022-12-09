@@ -22,6 +22,22 @@ class Book extends Model
         'language'
     ];
 
+    protected $appends = ['author', 'categories'];
+
+    public function getAuthorAttribute()
+    {
+        if (isset($this->bookAuthor()->first()->author->author_name)) {
+            $author = $this->bookAuthor()->first()->author;
+            return $author;
+        }
+    }
+
+    public function getCategoriesAttribute()
+    {
+        $categories = $this->hasMany(BookCategory::class, 'book_id')->with('category')->get();
+        return $categories;
+    }
+
     public function publisher()
     {
         return $this->belongsTo(Publisher::class, 'publisher_id');
@@ -40,7 +56,7 @@ class Book extends Model
     public function bookCategory()
     {
         return $this->belongsTo(BookCategory::class, 'id', 'book_id')->with('category');
-        
+
         /* Get All Categories */
         //return $this->hasMany(BookCategory::class, 'book_id', 'id')->with('category');
     }

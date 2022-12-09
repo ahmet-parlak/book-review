@@ -2,19 +2,19 @@
     <div class="container-fluid">
         <div class="row align-items-center bg-light py-3 px-xl-5 d-none d-lg-flex">
             <div class="col-lg-4">
-                <a href="" class="text-decoration-none">
-                    <span class="h1 text-uppercase text-primary bg-dark px-2">Book</span>
-                    <span class="h1 text-uppercase text-dark bg-primary px-2 ml-n1">Revıew</span>
+                <a href="{{route('home')}}" class="text-decoration-none">
+                    <span class="h1 text-uppercase text-primary bg-dark px-2">BOOK</span>
+                    <span class="h1 text-uppercase text-dark bg-primary px-2 ml-n1">REVIEW</span>
                 </a>
             </div>
             <div class="col-lg-4 col-6 text-left">
-                <form action="">
+                <form action="{{route('search')}}">
                     <div class="input-group">
-                        <input type="text" class="form-control" placeholder="Kitap, Yazar, ISBN, Yayınevi, ...">
+                        <input type="text" class="form-control" placeholder="Kitap, Yazar, ISBN, Yayınevi, ..." name="search" required minlength="3" autocomplete="off">
                         <div class="input-group-append">
-                            <span class="input-group-text bg-transparent text-primary">
+                            <button type="submit" class="input-group-text bg-transparent text-primary btn">
                                 <i class="fa fa-search"></i>
-                            </span>
+                            </button>
                         </div>
                     </div>
                 </form>
@@ -23,10 +23,9 @@
             {{-- User --}}
             <div class="col-lg-4 col-6 text-right">
                 @auth
-                    {{-- <a href="{{ route('logout')}}">Çıkış</a> --}}
                     <div class="menu">
                         @if (Auth::user()->type === 'admin')
-                         <a href="{{ route('dashboard') }}" class="btn btn-small btn-warning">Panel</a>
+                            <a href="{{ route('dashboard') }}" class="btn btn-small btn-warning">Panel</a>
                         @endif
                         <a href="{{ route('profile.show') }}" class="btn btn-small btn-warning">Profil</a>
                         <form method="POST" action="{{ route('logout') }}" class="d-inline">
@@ -87,16 +86,16 @@
             </div>
             <div class="col-lg-9">
                 <nav class="navbar navbar-expand-lg bg-dark navbar-dark py-3 py-lg-0 px-0">
-                    <a href="" class="text-decoration-none d-block d-lg-none">
-                        <span class="h1 text-uppercase text-dark bg-light px-2">Multi</span>
-                        <span class="h1 text-uppercase text-light bg-primary px-2 ml-n1">Shop</span>
+                    <a href="{{route('home')}}" class="text-decoration-none d-block d-lg-none">
+                        <span class="h1 text-uppercase text-dark bg-light px-2">BOOK</span>
+                        <span class="h1 text-uppercase text-light bg-primary px-2 ml-n1">REVIEW</span>
                     </a>
                     <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navbarCollapse">
                         <span class="navbar-toggler-icon"></span>
                     </button>
                     <div class="collapse navbar-collapse justify-content-between" id="navbarCollapse">
                         <div class="navbar-nav mr-auto py-0">
-                            <a href="index.html" class="nav-item nav-link active">Anasayfa</a>
+                            <a href="{{route('home')}}" class="nav-item nav-link active">Ana Sayfa</a>
                             <a href="shop.html" class="nav-item nav-link">İncelemeler</a>
                             <a href="detail.html" class="nav-item nav-link">Top 10</a>
                             <div class="nav-item dropdown">

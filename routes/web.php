@@ -3,6 +3,7 @@
 use App\Http\Middleware\isAdmin;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Admin;
+use App\Http\Controllers\MainController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -14,9 +15,10 @@ use App\Http\Controllers\Admin;
 |
 */
 
-Route::get('/', function () {
-    return view('master');
-})->name('home');
+Route::get('/', [MainController::class, 'home'])->name('home');
+Route::get('search', [MainController::class, 'search'])->name('search');
+Route::get('book/{id}', [MainController::class, 'book'])->name('book');
+
 
 Route::middleware([
     'auth:sanctum',

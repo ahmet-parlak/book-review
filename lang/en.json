@@ -114,5 +114,6 @@
     "Are you sure you would like to delete this API token?": "Are you sure you would like to delete this API token?",
     "This password does not match our records.": "This password does not match our records.",
     "The provided password does not match your current password.": "The provided password does not match your current password.",
-    "The :attribute must be at least :length characters.": "The :attribute must be at least :length characters."
+    "tr": "Turkhis",
+    "en": "English"
 }

@@ -15,7 +15,7 @@ use App\Models\BookCategory;
 use Illuminate\Contracts\Database\Eloquent\Builder;
 use Intervention\Image\Facades\Image;
 use Illuminate\Support\Facades\File;
-use Illuminate\Support\Facades\Storage;
+
 
 class BookController extends Controller
 {
@@ -153,10 +153,19 @@ class BookController extends Controller
 
         /* Manipulate post values (photo path) */
 
-
+        /* Book */
         Book::whereId($id)->update($values);
-        BookAuthor::whereBookId($id)->update(['author_id' => $request->author_id]);
+
+        /* Author */
+        if (BookAuthor::whereBookId($id)->count()) {
+            BookAuthor::whereBookId($id)->update(['author_id' => $request->author_id]);
+        } else {
+            BookAuthor::create(['book_id' => $id, 'author_id' => $request->author_id]);
+        }
+
+        /* Category */
         BookCategory::whereBookId($id)->update(['category_id' => $request->category_id]);
+
         return redirect()->route('books.edit', $id)->withSuccess('Kitap bilgileri güncellendi.');
     }
 

@@ -101,8 +101,10 @@
                                 <div class="author">
                                     <label for="author"
                                         class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Yazar*</label>
-                                    <input id="authorHidden" type="hidden" name="author_id" value="{{ $book->bookAuthor->author->id }}">
-                                    <input id="author" value="{{ $book->bookAuthor->author->author_name }}"
+                                    <input id="authorHidden" type="hidden" name="author_id"
+                                        @isset($book->bookAuthor->author) value="{{ $book->bookAuthor->author->id }}" @endisset>
+                                    <input id="author"
+                                        @isset($book->bookAuthor->author) value="{{ $book->bookAuthor->author->author_name }}" @endisset
                                         autocomplete="off"
                                         class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                                         type="text" list="authors" />
@@ -239,7 +241,7 @@
                             </div>
                         </div>
                     </form>
-                    
+
                     {{-- Remove Book --}}
                     <div class="remove-author bg-gray-50 px-4 py-3 text-right sm:px-6 my-3 text-center">
                         <form id="remove-form" action="{{ route('books.destroy', $book->id) }}" method="POST">

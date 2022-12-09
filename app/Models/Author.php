@@ -18,4 +18,9 @@ class Author extends Model
         'title',
         'author_photo'
     ];
+
+    public function books()
+    {
+        return $this->hasMany(BookAuthor::class, 'author_id', 'id',);
+    }
 }
