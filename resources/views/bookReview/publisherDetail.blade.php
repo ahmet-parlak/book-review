@@ -1,7 +1,7 @@
 @extends('master')
 
 @section('title')
-    {{ $book->title }} | BookReview
+    {{ $publisher->publisher_name }} | BookReview
 @endsection
 
 @section('main')
@@ -10,16 +10,16 @@
         <div class="container-fluid pb-5">
             <div class="row px-xl-5">
                 <div class="col-lg-4 mb-30">
-                    <div class="book-detail-img" data-ride="carousel">
-                        <img class="book-detail" src="{{ $book->book_photo }}" alt="Image"
-                            onerror="this.src='{{ asset('storage/books/default.png') }}'">
+                    <div class="publisher-detail-img" data-ride="carousel">
+                        <img class="publisher-detail" src="{{ asset($publisher->publisher_photo) }}" alt="Image"
+                            onerror="this.src='{{ asset('storage/publishers/default.jpg') }}'">
                     </div>
                 </div>
 
                 <div class="col-lg-8 h-auto mb-30">
                     <div class="h-100 bg-light p-30">
-                        <h3>{{ $book->title }}</h3>
-                        <div class="d-flex mb-3">
+                        <h3>{{ $publisher->publisher_name }}</h3>
+                        {{-- <div class="d-flex mb-3">
                             <div class="text-primary mr-2">
                                 <small class="fas fa-star"></small>
                                 <small class="fas fa-star"></small>
@@ -28,73 +28,21 @@
                                 <small class="far fa-star"></small>
                             </div>
                             <small class="pt-1">(99 Reviews)</small>
-                        </div>
+                        </div> --}}
                         {{-- <h5 class="font-weight-semi-bold mb-4">Yazar: <small class="font-weight-normal"><a href=""
                                     class="text-dark">{{ $book->author->author_name }}</a></small></h5>
                         <h5 class="font-weight-semi-bold mb-4">Yayınevi: <small class="font-weight-normal"><a href=""
                                     class="text-dark">{{ $book->publisher->publisher_name }}</a></small></h5> --}}
 
-                        <div class="author text-dark mb-2">
-                            @if (!is_null($book->author))
-                                <strong>Yazar:</strong> <a
-                                    href="{{ route('author', [$book->author, Str::slug($book->author->author_name)]) }}"
-                                    class="text-dark">
-
-                                    {{ $book->author->author_name }}
-
-                                </a>
-                            @endif
-                        </div>
-                        <div class="publisher text-dark mb-2">
-                            <strong>Yayınevi:</strong> <a
-                                href="{{ route('publisher', [$book->publisher, Str::slug($book->publisher->publisher_name)]) }}"
-                                class="text-dark">{{ $book->publisher->publisher_name }}</a>
-                        </div>
-                        <div class="publisher text-dark mb-2">
-                            <strong>Kategori:</strong>
-                            @foreach ($book->categories as $category)
-                                @if (!is_null($category->category))
-                                    <a href="" class="text-dark mr-1">
-                                        {{ $category->category->category_name }}
-                                    </a>
+                        <div class="website text-dark mb-2">
+                            <strong>Website:</strong> <a href="{{ $publisher->website }}" class="text-dark">
+                                @if (!is_null($publisher->website))
+                                    {{ explode("/",$publisher->website)[2] }}
                                 @endif
-                            @endforeach
+                            </a>
                         </div>
-
-                        <div class="publisher text-dark mb-2">
-                            <strong>Yayın Yılı:</strong> {{ $book->publication_year }}
-                        </div>
-                        <div class="isbn text-dark mb-2">
-                            <strong>ISBN:</strong> {{ $book->isbn }}
-                        </div>
-                        <div class="publisher text-dark mb-2">
-                            <strong>Dil:</strong> {!! __($book->language) !!}
-                        </div>
-                        <div class="pages text-dark mb-2">
-                            <strong>Sayfa Sayısı:</strong> {{ $book->pages }}
-                        </div>
-                        @if ($book->original_title)
-                            <div class="original-title text-dark mb-2">
-                                <strong>Özgün Ad:</strong> {{ $book->original_title }}
-                            </div>
-                        @endif
-                        @if ($book->translator)
-                            <div class="author text-dark mb-2">
-                                <strong>Çevirmen:</strong> {{ $book->translator }}
-                            </div>
-                        @endif
                         <div class="row">
-                            <div class="col-6 d-flex pt-2">
-                                <div class="d-inline-flex">
-                                    {{-- <a href="#review-sec" class="nav-item nav-link text-dark px-2">
-                                        <i class="fa fa-pen"> </i>
-                                    </a>
-                                    <a href="#review-sec" class="nav-item nav-link text-dark px-2">
-                                        <i class="fa fa-star"></i>
-                                    </a> --}}
-                                </div>
-                            </div>
-                            <div class="col-6 d-flex justify-content-end pt-2">
+                            <div class="col-12 d-flex justify-content-end pt-2">
                                 <div class="d-inline-flex">
                                     <a href="" class="text-dark px-2 align-self-end">
                                         Hata Bildir
@@ -110,16 +58,16 @@
                 <div class="col">
                     <div class="bg-light p-30">
                         <div class="nav nav-tabs mb-4">
-                            <a class="nav-item nav-link text-dark" data-toggle="tab" href="#tab-pane-1">Açıklama</a>
-                            <a class="nav-item nav-link text-dark active" data-toggle="tab"
+                            <a class="nav-item nav-link text-dark active" data-toggle="tab" href="#tab-pane-1">Açıklama</a>
+                            {{-- <a class="nav-item nav-link text-dark active" data-toggle="tab"
                                 href="#tab-pane-2">Değerlendirmeler
-                                (0)</a>
+                                (0)</a> --}}
                         </div>
                         <div class="tab-content">
-                            <div class="tab-pane fade" id="tab-pane-1">
-                                <p>{{ $book->description }}</p>
+                            <div class="tab-pane fade show active" id="tab-pane-1">
+                                <p>{{ $publisher->description }}</p>
                             </div>
-                            <div class="tab-pane fade show active" id="tab-pane-2">
+                            {{-- <div class="tab-pane fade show active" id="tab-pane-2">
                                 <div class="row">
                                     <div class="col-md-12 mb-5">
                                         <div class="d-flex">
@@ -163,7 +111,7 @@
                                         </div>
                                     </div>
                                 </div>
-                            </div>
+                            </div> --}}
                         </div>
                     </div>
                 </div>
@@ -186,12 +134,9 @@
                             <div class="product-action">
                                 <a class="btn btn-outline-dark btn-square" href=""><i
                                         class="fa fa-shopping-cart"></i></a>
-                                <a class="btn btn-outline-dark btn-square" href=""><i
-                                        class="far fa-heart"></i></a>
-                                <a class="btn btn-outline-dark btn-square" href=""><i
-                                        class="fa fa-sync-alt"></i></a>
-                                <a class="btn btn-outline-dark btn-square" href=""><i
-                                        class="fa fa-search"></i></a>
+                                <a class="btn btn-outline-dark btn-square" href=""><i class="far fa-heart"></i></a>
+                                <a class="btn btn-outline-dark btn-square" href=""><i class="fa fa-sync-alt"></i></a>
+                                <a class="btn btn-outline-dark btn-square" href=""><i class="fa fa-search"></i></a>
                             </div>
                         </div>
                         <div class="text-center py-4">
@@ -216,12 +161,9 @@
                             <div class="product-action">
                                 <a class="btn btn-outline-dark btn-square" href=""><i
                                         class="fa fa-shopping-cart"></i></a>
-                                <a class="btn btn-outline-dark btn-square" href=""><i
-                                        class="far fa-heart"></i></a>
-                                <a class="btn btn-outline-dark btn-square" href=""><i
-                                        class="fa fa-sync-alt"></i></a>
-                                <a class="btn btn-outline-dark btn-square" href=""><i
-                                        class="fa fa-search"></i></a>
+                                <a class="btn btn-outline-dark btn-square" href=""><i class="far fa-heart"></i></a>
+                                <a class="btn btn-outline-dark btn-square" href=""><i class="fa fa-sync-alt"></i></a>
+                                <a class="btn btn-outline-dark btn-square" href=""><i class="fa fa-search"></i></a>
                             </div>
                         </div>
                         <div class="text-center py-4">

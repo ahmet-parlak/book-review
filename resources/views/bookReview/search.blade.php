@@ -120,12 +120,14 @@
                                                 class="fa fa-pen"></i></a>
                                         <a class="btn btn-outline-dark btn-square" href="" title="Favorilere Ekle"><i
                                                 class="far fa-heart"></i></a>
-                                        <a class="btn btn-outline-dark btn-square" href="{{ route('book', $book->id) }}"
+                                        <a class="btn btn-outline-dark btn-square"
+                                            href="{{ route('book', [$book->id, Str::slug($book->title)]) }}"
                                             title="Görüntüle"><i class="fa fa-search"></i></a>
                                     </div>
                                 </div>
                                 <div class="text-center py-4">
-                                    <a class="h6 text-decoration-none" href="{{ route('book', $book->id) }}"
+                                    <a class="h6 text-decoration-none"
+                                        href="{{ route('book', [$book->id, Str::slug($book->title)]) }}"
                                         title="{{ $book->title }}">{{ Str::limit($book->title, '18', '...') }}</a>
                                     <div class="d-flex align-items-center justify-content-center mt-2">
                                         @isset($book->author)

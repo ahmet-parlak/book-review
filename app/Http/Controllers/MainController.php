@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Book;
+use App\Models\Publisher;
+use App\Models\Author;
 use Illuminate\Contracts\Database\Eloquent\Builder;
 
 class MainController extends Controller
@@ -37,7 +39,18 @@ class MainController extends Controller
     public function book($id)
     {
         $book = Book::whereId($id)->with('publisher')->first() ?? abort(404, 'Kitap Bulunamadı');
-        //return $book;
         return view('bookReview.bookDetail', compact('book'));
+    }
+
+    public function publisher($id,$slug)
+    {   
+        $publisher = Publisher::whereId($id)->first() ?? abort(404, 'YAYINEVİ BULUNAMADI');
+        return view('bookReview.publisherDetail', compact('publisher'));
+    }
+
+    public function author($id,$slug)
+    {   
+        $author = Author::whereId($id)->first() ?? abort(404, 'YAZAR BULUNAMADI');
+        return view('bookReview.authorDetail', compact('author'));
     }
 }
