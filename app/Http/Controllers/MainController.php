@@ -6,8 +6,9 @@ use Illuminate\Http\Request;
 use App\Models\Book;
 use App\Models\Publisher;
 use App\Models\Author;
+use App\Models\Review;
 use Illuminate\Contracts\Database\Eloquent\Builder;
-use PHPUnit\Framework\Constraint\Count;
+
 
 class MainController extends Controller
 {
@@ -55,5 +56,12 @@ class MainController extends Controller
     {
         $author = Author::whereId($id)->first() ?? abort(404, 'YAZAR BULUNAMADI');
         return view('bookReview.authorDetail', compact('author'));
+    }
+
+    public function mybooks()
+    {
+        $reviews = Review::whereUserId(auth()->user()->id)->with('book')->orderByDesc('created_at')->paginate(10);
+        //return $reviews;
+        return view('bookReview.mybooks', compact('reviews'));
     }
 }

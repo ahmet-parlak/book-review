@@ -4,9 +4,42 @@
     height: 45px;
 }
 
-.hover-shadow:hover{
+.hover-shadow:hover {
     box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
 }
+
+.text-xxsm {
+    font-size: xx-small;
+}
+
+.text-xsm {
+    font-size: x-small;
+}
+
+.text-sm {
+    font-size: small;
+}
+
+.text-md {
+    font-size: medium;
+}
+
+.text-lg {
+    font-size: large;
+}
+
+.text-lgr {
+    font-size: larger;
+}
+
+.text-xlg {
+    font-size: x-large;
+}
+
+.text-xxlg {
+    font-size: xx-large;
+}
+
 /* General End */
 
 
@@ -19,6 +52,7 @@
     height: 300px;
     width: 50px;
 }
+
 /* Search Page End */
 
 
@@ -50,13 +84,15 @@ span.clear-rating:hover {
     text-decoration: underline;
 }
 
-span.edit-review{
+span.edit-review {
     cursor: pointer;
 }
-span.edit-review:hover{
+
+span.edit-review:hover {
     position: absolute;
     font-size: larger;
 }
+
 /* Book Detail End */
 
 
