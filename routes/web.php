@@ -4,6 +4,7 @@ use App\Http\Middleware\isAdmin;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Admin;
 use App\Http\Controllers\MainController;
+use App\Http\Controllers\ReviewController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -21,15 +22,17 @@ Route::get('book/{id}/{slug}', [MainController::class, 'book'])->name('book');
 Route::get('publisher/{id}/{slug}', [MainController::class, 'publisher'])->name('publisher');
 Route::get('author/{id}/{slug}', [MainController::class, 'author'])->name('author');
 
-
+/* User Logined */
 Route::middleware([
     'auth:sanctum',
     config('jetstream.auth_session'),
     'verified',
 ])->group(function () {
+    Route::post('book/{id}/{slug}', [ReviewController::class, 'create'])->name('book.post');
 });
 
 
+/* Admin Panel */
 Route::group(['middleware' => ['auth', 'isAdmin'], 'prefix' => 'admin'], function () {
     Route::get('panel', [Admin\Dashboard::class, 'index'])->name('dashboard');
 

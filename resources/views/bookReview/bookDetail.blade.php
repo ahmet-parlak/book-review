@@ -19,15 +19,19 @@
                 <div class="col-lg-8 h-auto mb-30">
                     <div class="h-100 bg-light p-30">
                         <h3>{{ $book->title }}</h3>
-                        <div class="d-flex mb-3">
+                        <div class="d-flex mb-3 user-select-none">
                             <div class="text-primary mr-2">
-                                <small class="fas fa-star"></small>
-                                <small class="fas fa-star"></small>
-                                <small class="fas fa-star"></small>
-                                <small class="fas fa-star-half-alt"></small>
-                                <small class="far fa-star"></small>
+                                @for ($i = 0; $i < floor($book->rating); $i++)
+                                    <small class="fas fa-star"></small>
+                                @endfor
+                                @if ($book->rating - floor($book->rating) == 0.5)
+                                    <small class="fas fa-star-half-alt"></small>
+                                @endif
+                                @for ($i = 5 - ceil($book->rating); $i > 0; $i--)
+                                    <small class="far fa-star"></small>
+                                @endfor
                             </div>
-                            <small class="pt-1">(99 Reviews)</small>
+                            <small class="pt-1">({{ $book->review_count }} Değerlendirme)</small>
                         </div>
                         {{-- <h5 class="font-weight-semi-bold mb-4">Yazar: <small class="font-weight-normal"><a href=""
                                     class="text-dark">{{ $book->author->author_name }}</a></small></h5>
@@ -96,6 +100,15 @@
                             </div>
                             <div class="col-6 d-flex justify-content-end pt-2">
                                 <div class="d-inline-flex">
+                                    @auth
+                                        @if (auth()->user()->type == 'admin')
+                                            <a href="{{ route('books.edit', $book->id) }}"
+                                                class="text-dark px-2 align-self-end">
+                                                Düzenle
+                                            </a>
+                                        @endif
+                                    @endauth
+                                    
                                     <a href="" class="text-dark px-2 align-self-end">
                                         Hata Bildir
                                     </a>
@@ -113,7 +126,7 @@
                             <a class="nav-item nav-link text-dark" data-toggle="tab" href="#tab-pane-1">Açıklama</a>
                             <a class="nav-item nav-link text-dark active" data-toggle="tab"
                                 href="#tab-pane-2">Değerlendirmeler
-                                (0)</a>
+                                ({{ $book->review_count }})</a>
                         </div>
                         <div class="tab-content">
                             <div class="tab-pane fade" id="tab-pane-1">
@@ -121,46 +134,100 @@
                             </div>
                             <div class="tab-pane fade show active" id="tab-pane-2">
                                 <div class="row">
-                                    <div class="col-md-12 mb-5">
-                                        <div class="d-flex">
-                                            <p class="mb-0 mr-2">Puan * :</p>
-                                            <div class="text-primary">
-                                                <i class="far fa-star"></i>
-                                                <i class="far fa-star"></i>
-                                                <i class="far fa-star"></i>
-                                                <i class="far fa-star"></i>
-                                                <i class="far fa-star"></i>
-                                            </div>
-                                        </div>
-                                        <form>
-                                            <div class="form-group">
-                                                <label for="review"></label>
-                                                <textarea id="review" cols="30" rows="5" class="form-control"></textarea>
-                                            </div>
-                                            <div class="form-group mb-0">
-                                                <input type="submit" value="Değerlendir" class="btn btn-primary px-3">
-                                            </div>
-                                        </form>
-                                    </div>
-                                    <div class="col-md-12">
-                                        <h4 class="mb-4">Değerlendirmeler</h4>
-                                        <div class="media mb-4">
-                                            <img src="https://picsum.photos/200/300" alt="Image"
-                                                class="img-fluid mr-3 mt-1" style="width: 45px;">
-                                            <div class="media-body">
-                                                <h6>John Doe<small> - <i>01 Jan 2045</i></small></h6>
-                                                <div class="text-primary mb-2">
-                                                    <i class="fas fa-star"></i>
-                                                    <i class="fas fa-star"></i>
-                                                    <i class="fas fa-star"></i>
-                                                    <i class="fas fa-star-half-alt"></i>
-                                                    <i class="far fa-star"></i>
+                                    <!-- Review -->
+                                    @if (!$book->user_review)
+                                        <div class="col-md-12 mb-5">
+                                            <div class="d-flex user-select-none">
+                                                <p class="mb-0 mr-2">Puan * :</p>
+                                                <div class="rating-area text-primary">
+                                                    <span class="rate far fa-star" rating="1" title="beğenmedim"></span>
+                                                    <span class="rate far fa-star" rating="2"
+                                                        title="fena değildi"></i></span>
+                                                    <span class="rate far fa-star" rating="3"
+                                                        title="beğendim"></i></span>
+                                                    <span class="rate far fa-star" rating="4"
+                                                        title="çok beğendim"></i></span>
+                                                    <span class="rate far fa-star" rating="5"
+                                                        title="muhteşemdi"></i></span>
+                                                    <span
+                                                        class="clear-rating text-dark ml-2 d-none"><small>Temizle</small></span>
                                                 </div>
-                                                <p>Diam amet duo labore stet elitr ea clita ipsum, tempor labore accusam
-                                                    ipsum et no at. Kasd diam tempor rebum magna dolores sed sed eirmod
-                                                    ipsum.</p>
                                             </div>
+                                            <form id="review-form" method="POST" action="">
+                                                @csrf
+                                                <input type="hidden" name="book" value="{{ $book->id }}">
+                                                <input class="rating" type="hidden" name="rating" value="">
+                                                <div class="form-group">
+                                                    <label for="review"></label>
+                                                    <textarea id="review" name="review" cols="30" rows="5" class="form-control" minlength="3"
+                                                        maxlength="100000" placeholder="Görüşlerinizi bildirin (Opsiyonel)"></textarea>
+                                                </div>
+                                                <div class="form-group mb-0">
+                                                    @auth
+                                                        <input type="submit" value="Değerlendir"
+                                                            class="btn btn-primary px-3">
+                                                    @else
+                                                        <input type="submit" value="Değerlendir"
+                                                            class="btn btn-primary px-3" disabled>
+                                                        <span class="ml-2"><small>Değerlendirmek için lütfen <a
+                                                                    href="{{ route('login') }}">giriş yapın</a>.</span>
+                                                    @endauth
+
+                                                </div>
+                                            </form>
                                         </div>
+                                    @endif
+
+
+                                    <!-- Reviews -->
+                                    <div class="col-md-12">
+                                        {{-- User Review --}}
+                                        @if ($book->user_review)
+                                            <div class="border pt-3 px-3 mb-4">
+                                                <div class="mb-3 border-bottom">
+                                                    <h5>Değerlendirmeniz <span class="edit-review ml-5 fas fa-pen"
+                                                            title="Düzenle"></span></h5>
+                                                </div>
+                                                <div class="media mb-4">
+                                                    <img src="{{ auth()->user()->profile_photo_url }}" alt="Image"
+                                                        class="small-pp img-fluid mr-3 mt-1 rounded-circle shadow-4-strong">
+                                                    <div class="media-body">
+                                                        <h6>{{ auth()->user()->name }}<small> -
+                                                                <i>{{ $book->user_review->created_at }}</i></small></h6>
+                                                        <div class="text-primary mb-2">
+                                                            @for ($i = 0; $i < $book->user_review->rating; $i++)
+                                                                <i class="fas fa-star"></i>
+                                                            @endfor
+                                                            @for ($i = 0; $i < 5 - $book->user_review->rating; $i++)
+                                                                <i class="far fa-star"></i>
+                                                            @endfor
+                                                        </div>
+                                                        <p>{{ $book->user_review->review }}</p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        @endif
+
+                                        <h4 class="mb-4">Değerlendirmeler</h4>
+                                        @foreach ($book->reviews as $review)
+                                            <div class="media mb-4">
+                                                <img src="{{ $review->user->profile_photo_url }}" alt="Image"
+                                                    class="small-pp img-fluid mr-3 mt-1 rounded-circle shadow-4-strong">
+                                                <div class="media-body">
+                                                    <h6>{{ $review->user->name }}<small> -
+                                                            <i>{{ $review->created_at }}</i></small></h6>
+                                                    <div class="text-primary mb-2">
+                                                        @for ($i = 0; $i < $review->rating; $i++)
+                                                            <i class="fas fa-star"></i>
+                                                        @endfor
+                                                        @for ($i = 0; $i < 5 - $review->rating; $i++)
+                                                            <i class="far fa-star"></i>
+                                                        @endfor
+                                                    </div>
+                                                    <p>{{ $review->review }}</p>
+                                                </div>
+                                            </div>
+                                        @endforeach
                                     </div>
                                 </div>
                             </div>
@@ -182,7 +249,7 @@
                 <div class="owl-carousel related-carousel">
                     <div class="product-item bg-light">
                         <div class="product-img position-relative overflow-hidden">
-                            <img class="img-fluid w-100" src="img/product-1.jpg" alt="">
+                            <img class="img-fluid w-100" src="" alt="">
                             <div class="product-action">
                                 <a class="btn btn-outline-dark btn-square" href=""><i
                                         class="fa fa-shopping-cart"></i></a>
@@ -195,10 +262,10 @@
                             </div>
                         </div>
                         <div class="text-center py-4">
-                            <a class="h6 text-decoration-none text-truncate" href="">Product Name Goes Here</a>
+                            <a class="h6 text-decoration-none text-truncate" href="">Title</a>
                             <div class="d-flex align-items-center justify-content-center mt-2">
-                                <h5>$123.00</h5>
-                                <h6 class="text-muted ml-2"><del>$123.00</del></h6>
+                                <h5></h5>
+                                <h6 class="text-muted ml-2"><del></del></h6>
                             </div>
                             <div class="d-flex align-items-center justify-content-center mb-1">
                                 <small class="fa fa-star text-primary mr-1"></small>
@@ -212,7 +279,7 @@
                     </div>
                     <div class="product-item bg-light">
                         <div class="product-img position-relative overflow-hidden">
-                            <img class="img-fluid w-100" src="img/product-2.jpg" alt="">
+                            <img class="img-fluid w-100" src="" alt="">
                             <div class="product-action">
                                 <a class="btn btn-outline-dark btn-square" href=""><i
                                         class="fa fa-shopping-cart"></i></a>
@@ -225,10 +292,10 @@
                             </div>
                         </div>
                         <div class="text-center py-4">
-                            <a class="h6 text-decoration-none text-truncate" href="">Product Name Goes Here</a>
+                            <a class="h6 text-decoration-none text-truncate" href="">Title</a>
                             <div class="d-flex align-items-center justify-content-center mt-2">
-                                <h5>$123.00</h5>
-                                <h6 class="text-muted ml-2"><del>$123.00</del></h6>
+                                <h5></h5>
+                                <h6 class="text-muted ml-2"><del></del></h6>
                             </div>
                             <div class="d-flex align-items-center justify-content-center mb-1">
                                 <small class="fa fa-star text-primary mr-1"></small>
@@ -242,7 +309,7 @@
                     </div>
                     <div class="product-item bg-light">
                         <div class="product-img position-relative overflow-hidden">
-                            <img class="img-fluid w-100" src="img/product-3.jpg" alt="">
+                            <img class="img-fluid w-100" src="" alt="">
                             <div class="product-action">
                                 <a class="btn btn-outline-dark btn-square" href=""><i
                                         class="fa fa-shopping-cart"></i></a>
@@ -255,10 +322,10 @@
                             </div>
                         </div>
                         <div class="text-center py-4">
-                            <a class="h6 text-decoration-none text-truncate" href="">Product Name Goes Here</a>
+                            <a class="h6 text-decoration-none text-truncate" href="">Title</a>
                             <div class="d-flex align-items-center justify-content-center mt-2">
-                                <h5>$123.00</h5>
-                                <h6 class="text-muted ml-2"><del>$123.00</del></h6>
+                                <h5></h5>
+                                <h6 class="text-muted ml-2"><del></del></h6>
                             </div>
                             <div class="d-flex align-items-center justify-content-center mb-1">
                                 <small class="fa fa-star text-primary mr-1"></small>
@@ -272,7 +339,7 @@
                     </div>
                     <div class="product-item bg-light">
                         <div class="product-img position-relative overflow-hidden">
-                            <img class="img-fluid w-100" src="img/product-4.jpg" alt="">
+                            <img class="img-fluid w-100" src="" alt="">
                             <div class="product-action">
                                 <a class="btn btn-outline-dark btn-square" href=""><i
                                         class="fa fa-shopping-cart"></i></a>
@@ -285,10 +352,10 @@
                             </div>
                         </div>
                         <div class="text-center py-4">
-                            <a class="h6 text-decoration-none text-truncate" href="">Product Name Goes Here</a>
+                            <a class="h6 text-decoration-none text-truncate" href="">Title</a>
                             <div class="d-flex align-items-center justify-content-center mt-2">
-                                <h5>$123.00</h5>
-                                <h6 class="text-muted ml-2"><del>$123.00</del></h6>
+                                <h5></h5>
+                                <h6 class="text-muted ml-2"><del></del></h6>
                             </div>
                             <div class="d-flex align-items-center justify-content-center mb-1">
                                 <small class="fa fa-star text-primary mr-1"></small>
@@ -302,7 +369,7 @@
                     </div>
                     <div class="product-item bg-light">
                         <div class="product-img position-relative overflow-hidden">
-                            <img class="img-fluid w-100" src="img/product-5.jpg" alt="">
+                            <img class="img-fluid w-100" src="" alt="">
                             <div class="product-action">
                                 <a class="btn btn-outline-dark btn-square" href=""><i
                                         class="fa fa-shopping-cart"></i></a>
@@ -315,10 +382,10 @@
                             </div>
                         </div>
                         <div class="text-center py-4">
-                            <a class="h6 text-decoration-none text-truncate" href="">Product Name Goes Here</a>
+                            <a class="h6 text-decoration-none text-truncate" href="">Title</a>
                             <div class="d-flex align-items-center justify-content-center mt-2">
-                                <h5>$123.00</h5>
-                                <h6 class="text-muted ml-2"><del>$123.00</del></h6>
+                                <h5></h5>
+                                <h6 class="text-muted ml-2"><del></del></h6>
                             </div>
                             <div class="d-flex align-items-center justify-content-center mb-1">
                                 <small class="fa fa-star text-primary mr-1"></small>
@@ -335,4 +402,8 @@
         </div>
     </div>
     <!-- Products End -->
+@endsection
+
+@section('js')
+    <script src="{{ asset('assets/js/custom.js') }}"></script>
 @endsection

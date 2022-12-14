@@ -117,6 +117,7 @@
     "The password must be at least :charcters characters.": "Şifreniz en az :charcters karakter uzunluğunda olmalı.",
     "Whoops! Something went wrong.": "Oppps! Bir şeyler yanlış gitti.",
     "The :attribute must be at least :length characters.": ":attribute minimum :length karakter uzunluğunda olmalıdır.",
+    "Don't you have an account?": "Hesabın yok mu?",
     "tr": "Türkçe",
     "en": "İngilizce"
 }

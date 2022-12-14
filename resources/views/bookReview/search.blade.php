@@ -86,7 +86,6 @@
                                     <button type="button" class="btn btn-sm btn-light dropdown-toggle"
                                         data-toggle="dropdown">Sırala</button>
                                     <div class="dropdown-menu dropdown-menu-right">
-                                        <a class="dropdown-item" href="#">En son</a>
                                         <a class="dropdown-item" href="#">Popülerlik</a>
                                         <a class="dropdown-item" href="#">Puan</a>
                                     </div>
@@ -125,26 +124,33 @@
                                             title="Görüntüle"><i class="fa fa-search"></i></a>
                                     </div>
                                 </div>
-                                <div class="text-center py-4">
-                                    <a class="h6 text-decoration-none"
+                                <div class="text-center py-3">
+                                    <a class="h6 text-decoration-none mb-0"
                                         href="{{ route('book', [$book->id, Str::slug($book->title)]) }}"
                                         title="{{ $book->title }}">{{ Str::limit($book->title, '18', '...') }}</a>
-                                    <div class="d-flex align-items-center justify-content-center mt-2">
+                                    <div class="d-flex align-items-center justify-content-center mt-1">
                                         @isset($book->author)
-                                            <p title="{{ $book->author->author_name }}">
-                                                {{ Str::limit($book->author->author_name, '23', '...') }}
+                                            <p title="{{ $book->author->author_name }}" class="mb-0">
+                                                {{ Str::limit($book->author->author_name, '13', '...') }}
                                             </p>
                                         @else
                                             <p>-</p>
                                         @endisset
                                     </div>
+                                    <div>
+                                        <p class="mb-3" title="{{$book->publisher->publisher_name}}"><small>{{Str::limit($book->publisher->publisher_name,'22','...')}}</small></p>
+                                    </div>
                                     <div class="d-flex align-items-center justify-content-center mb-1">
-                                        <small class="fa fa-star text-primary mr-1"></small>
-                                        <small class="fa fa-star text-primary mr-1"></small>
-                                        <small class="fa fa-star text-primary mr-1"></small>
-                                        <small class="fa fa-star text-primary mr-1"></small>
-                                        <small class="fa fa-star text-primary mr-1"></small>
-                                        <small>(99)</small>
+                                        @for ($i = 0; $i < floor($book->rating); $i++)
+                                            <small class="fa fa-star text-primary mr-1"></small>
+                                        @endfor
+                                        @if ($book->rating - floor($book->rating) == 0.5)
+                                            <small class="fas fa-star-half-alt text-primary mr-1"></small>
+                                        @endif
+                                        @for ($i = 5 - ceil($book->rating); $i > 0; $i--)
+                                            <small class="far fa-star text-primary mr-1"></small>
+                                        @endfor
+                                        <small>({{ $book->review_count }})</small>
                                     </div>
                                 </div>
                             </div>
@@ -164,4 +170,5 @@
         </div>
     </div>
     <!-- Shop End -->
+    
 @endsection
