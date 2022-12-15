@@ -1,3 +1,5 @@
+/* #Book-Detail Start# */
+
 const ratingArea = $("div.rating-area"),
     rateStars = $("span.rate"),
     clearRating = $("span.clear-rating"),
@@ -72,3 +74,66 @@ function clearStar() {
     rateStars.addClass('far fa-star');
 }
 /* Rating End */
+
+/* #Book-Detail End# */
+
+
+
+
+
+/* #My-Books Start# */
+
+/* Remove Review */
+const removeReviewBtns = $("button.remove-review");
+
+removeReviewBtns.on("click", function () {
+    const review = $(this).attr('remove');
+
+    const title = "Emin misiniz?";
+    const text = "Bu kitaba verdiğiniz puan ve yaptığınız değerlendirme kaldırılacak. Bu işlem geri alınamaz!";
+    const confirmBtn = "Kaldır";
+
+    areYouSure(title, text, confirmBtn).then((result) => {
+        if (result.isConfirmed) {
+            $.post(remove_review_ajax_url, { _token: token, review: review },
+                function (response) {
+                    if (response.state == "success") {
+                        Swal.fire({
+                            icon: 'success',
+                            title: 'Başarılı',
+                            text: "Değerlendirmeniz kaldırıldı",
+                            showConfirmButton: false,
+                            timer: 1500
+                        }).then(location.reload())
+                    }
+                },
+                "json"
+            );
+
+        }
+    })
+
+
+});
+
+
+
+
+/* #My-Books End# */
+
+
+
+
+/* Are You Sure Alert */
+function areYouSure(title, text, confirmBtn) {
+    return Swal.fire({
+        title: title,
+        text: text,
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: confirmBtn,
+        cancelButtonText: 'İptal'
+    })
+}

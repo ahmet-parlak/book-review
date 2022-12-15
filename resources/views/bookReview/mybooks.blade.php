@@ -30,11 +30,14 @@
                                 <td class="align-middle">
                                     <div class="row">
                                         <div class="col-2"><img src="{{ $review->book->book_photo }}"
-                                                alt="{{ $review->book->title }}" style="width: 50px;"></div>
+                                                alt="{{ $review->book->title }}" style="width: 50px;"
+                                                onerror="this.src='{{ asset('storage/books/default.png') }}'"></div>
                                         <div class="col-10">
                                             <p class="title mb-0">
-                                                <strong>{{ Str::limit($review->book->title, 40) }}</strong></p>
-                                            <p class="author mb-0">{{ Str::limit($review->book->author->author_name, 40) }}
+                                                <strong>{{ Str::limit($review->book->title, 40) }}</strong>
+                                            </p>
+                                            <p class="author mb-0">
+                                                {{ Str::limit($review->book->author->author_name ?? '-', 40) }}
                                             </p>
                                             <p class="publisher mb-0">
                                                 <small>{{ Str::limit($review->book->publisher->publisher_name, 50) }}</small>
@@ -62,8 +65,8 @@
                                 <td class="align-middle">{{ $review->created_at }}</td>
                                 <td class="align-middle"><button class="btn btn-sm btn-warning mr-1" title="Düzenle"><i
                                             class="fa fa-pen"></i></button>
-                                    <button class="btn btn-sm btn-danger" title="Kaldır"><i
-                                            class="fa fa-times text-lgr align-middle"></i></button>
+                                    <button class="remove-review btn btn-sm btn-danger" remove="{{ $review->id }}"
+                                        title="Kaldır"><i class="fa fa-times text-lgr align-middle"></i></button>
                                 </td>
                             </tr>
                         @endforeach
@@ -79,4 +82,9 @@
 @endsection
 
 @section('js')
+    <script>
+        const remove_review_ajax_url = "{{ route('review.remove') }}",
+            token = "{{ csrf_token() }}";
+    </script>
+    <script src="{{ asset('assets/js/custom.js') }}"></script>
 @endsection

@@ -85,7 +85,7 @@
                     </div>
                 </nav>
             </div>
-            <div class="col-lg-9">
+            <div class="col-lg-10">
                 <nav class="navbar navbar-expand-lg bg-dark navbar-dark py-3 py-lg-0 px-0">
                     <a href="{{ route('home') }}" class="text-decoration-none d-block d-lg-none">
                         <span class="h1 text-uppercase text-primary bg-dark border border-primary px-2">BOOK</span>
@@ -111,7 +111,7 @@
                         </div>
                         @auth
                             <div class="navbar-nav ml-auto py-0 d-none d-lg-block">
-                                <a href="{{ route('mybooks') }}" class="mr-4 text-white">Kitaplarım</a>
+                                <a href="{{ route('mybooks') }}" class="mr-5 text-white">Kitaplarım</a>
                                 <a href="" class="btn px-0">
                                     <i class="fas fa-bell text-primary"></i>
                                     <span class="badge text-secondary border border-secondary rounded-circle"

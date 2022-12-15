@@ -30,6 +30,7 @@ Route::middleware([
 ])->group(function () {
     Route::post('book/{id}/{slug}', [ReviewController::class, 'create'])->name('book.post');
     Route::get('mybooks',[MainController::class, 'mybooks'])->name('mybooks');
+    Route::post('remove-review',[ReviewController::class, 'delete'])->name('review.remove');
 });
 
 
