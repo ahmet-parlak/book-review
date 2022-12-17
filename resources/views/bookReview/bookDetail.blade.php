@@ -194,8 +194,17 @@
                                                     <img src="{{ auth()->user()->profile_photo_url }}" alt="Image"
                                                         class="small-pp img-fluid mr-3 mt-1 rounded-circle shadow-4-strong">
                                                     <div class="media-body">
-                                                        <h6>{{ auth()->user()->name }}<small> -
-                                                                <i>{{ $book->user_review->created_at }}</i></small></h6>
+                                                        <h6>{{ auth()->user()->name }}
+                                                            <small> -
+                                                                <i>{{ $book->user_review->created_at->diffForHumans() }}
+                                                                    ({{ $book->user_review->created_at->format('d.m.Y - H.i') }})</i>
+                                                                @if ($book->user_review->created_at != $book->user_review->updated_at)
+                                                                    <strong class="ml-2">Güncellendi:</strong>
+                                                                    <i>{{ $book->user_review->updated_at->diffForHumans() }}
+                                                                        ({{ $book->user_review->updated_at->format('d.m.Y - H.i') }})</i>
+                                                                @endif
+                                                            </small>
+                                                        </h6>
                                                         <div class="text-primary mb-2">
                                                             @for ($i = 0; $i < $book->user_review->rating; $i++)
                                                                 <i class="fas fa-star"></i>
@@ -217,7 +226,14 @@
                                                     class="small-pp img-fluid mr-3 mt-1 rounded-circle shadow-4-strong">
                                                 <div class="media-body">
                                                     <h6>{{ $review->user->name }}<small> -
-                                                            <i>{{ $review->created_at }}</i></small></h6>
+                                                            <i
+                                                                title="{{ $review->created_at->format('d.m.Y') }}">{{ $review->created_at->diffForHumans() }}</i>
+                                                            @if ($review->created_at != $review->updated_at)
+                                                                <i title="{{ $review->updated_at->format('d.m.Y') }}">(Güncellendi:
+                                                                    {{ $review->updated_at->diffForHumans() }})</i>
+                                                            @endif
+                                                        </small>
+                                                    </h6>
                                                     <div class="text-primary mb-2">
                                                         @for ($i = 0; $i < $review->rating; $i++)
                                                             <i class="fas fa-star"></i>

@@ -34,14 +34,15 @@
                                 @for ($i = 5 - ceil($review->book->rating); $i > 0; $i--)
                                     <small class="far fa-star"></small>
                                 @endfor
-                                <span class="text-dark text-sm ml-1">({{$review->book->review_count}})</span>
-                                <a href="{{route('book',[$review->book_id,$review->book->title])}}#reviews" class="btn-sm btn-secondary px-3 ml-4">Değerlendirmeleri Gör</a>
+                                <span class="text-dark text-sm ml-1">({{ $review->book->review_count }})</span>
+                                <a href="{{ route('book', [$review->book_id, $review->book->title]) }}#reviews"
+                                    class="btn-sm btn-secondary px-3 ml-4">Değerlendirmeleri Gör</a>
                             </div>
                         </div>
                     </div>
 
                     <div class="col-md-12 my-3">
-                        
+
                         <div class="d-flex user-select-none">
                             <p class="mb-0 mr-2">Puanınız :</p>
                             <div class="rating-area text-primary">
@@ -62,14 +63,21 @@
                                     maxlength="100000" placeholder="Görüşlerinizi bildirin (Opsiyonel)">{{ $review->review }}</textarea>
                             </div>
                             <div class="date">
-                                <p><strong>Değerlendirme Tarihi: </strong>{{ $review->created_at }} @if ($review->created_at != $review->updated_at)
-                                    <span class="ml-2">(<strong>Güncelleme:</strong> {{ $review->updated_at }})</span>
-                                @endif
-                            </p>
+                                <p>
+                                    <strong>Değerlendirme: </strong>{{ $review->created_at->diffForHumans() }}
+                                    <small><i>({{ $review->created_at->format('d.m.Y - H.i') }})</i></small>
+                                    @if ($review->created_at != $review->updated_at)
+                                        <span
+                                            class="ml-4"><strong>Güncelleme: </strong>{{ $review->updated_at->diffForHumans() }}
+                                            <small><i>({{ $review->updated_at->format('d.m.Y - H.i') }})</i></small>
+                                        </span>
+                                    @endif
+                                </p>
                             </div>
                             <div class="form-group mb-0">
                                 <input type="submit" value="Güncelle" class="btn btn-primary font-weight-bold px-3">
-                                <button type="button" class="remove-review btn btn-danger px-3 ml-4" remove="{{ $review->id }}">Değerlendirmeyi Kaldır</button>
+                                <button type="button" class="remove-review btn btn-danger px-3 ml-4"
+                                    remove="{{ $review->id }}">Değerlendirmeyi Kaldır</button>
                             </div>
                         </form>
                     </div>

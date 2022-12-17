@@ -65,13 +65,16 @@
                                             {{ Str::limit($review->review, 40) }}
                                         @else
                                             <a href="{{ route('review.edit', [$review->id, Str::slug($review->book->title)]) }}#review"
-                                                class="text-dark">Değerlendir<i class="fa fa-pen ml-2"></i></a>
+                                                class="text-dark">Bir değerlendirme yazın<i class="fa fa-pen ml-2"></i></a>
                                         @endif
                                     </td>
                                     <td class="align-middle">
-                                        <div class="created" title="Değerlendirme Tarihi">{{ $review->created_at }}</div>
+                                        <div class="created-date font-italic" title="{{ $review->created_at->format('d.m.Y - H.i') }}">
+                                            {{ $review->created_at->diffForHumans() }}</div>
                                         @if ($review->created_at != $review->updated_at)
-                                            <div class="updated" title="Güncelleme Tarihi"><small>({{ $review->updated_at }})</small></div>
+                                            <div class="updated-date font-italic"
+                                                title="(Güncellendi) {{ $review->updated_at->format('d.m.Y - H.i') }}">
+                                                <small>({{ $review->updated_at->diffForHumans() }})</small></div>
                                         @endif
                                     </td>
                                     <td class="align-middle"><a class="btn btn-sm btn-warning mr-1"
