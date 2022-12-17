@@ -210,7 +210,7 @@
                                             </div>
                                         @endif
 
-                                        <h4 class="mb-4">Değerlendirmeler</h4>
+                                        <h4 id="reviews" class="mb-4">Değerlendirmeler</h4>
                                         @foreach ($book->reviews as $review)
                                             <div class="media mb-4">
                                                 <img src="{{ $review->user->profile_photo_url }}" alt="Image"

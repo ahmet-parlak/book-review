@@ -35,6 +35,7 @@
                                     <small class="far fa-star"></small>
                                 @endfor
                                 <span class="text-dark text-sm ml-1">({{$review->book->review_count}})</span>
+                                <a href="{{route('book',[$review->book_id,$review->book->title])}}#reviews" class="btn-sm btn-secondary px-3 ml-4">Değerlendirmeleri Gör</a>
                             </div>
                         </div>
                     </div>
