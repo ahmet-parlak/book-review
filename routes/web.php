@@ -31,6 +31,10 @@ Route::middleware([
     Route::post('book/{id}/{slug}', [ReviewController::class, 'create'])->name('book.post');
     Route::get('mybooks',[MainController::class, 'mybooks'])->name('mybooks');
     Route::post('remove-review',[ReviewController::class, 'delete'])->name('review.remove');
+    Route::get('edit-review/{id}/{slug}',[ReviewController::class, 'edit'])->name('review.edit');
+    Route::post('edit-review/{id}/{slug}',[ReviewController::class, 'update'])->name('review.edit.post');
+
+
 });
 
 

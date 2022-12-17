@@ -108,7 +108,7 @@
                                             </a>
                                         @endif
                                     @endauth
-                                    
+
                                     <a href="" class="text-dark px-2 align-self-end">
                                         Hata Bildir
                                     </a>
@@ -183,10 +183,12 @@
                                     <div class="col-md-12">
                                         {{-- User Review --}}
                                         @if ($book->user_review)
-                                            <div class="border pt-3 px-3 mb-4">
+                                            <div id="review" class="border pt-3 px-3 mb-4">
                                                 <div class="mb-3 border-bottom">
-                                                    <h5>Değerlendirmeniz <span class="edit-review ml-5 fas fa-pen"
-                                                            title="Düzenle"></span></h5>
+                                                    <h5>Değerlendirmeniz <a class="text-dark"
+                                                            href="{{ route('review.edit', [$book->user_review->id, Str::slug($book->title)]) }}"><span
+                                                                class="edit-review ml-5 fas fa-pen"
+                                                                title="Düzenle"></span></a></h5>
                                                 </div>
                                                 <div class="media mb-4">
                                                     <img src="{{ auth()->user()->profile_photo_url }}" alt="Image"

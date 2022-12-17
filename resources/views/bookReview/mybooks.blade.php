@@ -28,22 +28,26 @@
                         @foreach ($reviews as $review)
                             <tr>
                                 <td class="align-middle">
-                                    <div class="row">
-                                        <div class="col-2"><img src="{{ $review->book->book_photo }}"
-                                                alt="{{ $review->book->title }}" style="width: 50px;"
-                                                onerror="this.src='{{ asset('storage/books/default.png') }}'"></div>
-                                        <div class="col-10">
-                                            <p class="title mb-0">
-                                                <strong>{{ Str::limit($review->book->title, 40) }}</strong>
-                                            </p>
-                                            <p class="author mb-0">
-                                                {{ Str::limit($review->book->author->author_name ?? '-', 40) }}
-                                            </p>
-                                            <p class="publisher mb-0">
-                                                <small>{{ Str::limit($review->book->publisher->publisher_name, 50) }}</small>
-                                            </p>
+                                    <a class="text-dark"
+                                        href="{{ route('book', [$review->book->id, Str::slug($review->book->title)]) }}"
+                                        title="Kitaba Git">
+                                        <div class="row">
+                                            <div class="col-2"><img src="{{ $review->book->book_photo }}"
+                                                    alt="{{ $review->book->title }}" style="width: 50px;"
+                                                    onerror="this.src='{{ asset('storage/books/default.png') }}'"></div>
+                                            <div class="col-10">
+                                                <p class="title mb-0">
+                                                    <strong>{{ Str::limit($review->book->title, 40) }}</strong>
+                                                </p>
+                                                <p class="author mb-0">
+                                                    {{ Str::limit($review->book->author->author_name ?? '-', 40) }}
+                                                </p>
+                                                <p class="publisher mb-0">
+                                                    <small>{{ Str::limit($review->book->publisher->publisher_name, 50) }}</small>
+                                                </p>
+                                            </div>
                                         </div>
-                                    </div>
+                                    </a>
                                 </td>
                                 <td class="align-middle">
                                     <div class="input-group quantity mx-auto text-warning" style="width: 100px;">
@@ -59,12 +63,14 @@
                                     @if (strlen($review->review) > 0)
                                         {{ Str::limit($review->review, 40) }}
                                     @else
-                                        <a href="" class="text-dark">Değerlendir<i class="fa fa-pen ml-2"></i></a>
+                                        <a href="{{ route('book', [$review->book->id, Str::slug($review->book->title)]) }}#review"
+                                            class="text-dark">Değerlendir<i class="fa fa-pen ml-2"></i></a>
                                     @endif
                                 </td>
                                 <td class="align-middle">{{ $review->created_at }}</td>
-                                <td class="align-middle"><button class="btn btn-sm btn-warning mr-1" title="Düzenle"><i
-                                            class="fa fa-pen"></i></button>
+                                <td class="align-middle"><a class="btn btn-sm btn-warning mr-1"
+                                        href="{{ route('review.edit', [$review->id, Str::slug($review->book->title)]) }}"
+                                        title="Düzenle"><i class="fa fa-pen"></i></a>
                                     <button class="remove-review btn btn-sm btn-danger" remove="{{ $review->id }}"
                                         title="Kaldır"><i class="fa fa-times text-lgr align-middle"></i></button>
                                 </td>

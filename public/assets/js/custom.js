@@ -1,5 +1,24 @@
-/* #Book-Detail Start# */
+/* #General Start# */
+jQuery.fn.preventDoubleSubmission = function () {
+    $(this).on('submit', function (e) {
+        var $form = $(this);
+        if ($form.data('submitted') === true) {
+            // Previously submitted - don't submit again
+            e.preventDefault();
+        } else {
+            // Mark it so that the next submit can be ignored
+            $form.data('submitted', true);
+        }
+    });
+    // Keep chainability
+    return this;
+};
+$('form').preventDoubleSubmission();
+/* #General End# */
 
+
+
+/* #Book-Detail Start# */
 const ratingArea = $("div.rating-area"),
     rateStars = $("span.rate"),
     clearRating = $("span.clear-rating"),
@@ -22,6 +41,7 @@ reviewForm.on("submit", function (e) {
             alertSpan.innerText = "Değerlendirmek için kitaba puan vermelisiniz!";
             ratingArea.append(alertSpan);
             $(alertSpan).fadeIn(1000);
+            $(this).data('submitted', false);
         } else {
             $("span.rating-alert").hide();
             $("span.rating-alert").fadeIn(1000);
@@ -81,8 +101,6 @@ function clearStar() {
 
 
 
-/* #My-Books Start# */
-
 /* Remove Review */
 const removeReviewBtns = $("button.remove-review");
 
@@ -104,7 +122,14 @@ removeReviewBtns.on("click", function () {
                             text: "Değerlendirmeniz kaldırıldı",
                             showConfirmButton: false,
                             timer: 1500
-                        }).then(location.reload())
+                        }).then(() => {
+                            if (response.redirect) {
+                                window.location = response.redirect;
+
+                            } else {
+                                location.reload()
+                            }
+                        })
                     }
                 },
                 "json"
