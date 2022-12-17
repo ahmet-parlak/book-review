@@ -7,6 +7,8 @@
                     <span class="h1 text-uppercase text-dark bg-primary px-2 ml-n1">REVIEW</span>
                 </a>
             </div>
+
+            <!-- Search -->
             <div class="col-lg-4 col-6 text-left">
                 <form action="{{ route('search') }}">
                     <div class="input-group">
@@ -21,10 +23,15 @@
                 </form>
             </div>
 
-            {{-- User --}}
+            <!-- User -->
             <div class="col-lg-4 col-6 text-right">
                 @auth
                     <div class="menu">
+                        <div class="d-inline mx-2 py-3 border-right">
+                            <div class="d-inline text-capitalize">{{ Auth::user()->name }}</div>
+                            <img src="{{ Auth::user()->profile_photo_url }}" alt="Image"
+                                class="small-pp img-fluid rounded-circle shadow-4-strong mx-1">
+                        </div>
                         @if (Auth::user()->type === 'admin')
                             <a href="{{ route('dashboard') }}" class="btn btn-small btn-warning">Panel</a>
                         @endif
@@ -48,7 +55,7 @@
 
 
     <!-- Navbar Start -->
-    <div class="container-fluid bg-dark mb-30">
+    <div class="container-fluid bg-dark mb-2">
         <div class="row px-xl-5">
             <div class="col-lg-2 d-none d-lg-block">
                 <a class="btn d-flex align-items-center justify-content-between bg-primary w-100" data-toggle="collapse"
@@ -89,9 +96,11 @@
                 <nav class="navbar navbar-expand-lg bg-dark navbar-dark py-3 py-lg-0 px-0">
                     <a href="{{ route('home') }}" class="text-decoration-none d-block d-lg-none">
                         <span class="h1 text-uppercase text-primary bg-dark border border-primary px-2">BOOK</span>
-                        <span class="h1 text-uppercase text-dark bg-primary border border-primary px-2 ml-n1">REVIEW</span>
+                        <span
+                            class="h1 text-uppercase text-dark bg-primary border border-primary px-2 ml-n1">REVIEW</span>
                     </a>
-                    <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navbarCollapse">
+                    <button type="button" class="navbar-toggler" data-toggle="collapse"
+                        data-target="#navbarCollapse">
                         <span class="navbar-toggler-icon"></span>
                     </button>
                     <div class="collapse navbar-collapse justify-content-between" id="navbarCollapse">
@@ -141,3 +150,46 @@
         </div>
     </div>
     <!-- Navbar End -->
+
+    <!-- SmallScreen Start-->
+    <div class="d-lg-none mb-2">
+        <!-- User -->
+        <div class="text-right">
+            @auth
+                <div class="menu">
+                    <div class="d-inline">
+                        <img src="{{ Auth::user()->profile_photo_url }}" alt="Image"
+                            class="small-pp img-fluid rounded-circle shadow-4-strong mx-1">
+                    </div>
+                    @if (Auth::user()->type === 'admin')
+                        <a href="{{ route('dashboard') }}" class="btn btn-small btn-warning">Panel</a>
+                    @endif
+                    <a href="{{ route('profile.show') }}" class="btn btn-small btn-warning">Profil</a>
+                    <form method="POST" action="{{ route('logout') }}" class="d-inline">
+                        @csrf
+                        <input class="btn btn-small btn-warning" type="submit" value="Çıkış">
+                    </form>
+                </div>
+            @else
+                <a href="{{ route('login') }}" class="btn btn-small btn-warning">Giriş Yap</a>
+                <a href="{{ route('register') }}" class="btn btn-small btn-warning">Kayıt Ol</a>
+            @endauth
+        </div>
+
+        <div class="my-2 text-left col-10 offset-1">
+            <form action="{{ route('search') }}">
+                <div class="input-group">
+                    <input type="text" class="form-control" placeholder="Kitap, Yazar, ISBN, Yayınevi, ..."
+                        name="search" required minlength="3" autocomplete="off">
+                    <div class="input-group-append">
+                        <button type="submit" class="input-group-text bg-transparent text-primary btn">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </div>
+                </div>
+            </form>
+        </div>
+
+
+    </div>
+    <!-- SmallScreen End -->
