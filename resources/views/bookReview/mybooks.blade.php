@@ -69,19 +69,22 @@
                                         @endif
                                     </td>
                                     <td class="align-middle">
-                                        <div class="created-date font-italic" title="{{ $review->created_at->format('d.m.Y - H.i') }}">
+                                        <div class="created-date font-italic"
+                                            title="{{ $review->created_at->format('d.m.Y - H.i') }}">
                                             {{ $review->created_at->diffForHumans() }}</div>
                                         @if ($review->created_at != $review->updated_at)
                                             <div class="updated-date font-italic"
                                                 title="(Güncellendi) {{ $review->updated_at->format('d.m.Y - H.i') }}">
-                                                <small>({{ $review->updated_at->diffForHumans() }})</small></div>
+                                                <small>({{ $review->updated_at->diffForHumans() }})</small>
+                                            </div>
                                         @endif
                                     </td>
-                                    <td class="align-middle"><a class="btn btn-sm btn-warning mr-1"
+                                    <td class="align-middle"><a
+                                            class="fas fa-edit text-dark text-decoration-none text-xlg align-middle mr-3"
                                             href="{{ route('review.edit', [$review->id, Str::slug($review->book->title)]) }}"
-                                            title="Düzenle"><i class="fa fa-pen"></i></a>
-                                        <button class="remove-review btn btn-sm btn-danger" remove="{{ $review->id }}"
-                                            title="Kaldır"><i class="fa fa-times text-lgr align-middle"></i></button>
+                                            title="Düzenle"></a>
+                                        <a class="remove-review fa fa-times text-xlg text-decoration-none text-danger align-middle pointer"
+                                            remove="{{ $review->id }}" title="Kaldır"></a>
                                     </td>
                                 </tr>
                             @endforeach

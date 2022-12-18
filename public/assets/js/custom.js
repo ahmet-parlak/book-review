@@ -102,7 +102,7 @@ function clearStar() {
 
 
 /* Remove Review */
-const removeReviewBtns = $("button.remove-review");
+const removeReviewBtns = $(".remove-review");
 
 removeReviewBtns.on("click", function () {
     const review = $(this).attr('remove');

@@ -37,7 +37,7 @@
 <body>
 @include('template.header')
 
-    <div class="main">
+    <div class="main my-4">
         @yield('main')
     </div>
 

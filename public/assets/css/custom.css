@@ -8,6 +8,10 @@
     box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
 }
 
+a:hover{
+    cursor: pointer;
+}
+
 .text-xxsm {
     font-size: xx-small;
 }

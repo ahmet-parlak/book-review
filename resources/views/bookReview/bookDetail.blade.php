@@ -119,7 +119,7 @@
                     </div>
                 </div>
             </div>
-            <div class="row px-xl-5">
+            <div id="reviews" class="row px-xl-5">
                 <div class="col">
                     <div class="bg-light p-30">
                         <div class="nav nav-tabs mb-4">
@@ -187,7 +187,7 @@
                                                 <div class="mb-3 border-bottom">
                                                     <h5>Değerlendirmeniz <a class="text-dark"
                                                             href="{{ route('review.edit', [$book->user_review->id, Str::slug($book->title)]) }}"><span
-                                                                class="edit-review ml-5 fas fa-pen"
+                                                                class="edit-review ml-5 fas fa-edit"
                                                                 title="Düzenle"></span></a></h5>
                                                 </div>
                                                 <div class="media mb-4">
@@ -219,7 +219,7 @@
                                             </div>
                                         @endif
 
-                                        <h4 id="reviews" class="mb-4">Değerlendirmeler</h4>
+                                        <h4 class="mb-4">Değerlendirmeler</h4>
                                         @foreach ($book->reviews as $review)
                                             <div class="media mb-4">
                                                 <img src="{{ $review->user->profile_photo_url }}" alt="Image"

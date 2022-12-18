@@ -106,8 +106,7 @@
                     <div class="collapse navbar-collapse justify-content-between" id="navbarCollapse">
                         <div class="navbar-nav mr-auto py-0">
                             <a href="{{ route('home') }}" class="nav-item nav-link">Ana Sayfa</a>
-                            <a href="shop.html" class="nav-item nav-link">İncelemeler</a>
-                            <a href="detail.html" class="nav-item nav-link">Top 10</a>
+                            <a href="top-100" class="nav-item nav-link">Top 100</a>
                             <div class="nav-item dropdown">
                                 <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">Çok Okunan
                                     <i class="fa fa-angle-down mt-1"></i></a>
@@ -120,17 +119,18 @@
                         </div>
                         @auth
                             <div class="navbar-nav ml-auto py-0 d-none d-lg-block">
-                                <a href="{{ route('mybooks') }}" class="mr-5 text-white">Kitaplarım</a>
+                                <a href="{{ route('mybooks') }}" class="text-white mx-4"><i
+                                    class="fas fa-book mx-2 text-primary"></i>Kitaplarım</a>
                                 <a href="" class="btn px-0">
                                     <i class="fas fa-bell text-primary"></i>
                                     <span class="badge text-secondary border border-secondary rounded-circle"
                                         style="padding-bottom: 2px;">0</span>
                                 </a>
-                                <a href="" class="btn px-0 ml-3">
+                                {{-- <a href="" class="btn px-0 ml-3">
                                     <i class="fas fa-book-open text-primary"></i>
-                                    {{--  <span class="badge text-secondary border border-secondary rounded-circle"
-                                    style="padding-bottom: 2px;">0</span> --}}
-                                </a>
+                                     <span class="badge text-secondary border border-secondary rounded-circle"
+                                    style="padding-bottom: 2px;">0</span>
+                                </a> --}}
 
                                 {{-- <a href="" class="btn px-0">
                                 <i class="fas fa-heart text-primary"></i>
