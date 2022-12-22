@@ -1,7 +1,7 @@
 @extends('master')
 
 @section('title')
-    Değerlendirmeni Düzenle | BookReview
+    Değerlendirmeyi Düzenle | BookReview
 @endsection
 
 @section('css')
@@ -9,6 +9,17 @@
 
 @section('main')
     <div class="container-fluid">
+        <!-- Breadcrumb Start -->
+        <div class="row px-xl-5 d-flex justify-content-center">
+            <div class="col-lg-6">
+                <nav class="breadcrumb bg-light mb-30">
+                    <a class="breadcrumb-item text-dark" href="{{ route('mybooks') }}">Kitaplarım</a>
+                    <a class="breadcrumb-item text-dark" href="{{ route('myreviews') }}">Değerlendirmelerim</a>
+                    <span class="breadcrumb-item active text-capitalize">Düzenle</span>
+                </nav>
+            </div>
+        </div>
+        <!-- Breadcrumb End -->
         <div class="row px-xl-5 d-flex justify-content-center">
             <div class="col-lg-6">
                 <h5 class="section-title position-relative text-uppercase mb-3"><span
@@ -67,8 +78,8 @@
                                     <strong>Değerlendirme: </strong>{{ $review->created_at->diffForHumans() }}
                                     <small><i>({{ $review->created_at->format('d.m.Y - H.i') }})</i></small>
                                     @if ($review->created_at != $review->updated_at)
-                                        <span
-                                            class="ml-4"><strong>Güncelleme: </strong>{{ $review->updated_at->diffForHumans() }}
+                                        <span class="ml-4"><strong>Güncelleme:
+                                            </strong>{{ $review->updated_at->diffForHumans() }}
                                             <small><i>({{ $review->updated_at->format('d.m.Y - H.i') }})</i></small>
                                         </span>
                                     @endif

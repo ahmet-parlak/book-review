@@ -16,6 +16,7 @@ class Review extends Model
         'review'
     ];
 
+    //protected $appends = ['main_book_list'];
 
     public function user()
     {
@@ -24,6 +25,11 @@ class Review extends Model
 
     public function book()
     {
-        return $this->belongsTo(Book::class,'book_id');
+        return $this->belongsTo(Book::class, 'book_id');
     }
+
+    /* public function getMainBookListAttribute()
+    {
+        return MainBookList::where('user_id', $this->user_id)->where('book_id', $this->book_id)->first();
+    } */
 }

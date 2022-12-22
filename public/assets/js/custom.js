@@ -49,7 +49,6 @@ reviewForm.on("submit", function (e) {
     }
 })
 
-
 /* Review Form End */
 
 
@@ -138,15 +137,69 @@ removeReviewBtns.on("click", function () {
         }
     })
 
-
 });
-
-
-
 
 /* #My-Books End# */
 
 
+
+/* #My-List Start# */
+/* EditListState Start */
+const listStateSelect = $("#listState"),
+    list = $("#list-edit-form").attr("list"),
+    applyListStateBtn = $(".apply-list-state");
+
+$(listStateSelect).change(function (e) {
+    e.preventDefault();
+    applyListStateBtn.removeClass("d-none");
+});
+
+$(applyListStateBtn).click(function (e) {
+    e.preventDefault();
+    $.post(edit_list_state_ajax_url, { _token: token, list: list, state: $(listStateSelect).val() },
+        function (response) {
+            if (response.state == "success") {
+                Swal.fire({
+                    icon: 'success',
+                    title: 'Başarılı',
+                    text: "Liste görünürlüğü değiştirildi",
+                    showConfirmButton: false,
+                    timer: 1500
+                })
+            }
+        }
+    );
+});
+/* EditList State End */
+
+/* RemoveBookFromList Start */
+const booksRemoveBtns = $("a.remove-book-from-list");
+booksRemoveBtns.click(function (e) {
+    e.preventDefault();
+    console.log($(this).attr('remove'))
+    $.post(remove_book_from_list_ajax_url, { _token: token, list: list, book: $(this).attr('remove') },
+        function (response) {
+            if (response.state == "success") {
+                Swal.fire({
+                    icon: 'success',
+                    title: 'Başarılı',
+                    text: "Kitap listeden kaldırıldı",
+                    showConfirmButton: false,
+                    timer: 1500
+                }).then(() => {
+                    if (response.redirect) {
+                        window.location = response.redirect;
+                    } else {
+                        location.reload()
+                    }
+                })
+            }
+        }
+    );
+});
+/* RemoveBookFromList End */
+
+/* #My-List End# */
 
 
 /* Are You Sure Alert */

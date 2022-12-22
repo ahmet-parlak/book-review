@@ -119,8 +119,8 @@
                         </div>
                         @auth
                             <div class="navbar-nav ml-auto py-0 d-none d-lg-block">
-                                <a href="{{ route('mybooks') }}" class="text-white mx-4"><i
-                                    class="fas fa-book mx-2 text-primary"></i>Kitaplarım</a>
+                                <a href="{{ route('mybooks') }}" class="text-white mx-5"><i
+                                        class="fas fa-book mx-2 text-primary"></i>Kitaplarım</a>
                                 <a href="" class="btn px-0">
                                     <i class="fas fa-bell text-primary"></i>
                                     <span class="badge text-secondary border border-secondary rounded-circle"
@@ -128,7 +128,7 @@
                                 </a>
                                 {{-- <a href="" class="btn px-0 ml-3">
                                     <i class="fas fa-book-open text-primary"></i>
-                                     <span class="badge text-secondary border border-secondary rounded-circle"
+                                    <span class="badge text-secondary border border-secondary rounded-circle"
                                     style="padding-bottom: 2px;">0</span>
                                 </a> --}}
 

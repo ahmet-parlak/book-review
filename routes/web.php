@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Admin;
 use App\Http\Controllers\MainController;
 use App\Http\Controllers\ReviewController;
+use App\Http\Controllers\ListController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -29,11 +30,20 @@ Route::middleware([
     'verified',
 ])->group(function () {
     Route::post('book/{id}/{slug}', [ReviewController::class, 'create'])->name('book.post');
+
     Route::get('mybooks',[MainController::class, 'mybooks'])->name('mybooks');
+
+    Route::get('myreviews',[MainController::class, 'myreviews'])->name('myreviews');
     Route::post('remove-review',[ReviewController::class, 'delete'])->name('review.remove');
     Route::get('edit-review/{id}/{slug}',[ReviewController::class, 'edit'])->name('review.edit');
     Route::post('edit-review/{id}/{slug}',[ReviewController::class, 'update'])->name('review.edit.post');
-
+    
+    Route::get('mylists',[ListController::class, 'mylists'])->name('mylists');
+    Route::get('mylists/{list}',[ListController::class, 'mylist'])->name('mylist');
+    Route::post('mylists/edit-name',[ListController::class, 'editName'])->name('mylist.edit.name');
+    Route::post('mylists/edit-state',[ListController::class, 'editState'])->name('mylist.edit.state');
+    Route::post('mylists/remove-book',[ListController::class, 'removeBook'])->name('mylist.remove.book');
+    
 
 });
 

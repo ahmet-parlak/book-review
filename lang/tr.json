@@ -119,5 +119,8 @@
     "The :attribute must be at least :length characters.": ":attribute minimum :length karakter uzunluğunda olmalıdır.",
     "Don't you have an account?": "Hesabın yok mu?",
     "tr": "Türkçe",
-    "en": "İngilizce"
+    "en": "İngilizce",
+    "read": "okundu",
+    "to read": "okunacak",
+    "currently reading": "şu anda okunuyor"
 }

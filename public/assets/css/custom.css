@@ -1,4 +1,7 @@
 /* General Start */
+div.main{
+    min-height: 900px;
+}
 .small-pp {
     width: 45px;
     height: 45px;

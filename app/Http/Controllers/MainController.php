@@ -7,12 +7,15 @@ use App\Models\Book;
 use App\Models\Publisher;
 use App\Models\Author;
 use App\Models\Review;
+use App\Models\BookLists;
+use App\Models\BookList;
+use App\Models\User;
 use Illuminate\Contracts\Database\Eloquent\Builder;
 
 
 class MainController extends Controller
 {
-    public function home(Request $request)
+    public function home()
     {
         return view('bookReview.home');
     }
@@ -60,8 +63,14 @@ class MainController extends Controller
 
     public function mybooks()
     {
+        $reviews = Review::whereUserId(auth()->user()->id)->with('book')->orderByDesc('created_at')->limit(4)->get();
+        $book_lists = BookLists::where('user_id', auth()->user()->id)->with('books')->limit(5)->get();
+        return view('bookReview.mybooks', compact('reviews', 'book_lists'));
+    }
+
+    public function myreviews()
+    {
         $reviews = Review::whereUserId(auth()->user()->id)->with('book')->orderByDesc('created_at')->paginate(10);
-        //return $reviews;
-        return view('bookReview.mybooks', compact('reviews'));
+        return view('bookReview.myreviews', compact('reviews'));
     }
 }

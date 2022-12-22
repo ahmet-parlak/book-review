@@ -115,5 +115,8 @@
     "This password does not match our records.": "This password does not match our records.",
     "The provided password does not match your current password.": "The provided password does not match your current password.",
     "tr": "Turkhis",
-    "en": "English"
+    "en": "English",
+    "read": "read",
+    "to read": "to read",
+    "currently reading": "currently reading"
 }

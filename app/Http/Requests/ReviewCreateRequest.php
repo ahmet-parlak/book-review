@@ -37,4 +37,11 @@ class ReviewCreateRequest extends FormRequest
             })
         ];
     }
+
+    public function messages()
+    {
+        return[
+            'book.unique' => 'Kitap zaten değerlendirilmiş!'
+        ];
+    }
 }
