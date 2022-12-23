@@ -43,6 +43,8 @@ Route::middleware([
     Route::post('mylists/edit-name',[ListController::class, 'editName'])->name('mylist.edit.name');
     Route::post('mylists/edit-state',[ListController::class, 'editState'])->name('mylist.edit.state');
     Route::post('mylists/remove-book',[ListController::class, 'removeBook'])->name('mylist.remove.book');
+    Route::post('mylists/add-book',[ListController::class, 'addBook'])->name('mylist.add.book');
+    Route::post('mylists/delete-list',[ListController::class, 'deleteList'])->name('mylist.delete.list');
     
 
 });

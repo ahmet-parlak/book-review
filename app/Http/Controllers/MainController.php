@@ -46,7 +46,8 @@ class MainController extends Controller
     public function book($id)
     {
         $book = Book::whereId($id)->with('publisher')->with('reviews')->first() ?? abort(404, 'Kitap Bulunamadı');
-        return view('bookReview.bookDetail', compact('book'));
+        $lists = BookLists::where('user_id', auth()->user()->id)->get();
+        return view('bookReview.bookDetail', compact('book','lists'));
     }
 
     public function publisher($id, $slug)

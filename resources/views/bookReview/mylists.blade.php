@@ -80,6 +80,7 @@
         const edit_list_name_ajax_url = "{{ route('mylist.edit.name') }}",
             edit_list_state_ajax_url = "{{ route('mylist.edit.state') }}",
             remove_book_from_list_ajax_url = "{{ route('mylist.remove.book') }}",
+            delete_list_ajax_url = "{{ route('mylist.delete.list') }}",
             token = "{{ csrf_token() }}";
     </script>
     <script src="{{ asset('assets/js/custom.js') }}"></script>

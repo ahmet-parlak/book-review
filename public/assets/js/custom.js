@@ -94,6 +94,90 @@ function clearStar() {
 }
 /* Rating End */
 
+
+
+/* Lists Start */
+const listSelectBox = $("select.select-list"),
+    listNameInput = $("input.list-name"),
+    addToListBtn = $("a.add-to-list");
+
+
+$(listSelectBox).change(function (e) {
+    e.preventDefault();
+    const selected = $(listSelectBox).val();
+
+
+    switch (selected) {
+        case "create-list":
+            listNameInput.parent().removeClass("d-none");
+            if (listNameInput.val().length > 2) {
+                addToListBtn.removeClass("d-none");
+            } else {
+                addToListBtn.addClass("d-none");
+            }
+            break;
+        case "null":
+            addToListBtn.addClass("d-none");
+            listNameInput.parent().addClass("d-none");
+            break;
+        default:
+            addToListBtn.removeClass("d-none");
+            listNameInput.parent().addClass("d-none");
+            break;
+    }
+});
+
+listNameInput.keyup(function () {
+    if (listNameInput.val().length > 2) {
+        addToListBtn.removeClass("d-none");
+    } else {
+        addToListBtn.addClass("d-none");
+    }
+});
+
+addToListBtn.click(function () {
+    const selected = $(listSelectBox).val();
+    const reg = /^\d+$/; //regex for selected value is list
+    const book = $(listSelectBox).attr("book");
+    let list = null, list_name = null;
+    switch (true) {
+        case (selected == "create-list"):
+            list_name = listNameInput.val();
+            break;
+        case (reg.test(selected)):
+            list = selected;
+            break;
+        default:
+            alert("err")
+            break;
+    }
+
+    $.post(add_to_list_ajax_url, { _token: token, book: book, list: list, list_name: list_name },
+        function (response) {
+            if (response.state == "success") {
+                Swal.fire({
+                    icon: 'success',
+                    title: 'Başarılı',
+                    text: response.message,
+                    showConfirmButton: false,
+                    timer: 1500
+                })
+                if (response.newlist == "true") {
+                    const option = document.createElement("option");
+                    option.value = response.list;
+                    option.innerHTML = list_name;
+                    $("option[value=create-list]").before(option);
+                }
+                $(listSelectBox).val("null").change();
+            }
+        },
+        "json"
+    );
+});
+
+/* Lists End */
+
+
 /* #Book-Detail End# */
 
 
@@ -176,8 +260,8 @@ $(applyListStateBtn).click(function (e) {
 const booksRemoveBtns = $("a.remove-book-from-list");
 booksRemoveBtns.click(function (e) {
     e.preventDefault();
-    console.log($(this).attr('remove'))
-    $.post(remove_book_from_list_ajax_url, { _token: token, list: list, book: $(this).attr('remove') },
+    const btn = $(this);
+    $.post(remove_book_from_list_ajax_url, { _token: token, list: list, book: $(btn).attr('remove') },
         function (response) {
             if (response.state == "success") {
                 Swal.fire({
@@ -186,12 +270,15 @@ booksRemoveBtns.click(function (e) {
                     text: "Kitap listeden kaldırıldı",
                     showConfirmButton: false,
                     timer: 1500
-                }).then(() => {
-                    if (response.redirect) {
-                        window.location = response.redirect;
-                    } else {
-                        location.reload()
-                    }
+                })
+                $(btn).closest('tr').remove();
+            } else if (response.state == "error") {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Hata',
+                    text: response.message,
+                    showConfirmButton: false,
+                    timer: 1500
                 })
             }
         }
@@ -199,11 +286,47 @@ booksRemoveBtns.click(function (e) {
 });
 /* RemoveBookFromList End */
 
+/* DeleteList Start */
+const removeListBtns = $("a.remove-list");
+
+removeListBtns.click(function (e) {
+    const btn = $(this);
+    const list = btn.attr('remove');
+    areYouSure("Dikkat!", "Liste ve listede bulunan kitaplar kaldırılacak. Bu işlem geri alınamaz.", "Kaldır").then((result) => {
+        if (result.isConfirmed) {
+            $.post(delete_list_ajax_url, { _token: token, list: list },
+                function (response) {
+                    if (response.state == "success") {
+                        Swal.fire({
+                            icon: 'success',
+                            title: 'Başarılı',
+                            text: response.message,
+                            showConfirmButton: false,
+                            timer: 1500
+                        })
+                        $(btn).closest('tr').remove();
+                    } else if (response.state == "error") {
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'Hata',
+                            text: response.message,
+                            showConfirmButton: false,
+                            timer: 1500
+                        })
+                    }
+                }
+            );
+        }
+    });
+});
+/* DeleteList End */
+
+
 /* #My-List End# */
 
 
 /* Are You Sure Alert */
-function areYouSure(title, text, confirmBtn) {
+function areYouSure(title = "Dikkat", text, confirmBtn = "Onayla") {
     return Swal.fire({
         title: title,
         text: text,

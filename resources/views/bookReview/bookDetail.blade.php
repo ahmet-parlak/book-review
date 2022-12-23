@@ -88,28 +88,39 @@
                             </div>
                         @endif
                         <div class="row">
-                            <div class="col-6 d-flex pt-2">
-                                <div class="d-inline-flex">
-                                    {{-- <a href="#review-sec" class="nav-item nav-link text-dark px-2">
-                                        <i class="fa fa-pen"> </i>
-                                    </a>
-                                    <a href="#review-sec" class="nav-item nav-link text-dark px-2">
-                                        <i class="fa fa-star"></i>
-                                    </a> --}}
+                            <div class="col-8 d-flex pt-2">
+                                <div>
+                                    <div class="d-inline-flex">
+                                        <select name="add-to-list" book="{{$book->id}}" class="select-list custom-select text-capitalize"
+                                            style="width: 225px">
+                                            <option value="null">Listeye Ekle</option>
+                                            @foreach ($lists as $list)
+                                                <option value="{{ $list->id }}" class="">
+                                                    {{ __($list->list_name) }}</option>
+                                            @endforeach
+                                            <option value="create-list">Yeni Liste Oluştur</option>
+                                        </select>
+                                    </div>
+                                    <div class="form-input d-none my-2">
+                                        <input class="list-name form-control" name="list_name" type="text"
+                                            placeholder="Liste Adı">
+                                    </div>
                                 </div>
+                                <a
+                                    class="d-none add-to-list text-decoration-none align-self-center mx-4 btn-sm btn-warning px-3 text-uppercase">Ekle</a>
                             </div>
-                            <div class="col-6 d-flex justify-content-end pt-2">
+                            <div class="col-4 d-flex justify-content-end pt-2">
                                 <div class="d-inline-flex">
                                     @auth
                                         @if (auth()->user()->type == 'admin')
                                             <a href="{{ route('books.edit', $book->id) }}"
-                                                class="text-dark px-2 align-self-end">
+                                                class="text-dark px-2 align-self-center">
                                                 Düzenle
                                             </a>
                                         @endif
                                     @endauth
 
-                                    <a href="" class="text-dark px-2 align-self-end">
+                                    <a href="" class="text-dark px-2 align-self-center">
                                         Hata Bildir
                                     </a>
                                 </div>
@@ -423,5 +434,9 @@
 @endsection
 
 @section('js')
+    <script>
+        const add_to_list_ajax_url = "{{ route('mylist.add.book') }}",
+            token = "{{ csrf_token() }}";
+    </script>
     <script src="{{ asset('assets/js/custom.js') }}"></script>
 @endsection
