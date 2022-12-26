@@ -25,7 +25,7 @@ class ListController extends Controller
     {
         if (strlen($request->input('listName')) >= 3) {
             $list = BookLists::whereId($request->input('list'))->where('user_id', auth()->user()->id);
-            if ($list->count()) {
+            if ($list->count() && !in_array($list->first()->list_name, ['read', 'to read', 'currently reading'])) {
                 $ls = BookLists::where('user_id', auth()->user()->id)->where('list_name', $request->input('listName'));
                 //if the user does not have a list with the same name
                 if ($ls->count() == 0) {

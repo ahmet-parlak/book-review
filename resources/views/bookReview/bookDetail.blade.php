@@ -88,42 +88,45 @@
                             </div>
                         @endif
                         <div class="row">
-                            <div class="col-8 d-flex pt-2">
-                                <div>
-                                    <div class="d-inline-flex">
-                                        <select name="add-to-list" book="{{$book->id}}" class="select-list custom-select text-capitalize"
-                                            style="width: 225px">
-                                            <option value="null">Listeye Ekle</option>
-                                            @foreach ($lists as $list)
-                                                <option value="{{ $list->id }}" class="">
-                                                    {{ __($list->list_name) }}</option>
-                                            @endforeach
-                                            <option value="create-list">Yeni Liste Oluştur</option>
-                                        </select>
+                            @auth
+                                <!-- Add to List -->
+                                <div class="col-8 d-flex pt-2">
+                                    <div>
+                                        <div class="d-inline-flex">
+                                            <select name="add-to-list" book="{{ $book->id }}"
+                                                class="select-list custom-select text-capitalize" style="width: 225px">
+                                                <option value="null">Listeye Ekle</option>
+                                                @foreach ($lists as $list)
+                                                    <option value="{{ $list->id }}" class="">
+                                                        {{ __($list->list_name) }}</option>
+                                                @endforeach
+                                                <option value="create-list">Yeni Liste Oluştur</option>
+                                            </select>
+                                        </div>
+                                        <div class="form-input d-none my-2">
+                                            <input class="list-name form-control" name="list_name" type="text"
+                                                autocomplete="off" placeholder="Liste Adı">
+                                        </div>
                                     </div>
-                                    <div class="form-input d-none my-2">
-                                        <input class="list-name form-control" name="list_name" type="text" autocomplete="off"
-                                            placeholder="Liste Adı">
-                                    </div>
+                                    <a
+                                        class="d-none add-to-list text-decoration-none align-self-center mx-4 btn-sm btn-warning px-3 text-uppercase">Ekle</a>
                                 </div>
-                                <a
-                                    class="d-none add-to-list text-decoration-none align-self-center mx-4 btn-sm btn-warning px-3 text-uppercase">Ekle</a>
-                            </div>
-                            <div class="col-4 d-flex justify-content-end pt-2">
-                                <div class="d-inline-flex">
-                                    @auth
-                                        @if (auth()->user()->type == 'admin')
-                                            <a href="{{ route('books.edit', $book->id) }}"
-                                                class="text-dark px-2 align-self-center">
-                                                Düzenle
-                                            </a>
-                                        @endif
-                                    @endauth
+                            @endauth
+                        </div>
+                        <div class="col-12 d-flex justify-content-end pt-2">
+                            <div class="d-inline-flex">
+                                @auth
+                                    @if (auth()->user()->type == 'admin')
+                                        <a href="{{ route('books.edit', $book->id) }}"
+                                            class="text-dark px-2 align-self-center">
+                                            Düzenle
+                                        </a>
+                                    @endif
+                                @endauth
 
-                                    <a href="" class="text-dark px-2 align-self-center">
-                                        Hata Bildir
-                                    </a>
-                                </div>
+                                <a href="" class="text-dark px-2 align-self-center">
+                                    Hata Bildir
+                                </a>
                             </div>
                         </div>
 
@@ -233,10 +236,14 @@
                                         <h4 class="mb-4">Değerlendirmeler</h4>
                                         @foreach ($book->reviews as $review)
                                             <div class="media mb-4">
-                                                <img src="{{ $review->user->profile_photo_url }}" alt="Image"
-                                                    class="small-pp img-fluid mr-3 mt-1 rounded-circle shadow-4-strong">
+                                                <a href="{{ route('user', [$review->user->id, $review->user->name]) }}">
+                                                    <img src="{{ $review->user->profile_photo_url }}" alt="Image"
+                                                        class="small-pp img-fluid mr-3 mt-1 rounded-circle shadow-4-strong"
+                                                        onerror="this.src='{{ asset('storage/books/default.png') }}'"></a>
                                                 <div class="media-body">
-                                                    <h6>{{ $review->user->name }}<small> -
+                                                    <h6><a href="{{ route('user', [$review->user->id, $review->user->name]) }}"
+                                                            class="text-dark">{{ $review->user->name }}</a><small>
+                                                            -
                                                             <i
                                                                 title="{{ $review->created_at->format('d.m.Y') }}">{{ $review->created_at->diffForHumans() }}</i>
                                                             @if ($review->created_at != $review->updated_at)

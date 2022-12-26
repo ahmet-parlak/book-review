@@ -35,6 +35,8 @@
                             <th>Liste</th>
                             <th>Oluşturuldu</th>
                             <th>Güncellendi</th>
+                            <th>Durum</th>
+                            <th>Düzenle</th>
                             <th>Kaldır</th>
                         </thead>
                         <tbody class="align-middle">
@@ -54,6 +56,24 @@
                                     <td class="align-middle"
                                         title="{{ $list->updated_at ? $list->updated_at->format('d.m.Y (H:i)') : '' }}">
                                         {{ $list->updated_at ? $list->updated_at->diffForHumans() : '' }}
+                                    </td>
+                                    <td class="align-middle">
+                                        @switch($list->status)
+                                            @case('private')
+                                                Gizli
+                                            @break
+
+                                            @case('public')
+                                                Herkese Açık
+                                            @break
+
+                                            @default
+                                        @endswitch
+                                    </td>
+                                    <td class="align-middle">
+                                        <a href="{{ route('mylist', [$list->id, $list->list_name]) }}"
+                                            class="fa fa-edit text-lg text-decoration-none text-dark align-middle pointer"
+                                            title="Düzenle"></a>
                                     </td>
                                     <td class="align-middle">
                                         @if (!in_array($list->list_name, ['read', 'to read', 'currently reading']))

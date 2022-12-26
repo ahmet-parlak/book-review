@@ -22,6 +22,8 @@ Route::get('search', [MainController::class, 'search'])->name('search');
 Route::get('book/{id}/{slug}', [MainController::class, 'book'])->name('book');
 Route::get('publisher/{id}/{slug}', [MainController::class, 'publisher'])->name('publisher');
 Route::get('author/{id}/{slug}', [MainController::class, 'author'])->name('author');
+Route::get('user/{id}/{name}', [MainController::class, 'user'])->name('user');
+Route::get('list/{id}/{name}', [MainController::class, 'list'])->name('list');
 
 /* User Logined */
 Route::middleware([

@@ -46,8 +46,8 @@ class MainController extends Controller
     public function book($id)
     {
         $book = Book::whereId($id)->with('publisher')->with('reviews')->first() ?? abort(404, 'Kitap Bulunamadı');
-        $lists = BookLists::where('user_id', auth()->user()->id)->get();
-        return view('bookReview.bookDetail', compact('book','lists'));
+        $lists = BookLists::where('user_id', auth()->user()->id ?? 0)->get();
+        return view('bookReview.bookDetail', compact('book', 'lists'));
     }
 
     public function publisher($id, $slug)
@@ -73,5 +73,21 @@ class MainController extends Controller
     {
         $reviews = Review::whereUserId(auth()->user()->id)->with('book')->orderByDesc('created_at')->paginate(10);
         return view('bookReview.myreviews', compact('reviews'));
+    }
+
+    public function user($id, $name)
+    {
+        $user = User::find($id) ?? abort(404, "KULLANICI BULUNAMADI");
+        $reviews = Review::where('user_id', $id)->with('book')->get();
+        $lists = BookLists::where('user_id', $id)->with('books')->where('status', 'public')->get();
+        //return $lists;
+        return view('bookReview.user', compact('user', 'reviews', 'lists'));
+    }
+
+    public function list($id, $name)
+    {
+        $list = BookLists::whereId($id)->with('books.book')->with('user')->where('status', 'public')->first();
+        //return $list;
+        return view('bookReview.list', compact('list'));
     }
 }

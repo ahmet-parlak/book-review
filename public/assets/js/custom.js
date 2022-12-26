@@ -258,9 +258,9 @@ $(applyListStateBtn).click(function (e) {
                     text: "Liste görünürlüğü değiştirildi",
                     showConfirmButton: false,
                     timer: 1500
-                }).then(function () { 
+                }).then(function () {
                     applyListStateBtn.addClass("d-none")
-                 })
+                })
             }
         }
     );
