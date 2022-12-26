@@ -15,15 +15,31 @@ class ListController extends Controller
         return view('bookReview.mylists', compact('lists'));
     }
 
-    public function mylist($list)
+    public function mylist($id, $name)
     {
-        $list = BookLists::where('user_id', auth()->user()->id)->where('list_name', $list)->with('books.book.publisher')->first() ?? abort(404, "LİSTE BULUNAMADI");
+        $list = BookLists::where('user_id', auth()->user()->id)->where('id', $id)->with('books.book.publisher')->first() ?? abort(404, "LİSTE BULUNAMADI");
         return view('bookReview.mylist', compact('list'));
     }
 
     public function editName(Request $request)
     {
-        return $request->input('name');
+        if (strlen($request->input('listName')) >= 3) {
+            $list = BookLists::whereId($request->input('list'))->where('user_id', auth()->user()->id);
+            if ($list->count()) {
+                $ls = BookLists::where('user_id', auth()->user()->id)->where('list_name', $request->input('listName'));
+                //if the user does not have a list with the same name
+                if ($ls->count() == 0) {
+                    $list->update(['list_name' => $request->input('listName')]);
+                    return response()->json(["state" => "success", "message" => "Liste başlığı güncellendi."], 200);
+                } else {
+                    return response()->json(["state" => "error", "message" => "Bu isimde bir listeniz mevcut!"], 200);
+                }
+            } else {
+                return response()->json(["state" => "error", "message" => "Liste bulunamadı"], 200);
+            }
+        } else {
+            return response()->json(["state" => "error", "message" => "Bad request"], 200);
+        }
     }
 
     public function editState(Request $request)

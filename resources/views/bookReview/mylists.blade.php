@@ -42,7 +42,7 @@
                                 <tr>
                                     <td class="align-middle">
                                         <a class="text-dark text-decoration-none"
-                                            href="{{ route('mylist', $list->list_name) }}" title="Listeye Git">
+                                            href="{{ route('mylist', [$list->id, $list->list_name]) }}" title="Listeye Git">
                                             {!! Str::ucfirst(__($list->list_name)) !!}
                                         </a>
                                         <span class="badge badge-primary badge-pill mx-2">{{ count($list->books) }}</span>

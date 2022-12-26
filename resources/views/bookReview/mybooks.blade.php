@@ -33,7 +33,7 @@
                             <ul class="list-group list-group-flush user-select-none">
                                 @foreach ($book_lists as $list)
                                     <li class="list-group-item d-flex align-items-center text-capitalize">
-                                        <a href="{{ route('mylist', $list->list_name) }}" class="text-dark"
+                                        <a href="{{ route('mylist',[$list->id, $list->list_name]) }}" class="text-dark"
                                             title="Listeye Git">{!! __($list->list_name) !!}
                                         </a>
                                         <span class="badge badge-primary badge-pill mx-2">{{ count($list->books) }}</span>

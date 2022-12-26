@@ -102,7 +102,7 @@
                                         </select>
                                     </div>
                                     <div class="form-input d-none my-2">
-                                        <input class="list-name form-control" name="list_name" type="text"
+                                        <input class="list-name form-control" name="list_name" type="text" autocomplete="off"
                                             placeholder="Liste Adı">
                                     </div>
                                 </div>

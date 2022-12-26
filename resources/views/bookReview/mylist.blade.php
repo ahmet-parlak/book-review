@@ -8,7 +8,6 @@
 @endsection
 
 @section('main')
-
     <div class="">
         <div class="row mt-5 px-xl-5">
             <div class="col-lg-8 offset-2 table-responsive mb-5">
@@ -25,37 +24,52 @@
                     </div>
                 </div>
                 <!-- Breadcrumb End -->
+
                 <div class="header mb-2">
-                    <h5 class="section-title position-relative text-uppercase mb-3"><span
-                            class="bg-secondary pr-3">{!! __($list->list_name) !!}</span></h5>
-                    <div class="jumbotron p-4 mb-2">
-                        <form id="list-edit-form" list="{{ $list->id }}">
+                    <h5 class="section-title position-relative text-uppercase mb-3"><span class="bg-secondary pr-3">
                             @if (!in_array($list->list_name, ['read', 'to read', 'currently reading']))
-                                <div class="form-group d-flex mb-0">
-                                    <div class="col-sm-6 px-0">
-                                        <input type="text" readonly class="form-control" id="listName"
-                                            placeholder="{!! __($list->list_name) !!}">
-                                    </div>
-                                </div>
+                                <i class="edit-list-name fa fa-edit mr-2 text-shadow-1" title="Başlığı düzenle"></i>
                             @endif
-                            <div class="form-group d-flex align-middle mb-0">
-                                <div class="col-sm-6 px-0">
-                                    <select class="custom-select form-control" id="listState">
-                                        <option value="private" @selected($list->status == 'private')>Gizli</option>
-                                        <option value="public" @selected($list->status == 'public')>Herkese Açık</option>
-                                    </select>
-                                </div>
-                                <a class="text-dark col-form-label ml-3 d-none apply-list-state mx-4">Uygula</a>
-                                <label for="listState" class="col-form-label mx-4">Herkese açık listeler profilinizde
-                                    gösterilir.</label>
+                            {!! __($list->list_name) !!}
+                        </span> </h5>
+                    <div class="jumbotron px-4 pt-4 pb-3 mb-2">
+                        <div class="row">
+                            <div class="col-10">
+                                <form id="list-edit-form" list="{{ $list->id }}">
+                                    @if (!in_array($list->list_name, ['read', 'to read', 'currently reading']))
+                                        <div class="form-group d-flex mb-1">
+                                            <div class="col-6 px-0">
+                                                <input type="text" class="form-control edit-list-name"
+                                                    placeholder="Liste Başlığı" style="display:none">
+                                            </div>
+                                            <a
+                                                class="btn-sm btn-primary align-self-center text-dark col-form-label ml-3 d-none edit-list-name-apply font-weight-bold mx-4">Uygula</a>
+                                        </div>
+                                    @endif
+                                    <div class="form-group d-flex align-middle mb-0">
+                                        <div class="col-6 px-0">
+                                            <select class="custom-select form-control" id="listState">
+                                                <option value="private" @selected($list->status == 'private')>Gizli</option>
+                                                <option value="public" @selected($list->status == 'public')>Herkese Açık</option>
+                                            </select>
+                                        </div>
+                                        <a
+                                            class="btn-sm btn-primary col-form-label ml-3 d-none apply-list-state text-center align-self-center font-weight-bold text-dark">Uygula</a>
+                                    </div>
+                                    <p class="my-0 py-0 px-1">Profilinizi ziyaret eden kişiler herkese açık listelerinizi
+                                        görebilir.</p>
+
+                                </form>
+                            </div>
+                            <div class="col-2 align-self-center">
                                 <div class="text-right">
                                     @if (!in_array($list->list_name, ['read', 'to read', 'currently reading']))
-                                        <a class="btn btn-danger">Listeyi Kaldır</a>
+                                        <a class="remove-list btn btn-danger" remove="{{ $list->id }}">Listeyi
+                                            Kaldır</a>
                                     @endif
                                 </div>
                             </div>
-
-                        </form>
+                        </div>
                     </div>
                 </div>
                 @if ($list->books->count())
@@ -151,7 +165,9 @@
         const edit_list_name_ajax_url = "{{ route('mylist.edit.name') }}",
             edit_list_state_ajax_url = "{{ route('mylist.edit.state') }}",
             remove_book_from_list_ajax_url = "{{ route('mylist.remove.book') }}",
-            token = "{{ csrf_token() }}";
+            delete_list_ajax_url = "{{ route('mylist.delete.list') }}",
+            token = "{{ csrf_token() }}",
+            mylists_url = "{{ route('mylists') }}";
     </script>
     <script src="{{ asset('assets/js/custom.js') }}"></script>
 @endsection

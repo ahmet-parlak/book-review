@@ -110,6 +110,7 @@ $(listSelectBox).change(function (e) {
     switch (selected) {
         case "create-list":
             listNameInput.parent().removeClass("d-none");
+            $(listNameInput).focus();
             if (listNameInput.val().length > 2) {
                 addToListBtn.removeClass("d-none");
             } else {
@@ -169,6 +170,7 @@ addToListBtn.click(function () {
                     $("option[value=create-list]").before(option);
                 }
                 $(listSelectBox).val("null").change();
+                listNameInput.val("");
             }
         },
         "json"
@@ -227,7 +229,14 @@ removeReviewBtns.on("click", function () {
 
 
 
+
 /* #My-List Start# */
+const listEditForm = $("form[id=list-edit-form]");
+$(listEditForm).submit(function (e) {
+    e.preventDefault();
+
+});
+
 /* EditListState Start */
 const listStateSelect = $("#listState"),
     list = $("#list-edit-form").attr("list"),
@@ -249,7 +258,9 @@ $(applyListStateBtn).click(function (e) {
                     text: "Liste görünürlüğü değiştirildi",
                     showConfirmButton: false,
                     timer: 1500
-                })
+                }).then(function () { 
+                    applyListStateBtn.addClass("d-none")
+                 })
             }
         }
     );
@@ -286,6 +297,54 @@ booksRemoveBtns.click(function (e) {
 });
 /* RemoveBookFromList End */
 
+
+/* EditListName Start */
+const editListNameBtn = $("i.edit-list-name"),
+    editListNameInput = $("input.edit-list-name"),
+    editListNameApply = $("a.edit-list-name-apply");
+
+editListNameBtn.click(function () {
+    $(editListNameInput).show();
+    $(editListNameInput).focus();
+});
+
+$(editListNameInput).keyup(function (e) {
+    if ($(editListNameInput).val().length >= 3) {
+        $(editListNameApply).removeClass('d-none');
+    }
+});
+
+$(editListNameApply).click(function () {
+    if ($(editListNameInput).val().length >= 3) {
+        $.post(edit_list_name_ajax_url, { _token: token, list: list, listName: $(editListNameInput).val() },
+            function (response) {
+                if (response.state == "success") {
+                    Swal.fire({
+                        icon: 'success',
+                        title: 'Başarılı',
+                        text: response.message,
+                        showConfirmButton: false,
+                        timer: 1500
+                    }).then(() => {
+                        location.reload();
+                    })
+
+                } else if (response.state == "error") {
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Hata',
+                        text: response.message,
+                        showConfirmButton: false,
+                        timer: 1500
+                    })
+                }
+            }
+        );
+    }
+});
+/* EditListName End */
+
+
 /* DeleteList Start */
 const removeListBtns = $("a.remove-list");
 
@@ -304,7 +363,12 @@ removeListBtns.click(function (e) {
                             showConfirmButton: false,
                             timer: 1500
                         })
-                        $(btn).closest('tr').remove();
+                        if ($(location).attr("href").split('/')[4]) {
+                            location.href = mylists_url;
+                        } else {
+                            $(btn).closest('tr').remove();
+                        }
+
                     } else if (response.state == "error") {
                         Swal.fire({
                             icon: 'error',
@@ -320,7 +384,6 @@ removeListBtns.click(function (e) {
     });
 });
 /* DeleteList End */
-
 
 /* #My-List End# */
 
