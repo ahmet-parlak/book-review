@@ -19,6 +19,7 @@
                 <div class="col-lg-8 h-auto mb-30">
                     <div class="h-100 bg-light p-30">
                         <h3>{{ $book->title }}</h3>
+                        <!-- Book Rating -->
                         <div class="d-flex mb-3 user-select-none">
                             <div class="text-primary mr-2">
                                 @for ($i = 0; $i < floor($book->rating); $i++)
@@ -33,6 +34,7 @@
                             </div>
                             <small class="pt-1">({{ $book->review_count }} Değerlendirme)</small>
                         </div>
+                        <!-- Book Rating -->
                         {{-- <h5 class="font-weight-semi-bold mb-4">Yazar: <small class="font-weight-normal"><a href=""
                                     class="text-dark">{{ $book->author->author_name }}</a></small></h5>
                         <h5 class="font-weight-semi-bold mb-4">Yayınevi: <small class="font-weight-normal"><a href=""

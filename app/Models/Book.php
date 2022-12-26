@@ -88,6 +88,5 @@ class Book extends Model
         return $this->hasMany(Review::class, 'book_id')->with('user')->orderByRaw('FIELD(user_id,'.$auth_user_id.') DESC')->orderBy('created_at', 'DESC');
     }
 
-
     
 }

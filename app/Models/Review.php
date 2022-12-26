@@ -27,9 +27,4 @@ class Review extends Model
     {
         return $this->belongsTo(Book::class, 'book_id');
     }
-
-    /* public function getMainBookListAttribute()
-    {
-        return MainBookList::where('user_id', $this->user_id)->where('book_id', $this->book_id)->first();
-    } */
 }

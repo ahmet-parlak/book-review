@@ -55,6 +55,14 @@ a:hover {
 /* General End */
 
 
+/* Home Start */
+img.home-book {
+    height: 360px;
+}
+
+/* Home End */
+
+
 /* Search Page Start */
 .product-img {
     background: transparent url("../../loading.svg") no-repeat scroll center center;
@@ -165,7 +173,7 @@ img.user-pp {
     border-radius: 50%;
 }
 
-img.book-sm{
+img.book-sm {
     width: 50px;
     height: 80px;
 }

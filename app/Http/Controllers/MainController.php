@@ -10,6 +10,10 @@ use App\Models\Review;
 use App\Models\BookLists;
 use App\Models\BookList;
 use App\Models\User;
+use Illuminate\Support\Carbon;
+use Illuminate\Support\Facades\DB;
+
+
 use Illuminate\Contracts\Database\Eloquent\Builder;
 
 
@@ -17,7 +21,13 @@ class MainController extends Controller
 {
     public function home()
     {
-        return view('bookReview.home');
+        $trendBooks = Review::select('*', DB::raw('count(*) as total'))
+            ->groupBy('book_id')
+            ->whereDate('created_at', '>=', Carbon::now()->subDays(30))
+            ->orderByDesc('total')
+            ->with('book')->limit(6)->get();
+        $newBooks = Book::latest('id')->limit(6)->get();
+        return view('bookReview.home', compact('newBooks', 'trendBooks'));
     }
 
 

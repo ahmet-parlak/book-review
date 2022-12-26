@@ -119,13 +119,17 @@
                         </div>
                         @auth
                             <div class="navbar-nav ml-auto py-0 d-none d-lg-block">
-                                <a href="{{ route('mybooks') }}" class="text-white mx-5"><i
+                                <a href="{{ route('mybooks') }}" class="text-white mx-3"><i
                                         class="fas fa-book mx-2 text-primary"></i>Kitaplarım</a>
-                                <a href="" class="btn px-0">
+                                <a href="{{ route('myreviews') }}" class="text-white mx-3"><i
+                                        class="fas fa-star mx-2 text-primary"></i>Değerlendirmelerim</a>
+                                <a href="{{ route('mylists') }}" class="text-white mx-3"><i
+                                        class="fas fa-list-alt mx-2 text-primary"></i>Listelerim</a>
+                                {{-- <a href="" class="btn px-0">
                                     <i class="fas fa-bell text-primary"></i>
                                     <span class="badge text-secondary border border-secondary rounded-circle"
                                         style="padding-bottom: 2px;">0</span>
-                                </a>
+                                </a> --}}
                                 {{-- <a href="" class="btn px-0 ml-3">
                                     <i class="fas fa-book-open text-primary"></i>
                                     <span class="badge text-secondary border border-secondary rounded-circle"
