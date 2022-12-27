@@ -10,6 +10,7 @@ use App\Models\Review;
 use App\Models\BookLists;
 use App\Models\BookList;
 use App\Models\User;
+use App\Models\BookRequest;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\DB;
 
@@ -99,5 +100,43 @@ class MainController extends Controller
         $list = BookLists::whereId($id)->with('books.book')->with('user')->where('status', 'public')->first();
         //return $list;
         return view('bookReview.list', compact('list'));
+    }
+
+
+    public function bookRequest()
+    {
+        return view('bookReview.book-request');
+    }
+
+    public function createBookRequest(Request $request)
+    {
+        /* Validation */
+        $rules = [
+            "isbn" => "required|numeric|digits:13|unique:App\Models\Book,isbn",
+            "title" => "required|max:500",
+            "author" => "nullable|max:500",
+            "publisher" => "nullable|max:500"
+        ];
+        $messages = ['unique' => 'Bu :attribute sistemde zaten mevcut.'];
+        $attributes = ['isbn' => 'ISBN', 'title' => 'Kitap Başlığı', 'author' => 'Yazar', 'publisher' => 'Yayınevi'];
+
+        $request->validate($rules, $messages, $attributes);
+        /* Validation */
+
+        /* Duplicate Control */
+        $book_request =  BookRequest::where('user_id', auth()->user()->id)->where('isbn', $request->input('isbn'));
+        if ($book_request->count()) {
+            return back()->withSuccess('Talebiniz alınmış.');
+        }
+        /* Duplicate Control */
+
+        /* Store */
+        $request->merge([
+            'user_id' => auth()->user()->id
+        ]);
+        BookRequest::create($request->except('_token'));
+        /* Store */
+
+        return back()->withSuccess('Talebiniz alındı');
     }
 }

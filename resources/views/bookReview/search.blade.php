@@ -78,19 +78,21 @@
                                 {{-- <button class="btn btn-sm btn-light"><i class="fa fa-th-large"></i></button>
                                 <button class="btn btn-sm btn-light ml-2"><i class="fa fa-bars"></i></button> --}}
 
-                                <p>{{ request()->input('search') }} ile ilgili {{ $books->total() }} sonuç bulundu.</p>
+                                <p><span class="font-italic mr-2">{{ request()->input('search') }} </span> ile ilgili
+                                    {{ $books->total() }} sonuç bulundu</p>
                                 <p></p>
                             </div>
-                            <div class="ml-2">
-                                <div class="btn-group">
-                                    <button type="button" class="btn btn-sm btn-light dropdown-toggle"
-                                        data-toggle="dropdown">Sırala</button>
-                                    <div class="dropdown-menu dropdown-menu-right">
-                                        <a class="dropdown-item" href="#">Popülerlik</a>
-                                        <a class="dropdown-item" href="#">Puan</a>
+                            @if ($books->total())
+                                <div class="ml-2">
+                                    <div class="btn-group">
+                                        <button type="button" class="btn btn-sm btn-light dropdown-toggle"
+                                            data-toggle="dropdown">Sırala</button>
+                                        <div class="dropdown-menu dropdown-menu-right">
+                                            <a class="dropdown-item" href="#">Popülerlik</a>
+                                            <a class="dropdown-item" href="#">Puan</a>
+                                        </div>
                                     </div>
-                                </div>
-                                {{-- <div class="btn-group ml-2">
+                                    {{-- <div class="btn-group ml-2">
                                     <button type="button" class="btn btn-sm btn-light dropdown-toggle"
                                         data-toggle="dropdown">Showing</button>
                                     <div class="dropdown-menu dropdown-menu-right">
@@ -99,7 +101,8 @@
                                         <a class="dropdown-item" href="#">30</a>
                                     </div>
                                 </div> --}}
-                            </div>
+                                </div>
+                            @endif
                         </div>
                     </div>
                     <!-- Sorting End -->
@@ -138,7 +141,9 @@
                                         @endisset
                                     </div>
                                     <div>
-                                        <p class="mb-3" title="{{$book->publisher->publisher_name}}"><small>{{Str::limit($book->publisher->publisher_name,'22','...')}}</small></p>
+                                        <p class="mb-3" title="{{ $book->publisher->publisher_name }}">
+                                            <small>{{ Str::limit($book->publisher->publisher_name, '22', '...') }}</small>
+                                        </p>
                                     </div>
                                     <div class="d-flex align-items-center justify-content-center mb-1">
                                         @for ($i = 0; $i < floor($book->rating); $i++)
@@ -157,7 +162,25 @@
                         </div>
                     @endforeach
                     <!-- Item End -->
+                    @if ($books->total() == 0)
+                        <div class="col-12 text-center">
+                            <div class="alert alert-warning font-weight-bold" role="alert">
+                                Aradığınız kitap bulunamadı. ISBN ile aramayı deneyebilir ya da kitabın sisteme eklenmesi
+                                için talepte bulunabilirsiniz.
+                                @auth
+                                    <div class="col-12 text-center mt-2">
+                                        <a href="{{ route('book-request') }}" class="btn-sm btn-success">Kitap İsteği Oluştur</a>
+                                    </div>
+                                @else
+                                <div class="col-12 text-center mt-2">
+                                    <a href="" class="btn-sm btn-success">İstek Oluşturmak İçin Giriş Yapın</a>
+                                </div>
+                                @endauth
+                            </div>
 
+
+                        </div>
+                    @endif
                     <!-- Pagination Start -->
                     <div class="col-12 d-flex justify-content-center">
                         {{ $books->links('vendor.pagination.bootstrap-4') }}
@@ -170,5 +193,4 @@
         </div>
     </div>
     <!-- Shop End -->
-    
 @endsection

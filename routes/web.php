@@ -47,6 +47,9 @@ Route::middleware([
     Route::post('mylists/remove-book', [ListController::class, 'removeBook'])->name('mylist.remove.book');
     Route::post('mylists/add-book', [ListController::class, 'addBook'])->name('mylist.add.book');
     Route::post('mylists/delete-list', [ListController::class, 'deleteList'])->name('mylist.delete.list');
+
+    Route::get('book-request', [MainController::class, 'bookRequest'])->name('book-request');
+    Route::post('book-request', [MainController::class, 'createBookRequest']);
 });
 
 
