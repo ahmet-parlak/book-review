@@ -17,7 +17,7 @@ class ReviewController extends Controller
     public function create(ReviewCreateRequest $request)
     {
         Review::create(['user_id' => Auth::id(), 'book_id' => $request->book, 'rating' => $request->rating, 'review' => $request->review]);
-        $readList=BookLists::where('user_id',Auth::id())->where('list_name','read')->first();
+        $readList = BookLists::where('user_id', Auth::id())->where('list_name', 'read')->first();
         BookList::firstOrCreate(['list_id' => $readList->id, 'book_id' => $request->book]);
         return redirect()->back()->withSuccess("Değerlendirmeniz alındı");
     }
@@ -36,12 +36,18 @@ class ReviewController extends Controller
                 /* If delete request came from edit-request page */
                 $request_came_from =  $request->session()->get('_previous')['url'];
                 $path = explode('/', $request_came_from);
-                if (in_array("edit-review", $path)) {
+                /* if (in_array("edit-review", $path)) {
+                    return response()->json(["state" => "success", "message" => "review deleted", 'redirect' => route('mybooks')], 200);
+                } */
+
+                if (in_array("myreviews", $path)) {
+                    return response()->json(["state" => "success", "message" => "review deleted"], 200);
+                } else {
                     return response()->json(["state" => "success", "message" => "review deleted", 'redirect' => route('mybooks')], 200);
                 }
 
 
-                return response()->json(["state" => "success", "message" => "review deleted"], 200);
+                //return response()->json(["state" => "success", "message" => "review deleted"], 200);
             } else {
                 return response()->json(["state" => "error", "message" => "review not found"], 200);
             }

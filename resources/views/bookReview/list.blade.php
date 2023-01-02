@@ -107,7 +107,7 @@
                         </tbody>
                     </table>
                 @else
-                    <div class="alert alert-info text-center text-lg">Bu listeye henüz kitap eklemediniz.
+                    <div class="alert alert-info text-center text-lg">Bu listede henüz kitap bulunmuyor.
                     </div>
                 @endif
 

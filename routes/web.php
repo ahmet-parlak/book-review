@@ -53,6 +53,7 @@ Route::middleware([
 });
 
 
+
 /* Admin Panel */
 Route::group(['middleware' => ['auth', 'isAdmin'], 'prefix' => 'admin'], function () {
     Route::get('panel', [Admin\Dashboard::class, 'index'])->name('dashboard');
@@ -68,4 +69,6 @@ Route::group(['middleware' => ['auth', 'isAdmin'], 'prefix' => 'admin'], functio
 
     Route::get('fetch-books', [Admin\FetchBooks::class, 'index']);
     Route::post('fetch-books', [Admin\FetchBooks::class, 'fetch'])->name('fetchbooks');
+
+    Route::get('user/book-requests', [Admin\User\BookRequestController::class, 'index'])->name('user.book-requests.index');
 });;
