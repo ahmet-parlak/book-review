@@ -102,7 +102,7 @@
                         </tbody>
                     </table>
                 @else
-                    <div class="col-8 offset-2 alert alert-warning text-center text-lg font-weight-bold">Kitap bulunamadı
+                    <div class="col-8 offset-2 alert alert-warning text-center text-lg font-weight-bold">Henüz bir değerlendirme yapmadınız
                     </div>
                 @endif
 

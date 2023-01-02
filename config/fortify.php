@@ -144,4 +144,13 @@ return [
         ]) */
     ],
 
+    'redirects' => [
+        'login' => '/',
+        'logout' => '/',
+        'password-confirmation' => null,
+        'register' => 'dashboard',
+        'email-verification' => null,
+        'password-reset' => null,
+    ],
+
 ];

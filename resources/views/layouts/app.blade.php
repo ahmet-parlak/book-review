@@ -122,7 +122,7 @@
             Swal.fire({
                 icon: 'success',
                 title: 'Başarılı',
-                text: '{{ session('success') }}',
+                html: '{{ session('success') }}',
                 showConfirmButton: false,
                 timer: 1600
             })

@@ -9,6 +9,6 @@ class RegisterResponse implements RegisterResponseContract
 
     public function toResponse($request)
     {
-        return redirect(session('link'));
+        return redirect(session('link'))->withSuccess("BookReview'e Hoş Geldiniz!");
     }
 }

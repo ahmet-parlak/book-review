@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 use Laravel\Fortify\Contracts\CreatesNewUsers;
 use Laravel\Jetstream\Jetstream;
+use App\Models\BookLists;
 
 class CreateNewUser implements CreatesNewUsers
 {
@@ -27,10 +28,16 @@ class CreateNewUser implements CreatesNewUsers
             'terms' => Jetstream::hasTermsAndPrivacyPolicyFeature() ? ['accepted', 'required'] : '',
         ])->validate();
 
-        return User::create([
+        $user = User::create([
             'name' => $input['name'],
             'email' => $input['email'],
             'password' => Hash::make($input['password']),
         ]);
+
+        BookLists::create(['user_id' => $user->id, 'list_name' => 'read']);
+        BookLists::create(['user_id' => $user->id, 'list_name' => 'to read']);
+        BookLists::create(['user_id' => $user->id, 'list_name' => 'currently reading']);
+
+        return $user;
     }
 }

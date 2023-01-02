@@ -17,23 +17,33 @@
                 <div class="row">
                     <!-- My Lists -->
                     <div class="col-lg-6">
+
+                        <table class="table table-light table-borderless table-hover text-center mb-0">
+                            <thead class="thead-dark">
+
+                                <tr style="border-bottom:0">
+                                    <th colspan="3">
+                                        <a href="{{ route('mylists') }}" class="text-white user-select-none"><i
+                                                class="fas fa-list-alt mx-2" title="Listelerime Git"></i>Listelerim </a>
+                                    </th>
+                                </tr>
+
+                            </thead>
+                            @if ($book_lists->count() == 0)
+                                <tr>
+                                    <td>
+                                        <div class="alert alert-dark my-2" role="alert">
+                                            Henüz liste oluşturmadınız.
+                                        </div>
+                                    </td>
+                                </tr>
+                            @endif
+                        </table>
                         @if ($book_lists->count())
-                            <table class="table table-light table-borderless table-hover text-center mb-0">
-                                <thead class="thead-dark" >
-
-                                    <tr style="border-bottom:0">
-                                        <th colspan="3">
-                                            <a href="{{ route('mylists') }}" class="text-white user-select-none"><i
-                                                    class="fas fa-list-alt mx-2" title="Listelerime Git"></i>Listelerim </a>
-                                        </th>
-                                    </tr>
-
-                                </thead>
-                            </table>
                             <ul class="list-group list-group-flush user-select-none">
                                 @foreach ($book_lists as $list)
                                     <li class="list-group-item d-flex align-items-center text-capitalize">
-                                        <a href="{{ route('mylist',[$list->id, $list->list_name]) }}" class="text-dark"
+                                        <a href="{{ route('mylist', [$list->id, $list->list_name]) }}" class="text-dark"
                                             title="Listeye Git">{!! __($list->list_name) !!}
                                         </a>
                                         <span class="badge badge-primary badge-pill mx-2">{{ count($list->books) }}</span>

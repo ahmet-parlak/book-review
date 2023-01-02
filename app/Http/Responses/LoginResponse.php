@@ -9,6 +9,6 @@ class LoginResponse implements LoginResponseContract
 
     public function toResponse($request)
     {
-        return redirect(session('link'));
+        return redirect(session('link'))->withSuccess('Giriş Yapıldı');
     }
 }
