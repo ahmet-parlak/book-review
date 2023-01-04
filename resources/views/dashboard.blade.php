@@ -1,5 +1,4 @@
 <x-app-layout>
-
     <x-slot name="title">
         Yönetim Paneli
     </x-slot>
@@ -16,9 +15,9 @@
                 class="text-indigo-600">{{ number_format($books, 0, ',', '.') }}</span> kitap bulunuyor.
         </div>
 
-        <div class="row offset-1">
+        <div class="row">
             <!--Kitaplar-->
-            <div class="col-lg-5 col-md-12 mb-5">
+            <div class="col-lg-4 col-md-12 mb-5">
 
                 <div class="admin-card">
                     <div
@@ -46,7 +45,7 @@
             <!--Kitaplar-->
 
             <!--Kullanıcı Kitap İstekleri-->
-            <div class="col-lg-5 col-md-12 mb-5">
+            <div class="col-lg-4 col-md-12 mb-5">
                 <div class="admin-card">
                     <div
                         class="mx-auto p-6 max-w-sm bg-white rounded-lg border border-gray-200 shadow-md dark:bg-gray-800 dark:border-gray-700 hover:shadow">
@@ -70,8 +69,32 @@
             </div>
             <!--Kullanıcı Kitap İstekleri-->
 
+            <!--Kullanıcı Hata Raporları-->
+            <div class="col-lg-4 col-md-12 mb-5">
+                <div class="admin-card">
+                    <div
+                        class="mx-auto p-6 max-w-sm bg-white rounded-lg border border-gray-200 shadow-md dark:bg-gray-800 dark:border-gray-700 hover:shadow">
+                        <a href="{{ route('user.reports.index') }}" class="card-link">
+                            <!-- Icon-Start -->
+                            <div class="icon mb-2">
+                                <img class="mx-auto" src="{{ asset('/assets/vectors/user-report.svg') }}"
+                                    alt="user-reports-vector" srcset="">
+                            </div>
+                            <!-- Icon-End -->
+
+                            <h5 class="mb-2 text-2xl font-semibold tracking-tight text-gray-900 dark:text-white">
+                                Kullanıcı Hata Raporları
+                            </h5>
+
+                            <p class="mb-3 font-normal text-gray-500 dark:text-gray-400">Kullanıcıların oluşturduğu hata raporlarını buradan inceleyebilirsiniz.</p>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <!--Kullanıcı Kitap İstekleri-->
+
             <!--Kategoriler-->
-            <div class="col-lg-5 col-md-12 mb-5">
+            <div class="col-lg-4 col-md-12 mb-5">
 
                 <div class="admin-card ">
                     <div
@@ -100,7 +123,7 @@
             <!--Kategoriler-->
 
             <!--Yazarlar-->
-            <div class="col-lg-5 col-md-12 mb-4">
+            <div class="col-lg-4 col-md-12 mb-4">
 
                 <div class="admin-card">
                     <div
@@ -128,7 +151,7 @@
             <!--Yazarlar-->
 
             <!--Yayınevleri-->
-            <div class="col-lg-5 col-md-12 mb-5">
+            <div class="col-lg-4 col-md-12 mb-5">
                 <div class="admin-card">
                     <div
                         class="mx-auto p-6 max-w-sm bg-white rounded-lg border border-gray-200 shadow-md dark:bg-gray-800 dark:border-gray-700 hover:shadow">
@@ -153,8 +176,6 @@
                 </div>
             </div>
             <!--Yayınevleri-->
-
-
 
         </div>
     </div>

@@ -118,5 +118,17 @@
     "en": "English",
     "read": "read",
     "to read": "to read",
-    "currently reading": "currently reading"
+    "currently reading": "currently reading",
+    "isbn": "ISBN",
+    "title": "title",
+    "original_title": "original title",
+    "author": "author",
+    "translator": "translator",
+    "publisher": "publisher",
+    "publication_year": "publication year",
+    "pages": "pages",
+    "description": "description",
+    "book_photo": "book photo",
+    "language": "language",
+    "category": "category"
 }

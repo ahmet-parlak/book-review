@@ -1,9 +1,9 @@
 <x-app-layout>
     <x-slot name="title">
-        Kullanıcı Kitap İstekleri | Yönetim Paneli
+        Kitaplar Hata Raporları | Yönetim Paneli
     </x-slot>
     <x-slot name="header">
-        Kullanıcı Kitap İstekleri
+        Kitaplar Hata Raporları
     </x-slot>
     <x-slot name="breadcrumb">
         <!-- For current page -->
@@ -46,19 +46,13 @@
             <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
                 <tr>
                     <th scope="col" class="py-3 px-6">
-                        Kullanıcı
+                        Rapor Eden Kullanıcı
                     </th>
                     <th scope="col" class="py-3 px-6">
-                        Başlık
+                        Rapor Edilen Kitap
                     </th>
                     <th scope="col" class="py-3 px-6">
-                        ISBN
-                    </th>
-                    <th scope="col" class="py-3 px-6">
-                        Yazar
-                    </th>
-                    <th scope="col" class="py-3 px-6">
-                        Yayınevi
+                        Rapor Edilen Veriler
                     </th>
                     <th scope="col" class="py-3 px-6">
                         <span title="Güncelleme Tarihi">Tarih</span>
@@ -69,43 +63,66 @@
                 </tr>
             </thead>
             <tbody>
-                @foreach ($book_requests as $request)
+                @forelse ($reports as $report)
                     <tr
                         class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
-                        <th scope="row"
-                            class="flex items-center py-4 px-6 text-gray-900 whitespace-nowrap dark:text-white">
-                            <img class="w-10 h-10 rounded-full" src="{{ $request->user->profile_photo_url }}"
-                                alt="Jese image">
-                            <div class="pl-3">
-                                <div class="text-base font-semibold">{{ $request->user->name }}</div>
-                                {{-- <div class="font-normal text-gray-500">Subinfo</div> --}}
+                        <!-- User -->
+                        <td>
+                            <div class="flex items-center py-4 px-6 text-gray-900 whitespace-nowrap dark:text-white">
+                                <img class="w-10 h-10 rounded-full" src="{{ $report->user->profile_photo_url }}"
+                                    alt="Jese image">
+                                <div class="pl-3">
+                                    <div class="text-base font-semibold">{{ $report->user->name }}</div>
+                                    {{-- <div class="font-normal text-gray-500">Subinfo</div> --}}
+                                </div>
                             </div>
-                        </th>
-                        <td class="py-4 px-6" title="{{ $request->title }}">
-                            {{ Str::limit($request->title, 20, '...') }}
+                        </td>
+                        <!-- Book -->
+                        <td>
+                            <div class="flex items-center py-4 px-6 text-gray-900 whitespace-nowrap dark:text-white">
+                                <img class="w-10 h-10"
+                                    @if ($report->book->book_photo) src="{{ $report->book->book_photo }}" 
+                            @else src="{{ asset('/') . 'storage/books/default.png' }}" @endif
+                                    alt="{{ $report->book->title }}-img">
+                                <div class="pl-3">
+                                    <div class="text-base font-semibold" title="{{ $report->book->title }}">
+                                        {{ Str::limit($report->book->title, 25, '...') }}</div>
+                                    @isset($report->book->bookAuthor)
+                                        <div class="font-normal text-gray-500"
+                                            title="{{ $report->book->bookAuthor->author->author_name }}">
+                                            {{ Str::limit($report->book->bookAuthor->author->author_name, 25, '...') }}
+                                        </div>
+                                    @endisset
+                                </div>
+                            </div>
+                        </td>
+                        <!-- Reports -->
+                        <td class="py-4 px-6" width="340px" title="Rapor Edilen Veriler">
+                            <div class="row font-bold">
+                                @php
+                                    $collection = collect($report);
+                                    $collection->each(function ($item, $key) {
+                                        if ($item == 'reported') {
+                                            print "<span class='col-5 capitalize'><span class='text-danger'>" . __($key) . '</span></span>';
+                                        }
+                                    });
+                                @endphp
+
+                            </div>
+                        </td>
+                        <!-- Date -->
+                        <td class="py-4 px-6" title="{{ $report->created_at->format('d.m.Y (H:i)') }}">
+                            {{ $report->created_at->diffForHumans() }}
                         </td>
                         <td class="py-4 px-6">
-                            {{ $request->isbn }}
-                        </td>
-                        <td class="py-4 px-6" title="{{ $request->author }}">
-                            {{ Str::limit($request->author, 20, '...') }}
-                        </td>
-                        <td class="py-4 px-6" title="{{ $request->publisher }}">
-                            {{ Str::limit($request->publisher, 20, '...') }}
-                        </td>
-                        <td class="py-4 px-6" title="{{ $request->created_at->format('d.m.Y (H:i)') }}">
-                            {{ $request->created_at->diffForHumans() }}
-                        </td>
-                        <td class="py-4 px-6">
-                            <a href="" class="font-medium text-blue-600 dark:text-blue-500 hover:underline">Kitap
-                                Ekle</a>
+                            <a href="" class="font-medium text-blue-600 dark:text-blue-500 hover:underline"></a>
                         </td>
                     </tr>
                 @endforeach
             </tbody>
         </table>
         {{-- Search Info --}}
-        @if ($book_requests->total() == 0)
+        @if ($reports->total() == 0)
             <div class="flex m-4 p-4 text-base text-gray-700 bg-gray-100 rounded-lg dark:bg-gray-700 dark:text-gray-300"
                 role="alert">
                 <svg aria-hidden="true" class="flex-shrink-0 inline w-5 h-5 mr-3" fill="currentColor"
@@ -123,7 +140,7 @@
 
         {{-- Pagination --}}
         <div class="p-3">
-            {{ $book_requests->links() }}
+            {{ $reports->links() }}
         </div>
     </div>
 </x-app-layout>

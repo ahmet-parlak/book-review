@@ -74,4 +74,11 @@ Route::group(['middleware' => ['auth', 'isAdmin'], 'prefix' => 'admin'], functio
     Route::post('fetch-books', [Admin\FetchBooks::class, 'fetch'])->name('fetchbooks');
 
     Route::get('user/book-requests', [Admin\User\BookRequestController::class, 'index'])->name('user.book-requests.index');
+
+    /* User Reports */
+    Route::get('user/reports', [Admin\User\ReportController::class, 'index'])->name('user.reports.index');
+    Route::get('user/reports/books', [Admin\User\ReportController::class, 'books'])->name('user.reports.books');
+    Route::get('user/reports/authors', [Admin\User\ReportController::class, 'authors'])->name('user.reports.authors');
+    Route::get('user/reports/publishers', [Admin\User\ReportController::class, 'publishers'])->name('user.reports.publishers');
+
 });;

@@ -122,5 +122,17 @@
     "en": "İngilizce",
     "read": "okundu",
     "to read": "okunacak",
-    "currently reading": "şu anda okunuyor"
+    "currently reading": "şu anda okunuyor",
+    "isbn": "ISBN",
+    "title": "başlık",
+    "original_title": "özgün ad",
+    "author": "yazar",
+    "translator": "çevirmen",
+    "publisher": "yayınevi",
+    "publication_year": "yayın yılı",
+    "pages": "sayfa sayısı",
+    "description": "açıklama",
+    "book_photo": "kitap fotoğrafı",
+    "language": "dil",
+    "category": "kategori"
 }
