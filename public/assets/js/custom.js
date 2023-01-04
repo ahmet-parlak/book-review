@@ -180,6 +180,59 @@ addToListBtn.click(function () {
 /* Lists End */
 
 
+/* BookReport Start */
+const bookReportForm = $("#book_report_form"),
+    bookReportFormSubmitBtn = $("button.book_report"),
+    checkBoxes = $("input[type=checkbox]");
+
+$(bookReportFormSubmitBtn).click(function (e) {
+    let oneSelected = false;
+    $(".checkbox-warning").fadeOut(100);
+    checkBoxes.each(function (index, element) {
+        if ($(element).is(':checked')) {
+            oneSelected = true;
+        }
+    });
+    if (oneSelected) {
+
+        const book = $("input[name=book]").val();
+        $.post(report_book_ajax_url, { _token: token, book: book, reports: checkBoxes.serializeArray() },
+            function (response) {
+                if (response.state == "success") {
+                    Swal.fire({
+                        icon: 'success',
+                        title: response.title,
+                        html: response.message,
+                        footer:response.footer,
+                        showConfirmButton: false,
+                        timer: 3000
+                    })
+                }else{
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Hata Oluştu',
+                        text: response.message,
+                        showConfirmButton: false,
+                        timer: 2000
+                    })
+                }
+            },
+            "json"
+        );
+    } else {
+        $(".checkbox-warning").fadeIn(750);
+    }
+
+});
+
+$(checkBoxes).change(function (e) {
+    if (this.value == "on") {
+        $(".checkbox-warning").fadeOut(750);
+    }
+});
+/* BookReport End */
+
+
 /* #Book-Detail End# */
 
 

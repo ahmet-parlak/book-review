@@ -6,6 +6,7 @@ use App\Http\Controllers\Admin;
 use App\Http\Controllers\MainController;
 use App\Http\Controllers\ReviewController;
 use App\Http\Controllers\ListController;
+use App\Http\Controllers\ReportController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -50,6 +51,8 @@ Route::middleware([
 
     Route::get('book-request', [MainController::class, 'bookRequest'])->name('book-request');
     Route::post('book-request', [MainController::class, 'createBookRequest']);
+
+    Route::post('report-book', [ReportController::class, 'reportBook'])->name('report.book');
 });
 
 

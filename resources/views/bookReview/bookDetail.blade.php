@@ -125,10 +125,104 @@
                                         </a>
                                     @endif
                                 @endauth
-
-                                <a href="" class="text-dark px-2 align-self-center">
+                                <!-- Report -->
+                                <a class="text-dark px-2 align-self-center" data-toggle="modal" data-target="#reportModal">
                                     Hata Bildir
                                 </a>
+                                <div class="modal fade" id="reportModal" tabindex="-1" role="dialog"
+                                    aria-labelledby="reportModalLabel" aria-hidden="true">
+                                    <div class="modal-dialog" role="document">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h5 class="modal-title" id="reportModalLabel">Hata Bildir</h5>
+                                                <button type="button" class="close" data-dismiss="modal"
+                                                    aria-label="Close">
+                                                    <span aria-hidden="true">&times;</span>
+                                                </button>
+                                            </div>
+                                            <div class="modal-body">
+                                                <form id="book_report_form" class="book_report">
+                                                    <input type="hidden" name="book" value="{{ $book->id }}">
+                                                    <div class="font-italic font-weight-bold mb-2">
+                                                        Hatalı olduğunu düşündüğünüz veya kitapla ilgili eksik olan
+                                                        bilgileri işaretledikten sonra
+                                                        hata bildir butonuna basın.
+                                                    </div>
+                                                    <div class="custom-control custom-checkbox">
+                                                        <input type="checkbox" name="title"
+                                                            class="custom-control-input book-report" id="title">
+                                                        <label class="custom-control-label" for="title">Kitap
+                                                            Başlığı</label>
+                                                    </div>
+                                                    <div class="custom-control custom-checkbox">
+                                                        <input type="checkbox" name="isbn"
+                                                            class="custom-control-input book-report" id="isbn">
+                                                        <label class="custom-control-label" for="isbn">ISBN</label>
+                                                    </div>
+                                                    <div class="custom-control custom-checkbox">
+                                                        <input type="checkbox" name="book_photo"
+                                                            class="custom-control-input book-report" id="photo">
+                                                        <label class="custom-control-label" for="photo">Kitap
+                                                            Fotoğrafı</label>
+                                                    </div>
+                                                    <div class="custom-control custom-checkbox">
+                                                        <input type="checkbox" name="author"
+                                                            class="custom-control-input book-report" id="author">
+                                                        <label class="custom-control-label" for="author">Yazar</label>
+                                                    </div>
+                                                    <div class="custom-control custom-checkbox">
+                                                        <input type="checkbox" name="publisher"
+                                                            class="custom-control-input book-report" id="publisher">
+                                                        <label class="custom-control-label"
+                                                            for="publisher">Yayınevi</label>
+                                                    </div>
+                                                    <div class="custom-control custom-checkbox">
+                                                        <input type="checkbox" name="publication_year"
+                                                            class="custom-control-input book-report"
+                                                            id="publication_year">
+                                                        <label class="custom-control-label" for="publication_year">Yayın
+                                                            Yılı</label>
+                                                    </div>
+                                                    <div class="custom-control custom-checkbox">
+                                                        <input type="checkbox" name="category"
+                                                            class="custom-control-input book-report" id="category">
+                                                        <label class="custom-control-label"
+                                                            for="category">Kategori</label>
+                                                    </div>
+                                                    <div class="custom-control custom-checkbox">
+                                                        <input type="checkbox" name="language"
+                                                            class="custom-control-input book-report" id="language">
+                                                        <label class="custom-control-label" for="language">Kitap
+                                                            Dili</label>
+                                                    </div>
+
+                                                    <div class="custom-control custom-checkbox">
+                                                        <input type="checkbox" name="pages"
+                                                            class="custom-control-input book-report" id="pages">
+                                                        <label class="custom-control-label" for="pages">Sayfa
+                                                            Sayısı</label>
+                                                    </div>
+                                                    <div class="custom-control custom-checkbox">
+                                                        <input type="checkbox" name="description"
+                                                            class="custom-control-input book-report" id="description">
+                                                        <label class="custom-control-label" for="description">Kitap
+                                                            Açıklaması</label>
+                                                    </div>
+                                                    <div class="checkbox-warning text-danger mb-2" style="display: none">
+                                                        Lütfen rapor etmek istediğiniz verileri işaretleyin.
+                                                    </div>
+                                                </form>
+                                            </div>
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-secondary"
+                                                    data-dismiss="modal">İptal</button>
+                                                <button type="button" class="book_report btn btn-primary">Hata
+                                                    Bildir</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- Report -->
                             </div>
                         </div>
 
@@ -156,7 +250,8 @@
                                             <div class="d-flex user-select-none">
                                                 <p class="mb-0 mr-2">Puan * :</p>
                                                 <div class="rating-area text-primary">
-                                                    <span class="rate far fa-star" rating="1" title="beğenmedim"></span>
+                                                    <span class="rate far fa-star" rating="1"
+                                                        title="beğenmedim"></span>
                                                     <span class="rate far fa-star" rating="2"
                                                         title="fena değildi"></i></span>
                                                     <span class="rate far fa-star" rating="3"
@@ -445,6 +540,7 @@
 @section('js')
     <script>
         const add_to_list_ajax_url = "{{ route('mylist.add.book') }}",
+            report_book_ajax_url = "{{ route('report.book') }}",
             token = "{{ csrf_token() }}";
     </script>
     <script src="{{ asset('assets/js/custom.js') }}"></script>
