@@ -130,5 +130,14 @@
     "description": "description",
     "book_photo": "book photo",
     "language": "language",
-    "category": "category"
+    "category": "category",
+    "author_name": "author name",
+    "author_photo": "author photo",
+    "country": "country",
+    "birth_year": "birth year",
+    "death_year": "death year",
+    "publisher_name": "publisher name",
+    "publisher_photo": "publisher photo",
+    "website": "website"
+
 }

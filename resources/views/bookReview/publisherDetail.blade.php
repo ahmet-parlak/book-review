@@ -44,9 +44,80 @@
                         <div class="row">
                             <div class="col-12 d-flex justify-content-end pt-2">
                                 <div class="d-inline-flex">
-                                    <a href="" class="text-dark px-2 align-self-end">
-                                        Hata Bildir
-                                    </a>
+                                    @auth
+                                        @if (auth()->user()->type == 'admin')
+                                            <a href="{{ route('publishers.edit', $publisher->id) }}"
+                                                class="text-dark px-2 align-self-center">
+                                                Düzenle
+                                            </a>
+                                        @endif
+
+                                        <!-- Report -->
+                                        <a class="text-dark px-2 align-self-center" data-toggle="modal"
+                                            data-target="#reportModal">
+                                            Hata Bildir
+                                        </a>
+                                        <div class="modal fade" id="reportModal" tabindex="-1" role="dialog"
+                                            aria-labelledby="reportModalLabel" aria-hidden="true">
+                                            <div class="modal-dialog" role="document">
+                                                <div class="modal-content">
+                                                    <div class="modal-header">
+                                                        <h5 class="modal-title" id="reportModalLabel">Hata Bildir</h5>
+                                                        <button type="button" class="report-modal close" data-dismiss="modal"
+                                                            aria-label="Close">
+                                                            <span aria-hidden="true">&times;</span>
+                                                        </button>
+                                                    </div>
+                                                    <div class="modal-body">
+                                                        <form id="report_form" class="report">
+                                                            <input type="hidden" name="report_data"
+                                                                value="{{ $publisher->id }}">
+                                                            <div class="font-italic font-weight-bold mb-2">
+                                                                Hatalı olduğunu düşündüğünüz veya yazarla ilgili eksik olan
+                                                                bilgileri işaretledikten sonra
+                                                                hata bildir butonuna basın.
+                                                            </div>
+                                                            <div class="custom-control custom-checkbox">
+                                                                <input type="checkbox" name="publisher_name"
+                                                                    class="custom-control-input report" id="publisher_name">
+                                                                <label class="custom-control-label" for="publisher_name">Yayınevi
+                                                                    Adı</label>
+                                                            </div>
+                                                            <div class="custom-control custom-checkbox">
+                                                                <input type="checkbox" name="publisher_photo"
+                                                                    class="custom-control-input report" id="publisher_photo">
+                                                                <label class="custom-control-label"
+                                                                    for="publisher_photo">Fotoğrafı</label>
+                                                            </div>
+                                                            <div class="custom-control custom-checkbox">
+                                                                <input type="checkbox" name="website"
+                                                                    class="custom-control-input report" id="website">
+                                                                <label class="custom-control-label"
+                                                                    for="website">Website</label>
+                                                            </div>
+                                                            <div class="custom-control custom-checkbox">
+                                                                <input type="checkbox" name="description"
+                                                                    class="custom-control-input report" id="description">
+                                                                <label class="custom-control-label"
+                                                                    for="description">Açıklama</label>
+                                                            </div>
+                                                            <div class="checkbox-warning text-danger mb-2"
+                                                                style="display: none">
+                                                                Lütfen rapor etmek istediğiniz verileri işaretleyin.
+                                                            </div>
+                                                        </form>
+                                                    </div>
+                                                    <div class="modal-footer">
+                                                        <button type="button" class="btn btn-secondary"
+                                                            data-dismiss="modal">İptal</button>
+                                                        <button type="button" class="report btn btn-primary">Hata
+                                                            Bildir</button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <!-- Report -->
+                                    @endauth
                                 </div>
                             </div>
                         </div>
@@ -122,7 +193,7 @@
 
 
     <!-- Products Start -->
-    <div class="container-fluid py-5">
+    {{-- <div class="container-fluid py-5">
         <h2 class="section-title position-relative text-uppercase mx-xl-5 mb-4"><span
                 class="bg-secondary pr-3">Önerilenler</span></h2>
         <div class="row px-xl-5">
@@ -275,6 +346,13 @@
                 </div>
             </div>
         </div>
-    </div>
+    </div> --}}
     <!-- Products End -->
+@endsection
+@section('js')
+    <script>
+        const report_ajax_url = "{{ route('report.publisher') }}",
+            token = "{{ csrf_token() }}";
+    </script>
+    <script src="{{ asset('assets/js/custom.js') }}"></script>
 @endsection

@@ -1,9 +1,9 @@
 <x-app-layout>
     <x-slot name="title">
-        Kitaplar İçin Oluşturulan Hata Raporları | Yönetim Paneli
+        Yazarlar İçin Oluşturulan Hata Raporları | Yönetim Paneli
     </x-slot>
     <x-slot name="header">
-        Kitaplar İçin Oluşturulan Hata Raporları
+        Yazarlar İçin Oluşturulan Hata Raporları
     </x-slot>
     <x-slot name="breadcrumb">
         <!--Previous Pages-->
@@ -63,7 +63,7 @@
                         Rapor Eden Kullanıcı
                     </th>
                     <th scope="col" class="py-3 px-6">
-                        Rapor Edilen Kitap
+                        Rapor Edilen Yazar
                     </th>
                     <th scope="col" class="py-3 px-6">
                         Rapor Edilen Veriler
@@ -95,18 +95,12 @@
                         <td>
                             <div class="flex items-center py-4 px-6 text-gray-900 whitespace-nowrap dark:text-white">
                                 <img class="w-10 h-10"
-                                    @if ($report->book->book_photo) src="{{ $report->book->book_photo }}" 
-                            @else src="{{ asset('/') . 'storage/books/default.png' }}" @endif
-                                    alt="{{ $report->book->title }}-img">
+                                    @if ($report->author->author_photo) src="{{ asset($report->author->author_photo) }}" 
+                            @else src="{{ asset('/') . 'storage/authors/default.png' }}" @endif
+                                    alt="{{ $report->author->author_name }}-img">
                                 <div class="pl-3">
-                                    <div class="text-base font-semibold" title="{{ $report->book->title }}">
-                                        {{ Str::limit($report->book->title, 25, '...') }}</div>
-                                    @isset($report->book->bookAuthor)
-                                        <div class="font-normal text-gray-500"
-                                            title="{{ $report->book->bookAuthor->author->author_name }}">
-                                            {{ Str::limit($report->book->bookAuthor->author->author_name, 25, '...') }}
-                                        </div>
-                                    @endisset
+                                    <div class="text-base font-semibold" title="{{ $report->author->author_name }}">
+                                        {{ Str::limit($report->author->author_name, 25, '...') }}</div>
                                 </div>
                             </div>
                         </td>

@@ -53,6 +53,8 @@ Route::middleware([
     Route::post('book-request', [MainController::class, 'createBookRequest']);
 
     Route::post('report-book', [ReportController::class, 'reportBook'])->name('report.book');
+    Route::post('report-author', [ReportController::class, 'reportAuthor'])->name('report.author');
+    Route::post('report-publisher', [ReportController::class, 'reportPublisher'])->name('report.publisher');
 });
 
 

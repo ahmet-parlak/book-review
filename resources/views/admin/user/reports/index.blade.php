@@ -6,6 +6,9 @@
     <x-slot name="header">
         Kullanıcı Hata Raporları
     </x-slot>
+    <x-slot name="breadcrumb">
+        <!-- For current page -->
+    </x-slot>
 
     <div class="m-5">
         <div class="p-4 mb-4 font-bold tracking-wide text-center text-base text-gray-700 bg-gray-100 rounded-lg dark:bg-gray-200 dark:text-blue-800 [word-spacing:0.25em]"
@@ -13,7 +16,7 @@
             Kullanıcılar <span class="text-green-700">kitaplar</span> ile ilgili<span
                 class="text-indigo-600"> {{ number_format($books, 0, ',', '.') }}</span>,
                 <span class="text-yellow-700">yazarlar</span> ile ilgili <span class="text-indigo-600">{{ number_format($authors, 0, ',', '.') }}</span> ve
-                <span class="text-red-700">yayınevleri</span> ile ilgili <span class="text-indigo-600">{{ number_format($publishers, 0, ',', '.') }}</span> olmak
+                <span class="text-red-700">yayınevleri</span> ile ilgili <span class="text-indigo-600">{{ number_format($publishers, 0, ',', '.') }}</span> adet olmak
             üzere toplam <span
                 class="text-indigo-600">{{ number_format($books + $authors + $publishers, 0, ',', '.') }}</span> hata raporu
             oluşturdu.

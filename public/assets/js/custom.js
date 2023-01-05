@@ -179,13 +179,15 @@ addToListBtn.click(function () {
 
 /* Lists End */
 
+/* #Book-Detail End# */
 
-/* BookReport Start */
-const bookReportForm = $("#book_report_form"),
-    bookReportFormSubmitBtn = $("button.book_report"),
+
+/* #Report Start# */
+const ReportForm = $("#report_form"),
+    reportFormSubmitBtn = $("button.report"),
     checkBoxes = $("input[type=checkbox]");
 
-$(bookReportFormSubmitBtn).click(function (e) {
+$(reportFormSubmitBtn).click(function (e) {
     let oneSelected = false;
     $(".checkbox-warning").fadeOut(100);
     checkBoxes.each(function (index, element) {
@@ -195,19 +197,21 @@ $(bookReportFormSubmitBtn).click(function (e) {
     });
     if (oneSelected) {
 
-        const book = $("input[name=book]").val();
-        $.post(report_book_ajax_url, { _token: token, book: book, reports: checkBoxes.serializeArray() },
+        const report_data = $("input[name=report_data]").val();
+        $.post(report_ajax_url, { _token: token, report_data: report_data, reports: checkBoxes.serializeArray() },
             function (response) {
                 if (response.state == "success") {
+                    $(".report-modal.close").click();
                     Swal.fire({
                         icon: 'success',
                         title: response.title,
                         html: response.message,
-                        footer:response.footer,
+                        footer: response.footer,
                         showConfirmButton: false,
-                        timer: 3000
+                        timer: 2600
                     })
-                }else{
+
+                } else {
                     Swal.fire({
                         icon: 'error',
                         title: 'Hata Oluştu',
@@ -230,12 +234,7 @@ $(checkBoxes).change(function (e) {
         $(".checkbox-warning").fadeOut(750);
     }
 });
-/* BookReport End */
-
-
-/* #Book-Detail End# */
-
-
+/* #Report End# */
 
 
 

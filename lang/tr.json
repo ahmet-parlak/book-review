@@ -134,5 +134,13 @@
     "description": "açıklama",
     "book_photo": "kitap fotoğrafı",
     "language": "dil",
-    "category": "kategori"
+    "category": "kategori",
+    "author_name": "yazar adı",
+    "author_photo": "yazar fotoğrafı",
+    "country": "ülke",
+    "birth_year": "doğum yılı",
+    "death_year": "ölüm yılı",
+    "publisher_name": "yayınevi adı",
+    "publisher_photo": "yayınevi fotoğrafı",
+    "website": "website"
 }
