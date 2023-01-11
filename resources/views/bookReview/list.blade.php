@@ -65,7 +65,7 @@
 
                                         </a>
                                     </td>
-                                    <td class="align-middle text-center">
+                                    {{-- <td class="align-middle text-center">
                                         @isset($book->user_review)
                                             <a href="{{ route('review.edit', [$book->user_review->id, Str::slug($book->title)]) }}"
                                                 class="text-decoration-none text-dark" title="Değerlendirmeye Git">
@@ -80,7 +80,7 @@
                                                 <small class="pt-1">(Kullanıcı Puanı)</small>
                                             </a>
                                         @endisset
-                                    </td>
+                                    </td> --}}
                                     <td class="align-middle">
                                         <a href="{{ route('book', [$book->id, Str::slug($book->title)]) }}#reviews"
                                             class="text-decoration-none text-dark" title="Değerlendirmelere Git">
@@ -117,13 +117,6 @@
 @endsection
 
 @section('js')
-    <script>
-        const edit_list_name_ajax_url = "{{ route('mylist.edit.name') }}",
-            edit_list_state_ajax_url = "{{ route('mylist.edit.state') }}",
-            remove_book_from_list_ajax_url = "{{ route('mylist.remove.book') }}",
-            delete_list_ajax_url = "{{ route('mylist.delete.list') }}",
-            token = "{{ csrf_token() }}",
-            mylists_url = "{{ route('mylists') }}";
-    </script>
+
     <script src="{{ asset('assets/js/custom.js') }}"></script>
 @endsection

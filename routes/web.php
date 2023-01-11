@@ -7,6 +7,10 @@ use App\Http\Controllers\MainController;
 use App\Http\Controllers\ReviewController;
 use App\Http\Controllers\ListController;
 use App\Http\Controllers\ReportController;
+
+use App\Models\Book;
+use App\Models\BookTag;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -82,5 +86,4 @@ Route::group(['middleware' => ['auth', 'isAdmin'], 'prefix' => 'admin'], functio
     Route::get('user/reports/books', [Admin\User\ReportController::class, 'books'])->name('user.reports.books');
     Route::get('user/reports/authors', [Admin\User\ReportController::class, 'authors'])->name('user.reports.authors');
     Route::get('user/reports/publishers', [Admin\User\ReportController::class, 'publishers'])->name('user.reports.publishers');
-
-});;
+});

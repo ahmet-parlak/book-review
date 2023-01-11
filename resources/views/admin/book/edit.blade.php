@@ -268,11 +268,15 @@
                 form = document.querySelector("#book-form"),
                 fetchAuthorsAction = "{{ route('books.fetchauhors') }}",
                 token = "{{ csrf_token() }}";
-
-            //Select Book Current Category
-            const option = document.querySelector(".category-opt[value='{{ $book->bookCategory->category_id }}']");
-            option.setAttribute("selected", "true");
         </script>
+        
+        @isset($book->bookCategory->category_id)
+            <script>
+                //Select Book Current Category
+                const option = document.querySelector(".category-opt[value='{{ $book->bookCategory->category_id }}']");
+                option.setAttribute("selected", "true");
+            </script>
+        @endisset
 
 
         <script src="{{ asset('/') }}assets/js/admin/admin.js"></script>

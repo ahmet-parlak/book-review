@@ -82,6 +82,7 @@
                         class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
                         <th scope="row"
                             class="flex items-center py-4 px-6 text-gray-900 whitespace-nowrap dark:text-white">
+
                             <img class="w-10 h-10"
                                 @if ($book->book_photo) src="{{ $book->book_photo }}" 
                             @else src="{{ asset('/') . 'storage/books/default.png' }}" @endif
@@ -96,6 +97,7 @@
                                     </div>
                                 @endisset
                             </div>
+
                         </th>
                         <td class="py-4 px-6">
                             {{ $book->isbn }}
@@ -119,7 +121,7 @@
                                 -
                             </td>
                         @endisset
-                        {{-- Book Category --}}
+                        {{-- Book Language --}}
 
                         <td class="py-4 px-6">
                             {!! __($book->language) !!}
@@ -131,9 +133,10 @@
                         <td class="py-4 px-6" title="{{ explode(' ', $book->updated_at)[1] }}">
                             {{ explode(' ', $book->updated_at)[0] }}
                         </td>
-                        <td class="py-4 px-6">
+                        <td class="py-4 px-6 text-end">
                             <a href="{{ route('books.edit', $book->id) }}"
-                                class="font-medium text-blue-600 dark:text-blue-500 hover:underline">Düzenle</a>
+                                class="font-medium text-blue-600 dark:text-blue-500">Düzenle<i class="fa fa-pen ml-2"></i></a>
+                            <a href="{{ route('book', [$book->id, $book->title]) }}" target="_blank" class="font-medium text-blue-600 dark:text-blue-500 d-block mt-1">Kitaba Git<i class="fas fa-external-link-square-alt ml-2"></i></a>
                         </td>
                     </tr>
                 @endforeach
