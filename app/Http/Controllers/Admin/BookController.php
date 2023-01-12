@@ -164,7 +164,12 @@ class BookController extends Controller
         }
 
         /* Category */
-        BookCategory::whereBookId($id)->update(['category_id' => $request->category_id]);
+        if (BookCategory::whereBookId($id)->first()) {
+            BookCategory::whereBookId($id)->update(['category_id' => $request->category_id]);
+        } else {
+            BookCategory::create(['book_id' => $id, 'category_id' => $request->category_id]);
+        }
+
 
         return redirect()->route('books.edit', $id)->withSuccess('Kitap bilgileri güncellendi.');
     }

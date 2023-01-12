@@ -122,7 +122,7 @@
 
 
     <!-- Categories Start -->
-    <div class="container-fluid pt-5">
+    {{-- <div class="container-fluid pt-5">
         <h2 class="section-title position-relative text-uppercase mx-xl-5 mb-4"><span class="bg-secondary pr-3">Trend
                 Kategoriler</span></h2>
         <div class="row px-xl-5 pb-3">
@@ -188,7 +188,7 @@
             </div>
 
         </div>
-    </div>
+    </div> --}}
     <!-- Categories End -->
 
 
@@ -211,15 +211,15 @@
                                 <a class="btn btn-outline-dark btn-square" href=""><i
                                         class="far fa-heart"></i></a>
                                 <!-- <a class="btn btn-outline-dark btn-square" href=""><i class="fa fa-sync-alt"></i></a> -->
-                                <a class="btn btn-outline-dark btn-square" href="{{ route('book', [$book->id, $book->title]) }}"><i
-                                        class="fa fa-search"></i></a>
+                                <a class="btn btn-outline-dark btn-square"
+                                    href="{{ route('book', [$book->id, $book->title]) }}"><i class="fa fa-search"></i></a>
                             </div>
                         </div>
                         <div class="text-center py-4">
                             <a class="h5 text-decoration-none text-truncate"
                                 href="{{ route('book', [$book->id, $book->title]) }}">{{ Str::limit($book->title, 20) }}</a>
                             <div class="d-flex align-items-center justify-content-center mt-2">
-                                <h6>{{ Str::limit($book->author->author_name, 20) }}</h6>
+                                <h6>{{ Str::limit($book->author->author_name ?? '-', 20) }}</h6>
                             </div>
                             <div class="text-md">
                                 {{ Str::limit($book->publisher->publisher_name, 20) }}
@@ -264,7 +264,8 @@
                                 <a class="btn btn-outline-dark btn-square" href=""><i
                                         class="far fa-heart"></i></a>
                                 <!-- <a class="btn btn-outline-dark btn-square" href=""><i class="fa fa-sync-alt"></i></a> -->
-                                <a class="btn btn-outline-dark btn-square" href="{{ route('book', [$book->id, $book->title]) }}"><i
+                                <a class="btn btn-outline-dark btn-square"
+                                    href="{{ route('book', [$book->id, $book->title]) }}"><i
                                         class="fa fa-search"></i></a>
                             </div>
                         </div>
@@ -272,7 +273,7 @@
                             <a class="h5 text-decoration-none text-truncate"
                                 href="{{ route('book', [$book->id, $book->title]) }}">{{ Str::limit($book->title, 20) }}</a>
                             <div class="d-flex align-items-center justify-content-center mt-2">
-                                <h6>{{ Str::limit($book->author->author_name, 20) }}</h6>
+                                <h6>{{ Str::limit($book->author->author_name ?? '-', 20) }}</h6>
                             </div>
                             <div class="text-md">
                                 {{ Str::limit($book->publisher->publisher_name, 20) }}

@@ -10,7 +10,9 @@ use App\Models\Review;
 use App\Models\BookLists;
 use App\Models\BookList;
 use App\Models\User;
+use App\Models\Category;
 use App\Models\BookRequest;
+use App\Models\BookCategory;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\DB;
 
@@ -34,23 +36,37 @@ class MainController extends Controller
 
     public function search(Request $request)
     {
-        $request->has('search') ?: abort(404);
+        if (!$request->has('search') && !$request->has('category')) {
+            abort(404);
+        }
 
-        strlen($request->input("search")) < 3 ? abort(404) : true;
+        if ($request->input("search")) {
 
-        $books = Book::where("title", "LIKE", "%" . $request->input("search") . "%")
-            ->orWhere("isbn", "LIKE", "%" . $request->input("search") . "%")
-            ->orWhereHas('publisher', function (Builder $query) use ($request) {
-                $query->where('publisher_name', 'like', '%' . $request->input("search") . '%');
-            })
-            ->orWhereHas('author.author', function (Builder $query) use ($request) {
-                $query->where('author_name', 'like', '%' . $request->input("search") . '%');
-            })
-            ->withCount('reviews')
-            ->orderByDesc('reviews_count')
-            ->orderBy('updated_at', 'desc')->paginate(18)->withQueryString();
-        //return $books;
-        return view('bookReview.search', compact('books'));
+            strlen($request->input("search")) < 3 ? abort(404) : true;
+
+            if ($request->input("search") == "top-100") {
+                $books = Book::withCount('reviews')->orderByDesc('reviews_count')
+                    ->orderBy('updated_at', 'desc')->paginate(18)->withQueryString();
+
+                return view('bookReview.search', compact('books'));
+            }
+
+            $books = Book::where("title", "LIKE", "%" . $request->input("search") . "%")
+                ->orWhere("isbn", "LIKE", "%" . $request->input("search") . "%")
+                ->orWhereHas('publisher', function (Builder $query) use ($request) {
+                    $query->where('publisher_name', 'like', '%' . $request->input("search") . '%');
+                })
+                ->orWhereHas('author.author', function (Builder $query) use ($request) {
+                    $query->where('author_name', 'like', '%' . $request->input("search") . '%');
+                })
+                ->withCount('reviews')->orderByDesc('reviews_count')
+                ->orderBy('updated_at', 'desc')->paginate(18)->withQueryString();
+            return view('bookReview.search', compact('books'));
+        } elseif ($request->input("category")) {
+            $books = BookCategory::where('category_id', $request->input("category"))->with('book')->paginate(18)->withQueryString();
+            $category = Category::find($request->input("category"));
+            return view('bookReview.search-category', compact('books', 'category'));
+        }
     }
 
 

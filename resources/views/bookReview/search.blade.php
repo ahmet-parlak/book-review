@@ -25,8 +25,24 @@
         <div class="row px-xl-5">
             <!-- Shop Sidebar Start -->
             <div class="col-lg-3 col-md-4">
+
+                <!-- Serach Suggestions Start -->
+                <h5 class="section-title position-relative text-uppercase mb-3"><span class="bg-secondary pr-3">Arama
+                        Önerileri</span></h5>
+                <div class="bg-light p-4 mb-30">
+                    <ul>
+                        <li class="mb-4">Aradığınız kitaba ulaşmanın en hızlı yolu ISBN (Uluslararası Standart Kitap
+                            Numarası) ile arama
+                            yapmaktır.</li>
+                        <li class="mb-4">Aradığınız kitabın sistemde olmadığını düşünüyorsanız <a
+                                href="{{ route('book-request') }}">bu
+                                bağlantıyı</a> kullanarak kitabın sisteme eklenmesi için talepte bulunabilirsiniz.</li>
+                    </ul>
+                </div>
+                <!-- Serach Suggestions End -->
+
                 <!-- Publisher Start -->
-                <h5 class="section-title position-relative text-uppercase mb-3"><span
+                {{-- <h5 class="section-title position-relative text-uppercase mb-3"><span
                         class="bg-secondary pr-3">Yayınevi</span></h5>
                 <div class="bg-light p-4 mb-30">
                     <form>
@@ -42,11 +58,11 @@
                         </div>
 
                     </form>
-                </div>
+                </div> --}}
                 <!-- Publisher End -->
 
                 <!-- Author Start -->
-                <h5 class="section-title position-relative text-uppercase mb-3"><span class="bg-secondary pr-3">Yazar</span>
+                {{-- <h5 class="section-title position-relative text-uppercase mb-3"><span class="bg-secondary pr-3">Yazar</span>
                 </h5>
                 <div class="bg-light p-4 mb-30">
                     <form>
@@ -62,7 +78,7 @@
                         </div>
 
                     </form>
-                </div>
+                </div> --}}
                 <!-- Color End -->
             </div>
             <!-- Shop Sidebar End -->
@@ -82,13 +98,14 @@
                                     {{ $books->total() }} sonuç bulundu</p>
                                 <p></p>
                             </div>
-                            @if ($books->total())
+                            {{-- out of use --}}
+                            @if ($books->total() && 0)
                                 <div class="ml-2">
                                     <div class="btn-group">
                                         <button type="button" class="btn btn-sm btn-light dropdown-toggle"
                                             data-toggle="dropdown">Sırala</button>
                                         <div class="dropdown-menu dropdown-menu-right">
-                                            <a class="dropdown-item" href="#">Popülerlik</a>
+                                            <a class="dropdown-item active" href="">Popülerlik</a>
                                             <a class="dropdown-item" href="#">Puan</a>
                                         </div>
                                     </div>
@@ -116,12 +133,12 @@
                                         alt="{{ $book->title }}"
                                         onerror="this.src='{{ asset('storage/books/default.png') }}'">
                                     <div class="product-action">
-                                        <a class="btn btn-outline-dark btn-square" href="" title="Puanla"><i
+                                        {{-- <a class="btn btn-outline-dark btn-square" href="" title="Puanla"><i
                                                 class="fa fa-star"></i></a>
                                         <a class="btn btn-outline-dark btn-square" href="" title="Değerlendir"><i
                                                 class="fa fa-pen"></i></a>
                                         <a class="btn btn-outline-dark btn-square" href="" title="Favorilere Ekle"><i
-                                                class="far fa-heart"></i></a>
+                                                class="far fa-heart"></i></a> --}}
                                         <a class="btn btn-outline-dark btn-square"
                                             href="{{ route('book', [$book->id, Str::slug($book->title)]) }}"
                                             title="Görüntüle"><i class="fa fa-search"></i></a>
@@ -132,13 +149,12 @@
                                         href="{{ route('book', [$book->id, Str::slug($book->title)]) }}"
                                         title="{{ $book->title }}">{{ Str::limit($book->title, '18', '...') }}</a>
                                     <div class="d-flex align-items-center justify-content-center mt-1">
-                                        @isset($book->author)
-                                            <p title="{{ $book->author->author_name }}" class="mb-0">
-                                                {{ Str::limit($book->author->author_name, '13', '...') }}
-                                            </p>
-                                        @else
-                                            <p>-</p>
-                                        @endisset
+
+                                        <p title="{{ $book->author->author_name ?? '-' }}" class="mb-0">
+                                            {{ Str::limit($book->author->author_name ?? '-', '13', '...') }}
+                                        </p>
+
+
                                     </div>
                                     <div>
                                         <p class="mb-3" title="{{ $book->publisher->publisher_name }}">
@@ -169,12 +185,13 @@
                                 için talepte bulunabilirsiniz.
                                 @auth
                                     <div class="col-12 text-center mt-2">
-                                        <a href="{{ route('book-request') }}" class="btn-sm btn-success">Kitap İsteği Oluştur</a>
+                                        <a href="{{ route('book-request') }}" class="btn-sm btn-success">Kitap İsteği
+                                            Oluştur</a>
                                     </div>
                                 @else
-                                <div class="col-12 text-center mt-2">
-                                    <a href="" class="btn-sm btn-success">İstek Oluşturmak İçin Giriş Yapın</a>
-                                </div>
+                                    <div class="col-12 text-center mt-2">
+                                        <a href="" class="btn-sm btn-success">İstek Oluşturmak İçin Giriş Yapın</a>
+                                    </div>
                                 @endauth
                             </div>
 

@@ -53,25 +53,22 @@
                     <th scope="col" class="py-3 px-6">
                         Başlık
                     </th>
-                    <th scope="col" class="py-3 px-6">
+                    <th scope="col" class="py-3 px-6 text-center">
                         ISBN
                     </th>
-                    <th scope="col" class="py-3 px-6">
-                        Yayınevi
-                    </th>
-                    <th scope="col" class="py-3 px-6">
+                    <th scope="col" class="py-3 px-6 text-center">
                         <span title="Yayın Yılı">Yayın Y.</span>
                     </th>
-                    <th scope="col" class="py-3 px-6">
+                    <th scope="col" class="py-3 px-6 text-center">
                         Kategori
                     </th>
-                    <th scope="col" class="py-3 px-6">
+                    <th scope="col" class="py-3 px-6 text-center">
                         Dil
                     </th>
-                    <th scope="col" class="py-3 px-6">
+                    <th scope="col" class="py-3 px-6 text-center">
                         <span title="Güncelleme Tarihi">Gün. Tar.</span>
                     </th>
-                    <th scope="col" class="py-3 px-6">
+                    <th scope="col" class="py-3 px-6 text-center">
                         İşlem
                     </th>
                 </tr>
@@ -89,54 +86,58 @@
                                 alt="{{ $book->title }}-img">
                             <div class="pl-3">
                                 <div class="text-base font-semibold" title="{{ $book->title }}">
-                                    {{ Str::limit($book->title, 25, '...') }}</div>
+                                    {{ Str::limit($book->title, 40, '...') }}</div>
                                 @isset($book->bookAuthor)
                                     <div class="font-normal text-gray-500"
                                         title="{{ $book->bookAuthor->author->author_name }}">
                                         {{ Str::limit($book->bookAuthor->author->author_name, 25, '...') }}
                                     </div>
                                 @endisset
+                                <div class="font-normal text-gray-500"
+                                    title="{{ $book->publisher->publisher_name }}">
+                                    {{ Str::limit($book->publisher->publisher_name, 25, '...') }}
+                                </div>
                             </div>
 
                         </th>
-                        <td class="py-4 px-6">
+                        <td class="py-4 px-6 text-center">
                             {{ $book->isbn }}
                         </td>
-                        <td class="py-4 px-6" title="{{ $book->publisher->publisher_name }}">
-                            {{ Str::limit($book->publisher->publisher_name, 20, '...') }}
-                        </td>
-                        <td class="py-4 px-6">
-                            <div class="flex items-center">
+                        <td class="py-4 px-6 text-center">
+                            <div class="flex items-center text-center">
                                 {{-- <div class="h-2.5 w-2.5 rounded-full bg-green-400 mr-2"></div> --}} {{ $book->publication_year }}
                             </div>
                         </td>
 
                         {{-- Book Category --}}
                         @isset($book->bookCategory->category->category_name)
-                            <td class="py-4 px-6" title="{{ $book->bookCategory->category->category_name }}">
+                            <td class="py-4 px-6 text-center" title="{{ $book->bookCategory->category->category_name }}">
                                 {{ Str::limit($book->bookCategory->category->category_name, 10, '...') }}
                             </td>
                         @else
-                            <td class="py-4 px-6" title="">
+                            <td class="py-4 px-6 text-center" title="">
                                 -
                             </td>
                         @endisset
                         {{-- Book Language --}}
 
-                        <td class="py-4 px-6">
+                        <td class="py-4 px-6 text-center">
                             {!! __($book->language) !!}
                         </td>
 
                         {{-- <td class="py-4 px-6">
                             {{ Str::limit($book->description, 30, '...') }}
                         </td> --}}
-                        <td class="py-4 px-6" title="{{ explode(' ', $book->updated_at)[1] }}">
+                        <td class="py-4 px-6 text-center" title="{{ explode(' ', $book->updated_at)[1] }}">
                             {{ explode(' ', $book->updated_at)[0] }}
                         </td>
                         <td class="py-4 px-6 text-end">
                             <a href="{{ route('books.edit', $book->id) }}"
-                                class="font-medium text-blue-600 dark:text-blue-500">Düzenle<i class="fa fa-pen ml-2"></i></a>
-                            <a href="{{ route('book', [$book->id, $book->title]) }}" target="_blank" class="font-medium text-blue-600 dark:text-blue-500 d-block mt-1">Kitaba Git<i class="fas fa-external-link-square-alt ml-2"></i></a>
+                                class="font-medium text-blue-600 dark:text-blue-500">Düzenle<i
+                                    class="fa fa-pen ml-2"></i></a>
+                            <a href="{{ route('book', [$book->id, $book->title]) }}" target="_blank"
+                                class="font-medium text-blue-600 dark:text-blue-500 d-block mt-1">Kitaba Git<i
+                                    class="fas fa-external-link-square-alt ml-2"></i></a>
                         </td>
                     </tr>
                 @endforeach
