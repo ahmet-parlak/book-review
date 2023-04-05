@@ -1,10 +1,9 @@
 <?php
 
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
 use App\Http\Controllers\Api\AuthController;
-
+use App\Http\Controllers\Api\AuthUserController;
 
 /*
 |--------------------------------------------------------------------------
@@ -17,18 +16,32 @@ use App\Http\Controllers\Api\AuthController;
 |
 */
 
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-    return response(['message'=>'success', "user"=>auth()->user()]);
-    //return $request->user();
+//Authentication
+Route::controller(AuthController::class)->group(function () {
+    Route::post('/auth', 'auth');
+    Route::post('/register', 'register');
 });
 
-Route::controller(AuthController::class)->group(function(){
-    Route::post('/auth','auth');
-    Route::post('/register','register');
+//AuthUser
+Route::middleware('auth:sanctum')->group(function () {
+
+    //Controller Group
+    /*  Route::group(['prefix'=>'auth/user'], function(){
+        Route::controller(AuthUserController::class)->group(function(){
+            Route::get('/', 'index');                   //get user credentials
+            Route::put('/','update');                   //update profile
+            Route::post('/','update');                  //update profile photo
+            Route::put('/password', 'passwordUpdate');  //update password
+        });
+    }); 
+    */
+
+    Route::group(['prefix' => 'auth/user', 'controller' => AuthUserController::class], function () {
+        Route::get('/', 'index');                   //get user credentials
+        Route::put('/', 'update');                  //update profile
+        Route::post('/', 'update');                 //update profile photo
+        Route::put('/password', 'passwordUpdate');  //update password
+    });
+
+
 });
-
-
-
-
-
-
