@@ -60,8 +60,8 @@ class MainController extends Controller
                     $query->where('author_name', 'like', '%' . $request->input("search") . '%');
                 })
                 ->withCount('reviews')->orderByDesc('reviews_count')
-                ->orderBy('updated_at', 'desc')->paginate(18)->withQueryString();
-            return view('bookReview.search', compact('books'));
+                ->orderBy('updated_at', 'desc')->paginate(18)->withQueryString();          
+                return view('bookReview.search', compact('books'));
         } elseif ($request->input("category")) {
             $books = BookCategory::where('category_id', $request->input("category"))->with('book')->paginate(18)->withQueryString();
             $category = Category::find($request->input("category"));

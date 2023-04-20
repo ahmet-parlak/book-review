@@ -110,7 +110,7 @@ class ListController extends Controller
             $list = BookLists::firstOrCreate(['user_id' => $user_id, 'list_name' => $list_name]);
             if ($list->wasRecentlyCreated) {
                 BookList::create(['list_id' => $list->id, 'book_id' => $book_id]);
-                return response()->json(["state" => "success", "message" => "Liste oluşturuldu ve kitap eklendi.", "newlist" => "true", "list" => $list->id], 200);
+                return response()->json(["state" => "success", "message" => "Liste oluşturuldu ve kitap eklendi.", "newlist" => "true", "list" => $list->refresh()], 200);
             } elseif (BookList::where(['list_id' => $list->id, 'book_id' => $book_id])->count()) {
                 return response()->json(["state" => "success", "message" => "Kitap bu listeye zaten eklenmiş"], 200);
             } else {

@@ -165,7 +165,7 @@ addToListBtn.click(function () {
                 })
                 if (response.newlist == "true") {
                     const option = document.createElement("option");
-                    option.value = response.list;
+                    option.value = response.list.id;
                     option.innerHTML = list_name;
                     $("option[value=create-list]").before(option);
                 }

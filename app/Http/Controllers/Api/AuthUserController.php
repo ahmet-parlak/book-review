@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Http\Resources\UserResource;
 use App\Actions\Fortify\UpdateUserProfileInformation;
 use App\Actions\Fortify\UpdateUserPassword;
+use App\Models\BookLists;
 
 class AuthUserController extends Controller
 {
@@ -18,7 +19,8 @@ class AuthUserController extends Controller
     public function index()
     {
         $user = new UserResource(auth()->user());
-        return response(["user"=>$user]);
+        $bookLists = BookLists::where('user_id', auth()->user()->id)->get();
+        return response(["user"=>$user, "book_lists" => $bookLists]);
     }
 
     

@@ -22,7 +22,7 @@ class Book extends Model
         'language'
     ];
 
-    protected $appends = ['author', 'categories', 'rating', 'user_review', 'review_count'];
+    protected $appends = ['author', 'categories', 'rating', 'user_review', 'review_count', 'publisher'];
 
     public function getAuthorAttribute()
     {
@@ -30,6 +30,10 @@ class Book extends Model
             $author = $this->bookAuthor()->first()->author;
             return $author;
         }
+    }
+    public function getPublisherAttribute()
+    {
+       return $this->publisher()->first();
     }
 
     public function getCategoriesAttribute()
@@ -41,7 +45,7 @@ class Book extends Model
     public function getUserReviewAttribute()
     {
         $auth_user_id =  auth()->user()->id ?? 0;
-        return $this->hasOne(Review::class, 'book_id')->where('reviews.user_id', $auth_user_id)->first();
+        return $this->hasOne(Review::class, 'book_id')->where('reviews.user_id', $auth_user_id)->with('user')->first();
     }
 
     public function getReviewCountAttribute()
