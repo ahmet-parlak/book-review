@@ -21,7 +21,7 @@ class ReportController extends Controller
 
     public function books()
     {
-        $reports = BookReport::with('user','book')->paginate(10);
+        $reports = BookReport::with('user','book')->orderByDesc('updated_at')->paginate(10);
         
         return view('admin.user.reports.books', compact(['reports']));
     }

@@ -62,6 +62,8 @@ class ListController extends Controller
 
             if ($booklist->count()) {
                 $booklist->delete();
+            }else{
+                return response()->json(["state" => "error", "message" => "Book not found"], 200);
             }
 
             return response()->json(["state" => "success", "message" => ""], 200);

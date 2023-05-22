@@ -8,6 +8,8 @@ use App\Http\Controllers\Api\AuthUserController;
 use App\Http\Controllers\Api\SearchController;
 use App\Http\Controllers\Api\BookController;
 use App\Http\Controllers\Api\ListController;
+use App\Http\Controllers\Api\HomeController;
+use App\Http\Controllers\Api\ReviewController;
 
 /*
 |--------------------------------------------------------------------------
@@ -28,6 +30,11 @@ Route::controller(AuthController::class)->group(function () {
 
 //AuthUser
 Route::middleware('auth:sanctum')->group(function () {
+    
+    //home
+    Route::controller(HomeController::class)->group(function(){
+        Route::get('/home','index');
+    });
 
     //User 
     Route::group(['prefix' => 'auth/user', 'controller' => AuthUserController::class], function () {
@@ -52,13 +59,22 @@ Route::middleware('auth:sanctum')->group(function () {
     });
 
     //BookList
-    Route::group(['prefix'=>'list', 'controller' => ListController::class], function(){
+    Route::group(['prefix'=>'mylists', 'controller' => ListController::class], function(){
+        Route::get('/','index');                //get all lists
+        Route::get('/{id}','show');             //get list
         Route::post('/', 'store');              //create list
-        Route::patch('/', 'update');            //update list
-        Route::delete('/', 'destroy');          //delete list
+        Route::post('/{id}', 'update');            //update list
+        Route::delete('/{id}', 'destroy');          //delete list
         
-        Route::post('/add', 'addBook');         //add book
-        Route::post('/remove', 'removeBook');   //remove book
+        Route::get('/{id}/add/{book}', 'addBook');         //add book
+        Route::get('/{id}/remove/{book}', 'removeBook');   //remove book
+    });
+
+
+    //UserReviews
+    Route::group(['prefix'=>'reviews','controller' =>ReviewController::class], function(){
+
+        Route::get('/','index');
     });
 
 

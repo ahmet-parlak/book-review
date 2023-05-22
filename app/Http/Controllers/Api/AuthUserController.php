@@ -19,7 +19,7 @@ class AuthUserController extends Controller
     public function index()
     {
         $user = new UserResource(auth()->user());
-        $bookLists = BookLists::where('user_id', auth()->user()->id)->get();
+        $bookLists = BookLists::where('user_id', auth()->user()->id)->withCount('books')->get();
         return response(["user"=>$user, "book_lists" => $bookLists]);
     }
 
