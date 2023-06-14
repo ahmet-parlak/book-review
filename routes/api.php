@@ -72,9 +72,10 @@ Route::middleware('auth:sanctum')->group(function () {
 
 
     //UserReviews
-    Route::group(['prefix'=>'reviews','controller' =>ReviewController::class], function(){
+    Route::group(['prefix'=>'myreviews','controller' =>ReviewController::class], function(){
 
         Route::get('/','index');
+        Route::delete('/{id}','destroy');
     });
 
 

@@ -15,7 +15,7 @@ class ReviewController extends Controller
      */
     public function index()
     {
-        $reviews = Review::whereUserId(auth()->user()->id)->with('book')->orderByDesc('created_at')->paginate(10);
+        $reviews = Review::whereUserId(auth()->user()->id)->with('book')->orderByDesc('created_at')->paginate(6);
         return response($reviews);
     }
 
@@ -61,6 +61,17 @@ class ReviewController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $review = Review::where('book_id',$id)->where('user_id', auth()->user()->id);
+
+        if ($review->count()) {
+            /* Deleting review */
+            $review->delete();
+
+            return response()->json(["state" => "success", "message" => "review deleted"], 200);
+
+        } else {
+            return response()->json(["state" => "error", "message" => "review not found"], 200);
+        }
+
     }
 }

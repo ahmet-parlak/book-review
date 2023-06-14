@@ -18,30 +18,25 @@ class HomeController extends Controller
      */
     public function index()
     {
-        /* $trendBooks = Review::select('*', DB::raw('count(*) as total'))
-            ->groupBy('book_id')
-            ->whereDate('created_at', '>=', Carbon::now()->subDays(30))
-            ->orderByDesc('total')
-            ->with('book')->limit(6)->get(); */
         
-        
-        $trendBooks = Book::select('*', DB::raw('count(*) as total'))
-        ->with(['reviews' => function ($query) {
-            $query->whereDate('created_at', '>=', Carbon::now()->subDays(6));
-        }])
-        ->with('bookAuthor','publisher')
-        ->groupBy('id')
-        ->orderByDesc('total')
-        ->limit(6)
-        ->get();
+        $startDate = Carbon::now()->subDays(30);
+
+        $trendBooks = Book::join('reviews', 'books.id', '=', 'reviews.book_id')
+            ->select('books.*', DB::raw('COUNT(reviews.id) as review_count'))
+            ->where('reviews.created_at', '>=', $startDate)
+            ->groupBy('books.id')
+            ->orderByDesc('review_count')
+            ->take(6)
+            ->get();
+
 
 
         $newBooks = Book::latest('id')->limit(6)->get();
 
-        $trendBooksData = ['title' => 'Trend Kitaplar', 'books'=>$trendBooks];
-        $newBooksData = ['title' => 'Yeni Eklenenler', 'books' =>$newBooks];
-        $data = [$trendBooksData,$newBooksData];
-        $response = ['state'=>'success', 'data'=>$data];
+        $trendBooksData = ['title' => 'Trend Kitaplar', 'books' => $trendBooks];
+        $newBooksData = ['title' => 'Yeni Eklenenler', 'books' => $newBooks];
+        $data = [$trendBooksData, $newBooksData];
+        $response = ['state' => 'success', 'data' => $data];
         return response($response);
     }
 
