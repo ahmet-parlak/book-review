@@ -10,7 +10,7 @@ use App\Http\Controllers\Api\BookController;
 use App\Http\Controllers\Api\ListController;
 use App\Http\Controllers\Api\HomeController;
 use App\Http\Controllers\Api\ReviewController;
-
+use App\Http\Controllers\Api\BookRequestController;
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -76,6 +76,12 @@ Route::middleware('auth:sanctum')->group(function () {
 
         Route::get('/','index');
         Route::delete('/{id}','destroy');
+    });
+
+
+    //BookRequest
+    Route::controller(BookRequestController::class)->group(function (){
+        Route::post('/bookrequest', 'createBookRequest');
     });
 
 
