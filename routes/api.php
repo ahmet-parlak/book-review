@@ -11,6 +11,7 @@ use App\Http\Controllers\Api\ListController;
 use App\Http\Controllers\Api\HomeController;
 use App\Http\Controllers\Api\ReviewController;
 use App\Http\Controllers\Api\BookRequestController;
+use App\Http\Controllers\Api\UserDetailController;
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -82,6 +83,13 @@ Route::middleware('auth:sanctum')->group(function () {
     //BookRequest
     Route::controller(BookRequestController::class)->group(function (){
         Route::post('/bookrequest', 'createBookRequest');
+    });
+
+    //UserDetail
+    Route::controller(UserDetailController::class)->group(function (){
+        Route::get('/user/{id}','show');
+        Route::get('/user/{userId}/list/{listId}','list');
+        Route::get('/user/{id}/reviews','reviews');
     });
 
 

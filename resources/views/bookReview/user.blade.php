@@ -58,8 +58,8 @@
                                                     {{ $review->book->title }}
                                                 </div>
                                                 <div class="author-publisher">
-                                                    {{ $review->book->author->author_name }} -
-                                                    {{ $review->book->publisher->publisher_name }}
+                                                    {{ $review->book->author->author_name ?? '' }} -
+                                                    {{ $review->book->publisher->publisher_name ?? '' }}
                                                 </div>
                                                 <div class="rating">
                                                     <div class="text-primary">
