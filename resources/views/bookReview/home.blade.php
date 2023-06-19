@@ -24,7 +24,7 @@
                                     <p class="mx-md-5 px-5 animate__animated animate__bounceIn">En çok puanlanan ve
                                         değerlendirilen kitaplar</p>
                                     <a class="btn btn-outline-light py-2 px-4 mt-3 animate__animated animate__fadeInUp"
-                                        href="#">Git</a>
+                                        href="#mostReadsSection">Git</a>
                                 </div>
                             </div>
                         </div>
@@ -41,7 +41,7 @@
                                         sahip
                                         kitaplar</p>
                                     <a class="btn btn-outline-light py-2 px-4 mt-3 animate__animated animate__fadeInUp"
-                                        href="#">Git</a>
+                                        href="#highRatedSection">Git</a>
                                 </div>
                             </div>
                         </div>
@@ -52,11 +52,11 @@
                                 <div class="p-3" style="max-width: 700px;">
                                     <h1 class="display-4 text-white mb-3 animate__animated animate__fadeInDown">
                                         Yeni
-                                        Çıkanlar</h1>
-                                    <p class="mx-md-5 px-5 animate__animated animate__bounceIn">Yeni yayınlanan
+                                        Eklenenler</h1>
+                                    <p class="mx-md-5 px-5 animate__animated animate__bounceIn">Sisteme yeni eklenen
                                         kitaplar</p>
                                     <a class="btn btn-outline-light py-2 px-4 mt-3 animate__animated animate__fadeInUp"
-                                        href="#">Git</a>
+                                        href="#newBooksSection">Git</a>
                                 </div>
                             </div>
                         </div>
@@ -193,7 +193,7 @@
 
 
     <!-- Trends Start -->
-    <div class="container-fluid pt-5 pb-3">
+    <div id="trendsSection" class="container-fluid pt-5 pb-3">
         <h2 class="section-title position-relative text-uppercase mx-xl-5 mb-4"><span class="bg-secondary pr-3">Trend
                 Kitaplar</span></h2>
         <div class="row px-xl-5">
@@ -248,8 +248,110 @@
     </div>
     <!-- Trends End -->
 
+    <!-- Most Reads Start -->
+    <div id="mostReadsSection" class="container-fluid pt-5 pb-3" >
+        <h2 class="section-title position-relative text-uppercase mx-xl-5 mb-4"><span class="bg-secondary pr-3">Çok Okunanlar</span></h2>
+        <div class="row px-xl-5">
+            @foreach ($mostReads as $book)
+                <div class="col-lg-2 col-md-4 col-sm-6 pb-1">
+                    <div class="product-item bg-light mb-4">
+                        <div class="product-img position-relative overflow-hidden">
+                            <img class="home-book img-fluid w-100" src="{{ asset($book->book_photo) }}"
+                                alt="{{ Str::limit($book->title, 10) }}">
+                            <div class="product-action">
+                                <!-- <a class="btn btn-outline-dark btn-square" href=""><i class="fa fa-shopping-cart"></i></a> -->
+                                {{-- <a class="btn btn-outline-dark btn-square" href=""><i
+                                        class="far fa-heart"></i></a> --}}
+                                <!-- <a class="btn btn-outline-dark btn-square" href=""><i class="fa fa-sync-alt"></i></a> -->
+                                <a class="btn btn-outline-dark btn-square" title="Görüntüle"
+                                    href="{{ route('book', [$book->id, $book->title]) }}"><i
+                                        class="fa fa-search"></i></a>
+                            </div>
+                        </div>
+                        <div class="text-center py-4">
+                            <a class="h5 text-decoration-none text-truncate"
+                                href="{{ route('book', [$book->id, $book->title]) }}">{{ Str::limit($book->title, 20) }}</a>
+                            <div class="d-flex align-items-center justify-content-center mt-2">
+                                <h6>{{ Str::limit($book->author->author_name ?? '-', 20) }}</h6>
+                            </div>
+                            <div class="text-md">
+                                {{ Str::limit($book->publisher->publisher_name, 20) }}
+                            </div>
+                            <!-- Book Rating -->
+                            <div class="d-flex align-items-center justify-content-center mb-1">
+                                @for ($i = 0; $i < floor($book->rating); $i++)
+                                    <small class="fa fa-star text-primary mr-1"></small>
+                                @endfor
+                                @if ($book->rating - floor($book->rating) == 0.5)
+                                    <small class="fa fa-star-half-alt text-primary mr-1"></small>
+                                @endif
+                                @for ($i = 5 - ceil($book->rating); $i > 0; $i--)
+                                    <small class="far fa-star text-primary mr-1"></small>
+                                @endfor
+                                <small>({{ $book->review_count }})</small>
+                            </div>
+                            <!-- Book Rating -->
+                        </div>
+                    </div>
+                </div>
+            @endforeach
+        </div>
+    </div>
+    <!-- Most Reads End -->
+
+    <!-- High Rateds Start -->
+    <div id="highRatedSection" class="container-fluid pt-5 pb-3" >
+        <h2 class="section-title position-relative text-uppercase mx-xl-5 mb-4"><span class="bg-secondary pr-3">Yüksek Puanlılar</span></h2>
+        <div class="row px-xl-5">
+            @foreach ($highRatedBooks as $book)
+                <div class="col-lg-2 col-md-4 col-sm-6 pb-1">
+                    <div class="product-item bg-light mb-4">
+                        <div class="product-img position-relative overflow-hidden">
+                            <img class="home-book img-fluid w-100" src="{{ asset($book->book_photo) }}"
+                                alt="{{ Str::limit($book->title, 10) }}">
+                            <div class="product-action">
+                                <!-- <a class="btn btn-outline-dark btn-square" href=""><i class="fa fa-shopping-cart"></i></a> -->
+                                {{-- <a class="btn btn-outline-dark btn-square" href=""><i
+                                        class="far fa-heart"></i></a> --}}
+                                <!-- <a class="btn btn-outline-dark btn-square" href=""><i class="fa fa-sync-alt"></i></a> -->
+                                <a class="btn btn-outline-dark btn-square" title="Görüntüle"
+                                    href="{{ route('book', [$book->id, $book->title]) }}"><i
+                                        class="fa fa-search"></i></a>
+                            </div>
+                        </div>
+                        <div class="text-center py-4">
+                            <a class="h5 text-decoration-none text-truncate"
+                                href="{{ route('book', [$book->id, $book->title]) }}">{{ Str::limit($book->title, 20) }}</a>
+                            <div class="d-flex align-items-center justify-content-center mt-2">
+                                <h6>{{ Str::limit($book->author->author_name ?? '-', 20) }}</h6>
+                            </div>
+                            <div class="text-md">
+                                {{ Str::limit($book->publisher->publisher_name, 20) }}
+                            </div>
+                            <!-- Book Rating -->
+                            <div class="d-flex align-items-center justify-content-center mb-1">
+                                @for ($i = 0; $i < floor($book->rating); $i++)
+                                    <small class="fa fa-star text-primary mr-1"></small>
+                                @endfor
+                                @if ($book->rating - floor($book->rating) == 0.5)
+                                    <small class="fa fa-star-half-alt text-primary mr-1"></small>
+                                @endif
+                                @for ($i = 5 - ceil($book->rating); $i > 0; $i--)
+                                    <small class="far fa-star text-primary mr-1"></small>
+                                @endfor
+                                <small>({{ $book->review_count }})</small>
+                            </div>
+                            <!-- Book Rating -->
+                        </div>
+                    </div>
+                </div>
+            @endforeach
+        </div>
+    </div>
+    <!-- High Rateds End -->
+
     <!-- New Books Start -->
-    <div class="container-fluid pt-5 pb-3">
+    <div id='newBooksSection' class="container-fluid pt-5 pb-3">
         <h2 class="section-title position-relative text-uppercase mx-xl-5 mb-4"><span class="bg-secondary pr-3">Yeni
                 Eklenenler</span></h2>
         <div class="row px-xl-5">

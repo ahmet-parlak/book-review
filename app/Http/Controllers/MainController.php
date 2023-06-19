@@ -30,7 +30,25 @@ class MainController extends Controller
             ->orderByDesc('total')
             ->with('book')->limit(6)->get();
         $newBooks = Book::latest('id')->limit(6)->get();
-        return view('bookReview.home', compact('newBooks', 'trendBooks'));
+
+        $mostReads = Book::from('books')
+        ->select('books.*', DB::raw('COUNT(book_list.book_id) AS book_count'))
+        ->join('book_list', 'books.id', '=', 'book_list.book_id')
+        ->join('book_lists', 'book_list.list_id', '=', 'book_lists.id')
+        ->where('book_lists.list_name', 'read')
+        ->groupBy('books.id')
+        ->orderBy('book_count', 'DESC')
+        ->take(6)
+        ->get();
+
+        $highRatedBooks =Book::join('reviews', 'books.id', '=', 'reviews.book_id')
+            ->select('books.*', DB::raw('AVG(reviews.rating) AS average_rating'))
+            ->groupBy('books.id')
+            ->orderByDesc('average_rating')
+            ->take(6)
+            ->get();
+
+        return view('bookReview.home', compact('newBooks', 'trendBooks', 'mostReads', 'highRatedBooks'));
     }
 
 

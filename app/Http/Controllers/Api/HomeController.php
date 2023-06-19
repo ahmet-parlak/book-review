@@ -33,9 +33,31 @@ class HomeController extends Controller
 
         $newBooks = Book::latest('id')->limit(6)->get();
 
+        $mostReads = Book::from('books')
+        ->select('books.*', DB::raw('COUNT(book_list.book_id) AS book_count'))
+        ->join('book_list', 'books.id', '=', 'book_list.book_id')
+        ->join('book_lists', 'book_list.list_id', '=', 'book_lists.id')
+        ->where('book_lists.list_name', 'read')
+        ->groupBy('books.id')
+        ->orderBy('book_count', 'DESC')
+        ->take(6)
+        ->get();
+
+        $highRatedBooks =Book::join('reviews', 'books.id', '=', 'reviews.book_id')
+            ->select('books.*', DB::raw('AVG(reviews.rating) AS average_rating'))
+            ->groupBy('books.id')
+            ->orderByDesc('average_rating')
+            ->take(6)
+            ->get();
+
+        
+
         $trendBooksData = ['title' => 'Trend Kitaplar', 'books' => $trendBooks];
         $newBooksData = ['title' => 'Yeni Eklenenler', 'books' => $newBooks];
-        $data = [$trendBooksData, $newBooksData];
+        $mostReadsData = ['title' => 'Çok Okunanlar', 'books' => $mostReads];
+        $highRatedBooksData = ['title' => 'Yüksek Puanlılar', 'books' => $highRatedBooks];
+        
+        $data = [$trendBooksData, $mostReadsData, $highRatedBooksData, $newBooksData];
         $response = ['state' => 'success', 'data' => $data];
         return response($response);
     }
