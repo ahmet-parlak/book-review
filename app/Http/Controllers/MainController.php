@@ -26,7 +26,7 @@ class MainController extends Controller
     {
         $trendBooks = Review::select('*', DB::raw('count(*) as total'))
             ->groupBy('book_id')
-            ->whereDate('created_at', '>=', Carbon::now()->subDays(30))
+            ->whereDate('created_at', '>=', Carbon::now()->subDays(60))
             ->orderByDesc('total')
             ->with('book')->limit(6)->get();
         $newBooks = Book::latest('id')->limit(6)->get();
@@ -48,13 +48,28 @@ class MainController extends Controller
             ->take(6)
             ->get();
 
-        return view('bookReview.home', compact('newBooks', 'trendBooks', 'mostReads', 'highRatedBooks'));
+        $topReadAuthors = DB::table('book_author AS ba')
+            ->join('books AS b', 'ba.book_id', '=', 'b.id')
+            ->join('book_list AS bli', 'b.id', '=', 'bli.book_id')
+            ->join('book_lists AS bl', 'bli.list_id', '=', 'bl.id')
+            ->join('authors AS a', 'ba.book_id', '=', 'a.id')
+            ->select('a.*', DB::raw('COUNT(*) AS read_count'))
+            ->where('bl.list_name', 'read')
+            ->groupBy('ba.author_id')
+            ->orderByDesc('read_count')
+            ->take(6)
+            ->get();
+            //return $topReadAuthors;
+
+        
+
+        return view('bookReview.home', compact('newBooks', 'trendBooks', 'mostReads', 'highRatedBooks', 'topReadAuthors'));
     }
 
 
     public function search(Request $request)
     {
-        if (!$request->has('search') && !$request->has('category')) {
+        if (!$request->has('search') && !$request->has('category') && !$request->has('klasikler') && !$request->has('top-authors')) {
             abort(404);
         }
 
@@ -83,6 +98,13 @@ class MainController extends Controller
         } elseif ($request->input("category")) {
             $books = BookCategory::where('category_id', $request->input("category"))->with('book')->paginate(18)->withQueryString();
             $category = Category::find($request->input("category"));
+            return view('bookReview.search-category', compact('books', 'category'));
+        }
+
+        if($request->input("klasikler"))
+        {
+            $category = Category::where('category_name','klasikler')->first();
+            $books = BookCategory::where('category_id', $category->id)->with('book')->paginate(18)->withQueryString();
             return view('bookReview.search-category', compact('books', 'category'));
         }
     }

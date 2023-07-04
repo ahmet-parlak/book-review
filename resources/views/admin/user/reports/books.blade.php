@@ -129,8 +129,11 @@
                             {{ $report->created_at->diffForHumans() }}
                         </td>
                         <td class="py-4 px-6">
-                            <a href="" class="font-medium text-blue-600 dark:text-blue-500 hover:underline"></a>
+                            <a href="{{ route('books.edit', $report->book->id) }}"
+                                class="font-medium text-blue-600 dark:text-blue-500">Kitabı Düzenle<i
+                                    class="fa fa-pen ml-2"></i></a>
                         </td>
+
                     </tr>
                 @endforeach
             </tbody>

@@ -123,7 +123,9 @@
                             {{ $report->created_at->diffForHumans() }}
                         </td>
                         <td class="py-4 px-6">
-                            <a href="" class="font-medium text-blue-600 dark:text-blue-500 hover:underline"></a>
+                            <a href="{{ route('authors.edit', $report->author->id) }}"
+                                class="font-medium text-blue-600 dark:text-blue-500">Yazarı Düzenle<i
+                                    class="fa fa-pen ml-2"></i></a>
                         </td>
                     </tr>
                 @endforeach
@@ -141,7 +143,7 @@
                 </svg>
                 <span class="sr-only">Info</span>
                 <div>
-                    İstek bulunamadı.
+                    Rapor bulunamadı.
                 </div>
             </div>
         @endif

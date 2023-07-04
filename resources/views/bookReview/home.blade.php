@@ -70,7 +70,7 @@
                     <div class="offer-text">
                         <!-- <h6 class="text-white text-uppercase">Save 20%</h6> -->
                         <h3 class="text-white mb-3">Klasikler</h3>
-                        <a href="" class="btn btn-primary">Git</a>
+                        <a href="http://localhost:8000/search?klasikler=dunya" class="btn btn-primary">Git</a>
                     </div>
                 </div>
                 <div class="product-offer mb-30" style="height: 200px;">
@@ -80,7 +80,7 @@
                     <div class="offer-text">
                         <!-- <h6 class="text-white text-uppercase">Save 20%</h6> -->
                         <h3 class="text-white mb-3">Çok Okunan Yazarlar</h3>
-                        <a href="" class="btn btn-primary">Git</a>
+                        <a href="#topReadAuthorsSection" class="btn btn-primary">Git</a>
                     </div>
                 </div>
             </div>
@@ -394,6 +394,38 @@
                                 <small>({{ $book->review_count }})</small>
                             </div>
                             <!-- Book Rating -->
+                        </div>
+                    </div>
+                </div>
+            @endforeach
+        </div>
+    </div>
+    <!-- New Books End -->
+
+    <!-- Top Read Authors Start -->
+    <div id='topReadAuthorsSection' class="container-fluid pt-5 pb-3">
+        <h2 class="section-title position-relative text-uppercase mx-xl-5 mb-4"><span class="bg-secondary pr-3">Çok Okunan Yazarlar</span></h2>
+        <div class="row px-xl-5">
+            @foreach ($topReadAuthors as $author)
+                <div class="col-lg-2 col-md-4 col-sm-6 pb-1">
+                    <div class="product-item bg-light mb-4">
+                        <div class="product-img position-relative overflow-hidden">
+                            <img class="home-book img-fluid w-100" src="{{ asset($author->author_photo) }}"
+                                alt="{{ Str::limit($author->author_name, 10) }}" onerror="this.src='{{ asset('storage/authors/default.png') }}'">
+                            <div class="product-action">
+                                <!-- <a class="btn btn-outline-dark btn-square" href=""><i class="fa fa-shopping-cart"></i></a> -->
+                                {{-- <a class="btn btn-outline-dark btn-square" href=""><i
+                                        class="far fa-heart"></i></a> --}}
+                                <!-- <a class="btn btn-outline-dark btn-square" href=""><i class="fa fa-sync-alt"></i></a> -->
+                                <a class="btn btn-outline-dark btn-square" title="Görüntüle"
+                                    href="{{ route('author', [$author->id, $author->author_name]) }}"><i
+                                        class="fa fa-search"></i></a>
+                            </div>
+                        </div>
+                        <div class="text-center py-4">
+                            <a class="h5 text-decoration-none text-truncate"
+                                href="{{ route('author', [$author->id, $author->author_name]) }}">{{ Str::limit($author->author_name, 20) }}</a>
+                            
                         </div>
                     </div>
                 </div>
