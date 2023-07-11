@@ -1,4 +1,4 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400"></a></p>
 
 <p align="center">
 <a href="https://travis-ci.org/laravel/framework"><img src="https://travis-ci.org/laravel/framework.svg" alt="Build Status"></a>
@@ -7,60 +7,39 @@
 <a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
 </p>
 
-## About Laravel
+## About Project
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+This repository contains the code for a web application that allows users to rate and review books, as well as create and share their own book lists with other users. The application provides a platform for book enthusiasts to engage with each other, discover new books, and share their thoughts and recommendations.
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+## Features
+- **User Registration and Authentication:** Users can create accounts and log in to the application using their credentials. This ensures that only registered users can rate books, write reviews, and create book lists.
+- **Book Database:** The application includes a comprehensive database of books, including their titles, authors, genres, and cover images.
+- **Search and Discovery:** The application includes a search functionality that allows users to find specific books by isbn, title, author, or publisher. 
+- **Book Rating and Review:** Users can rate books on a scale and provide detailed reviews sharing their opinions and insights. This feedback helps other users make informed decisions about which books to read.
+- **Book Lists:**  Users have the option to create personal book lists, such as "Favorite Science Fiction Novels" or "Must-Read Classics." They can add books from the database to their lists and customize them according to their preferences.
+- **Public and Private Lists:** Users can choose whether to make their book lists public or private. Public lists are visible to other users, allowing for sharing and discovery, while private lists remain visible only to the creator.
+- **Error/Incomplete Book Reporting System:** Users can report books that contain errors or incomplete information. This feature allows users to notify the system administrators about any issues they encounter with book details, such as incorrect author names, missing genres, or inaccurate descriptions.
+- **Book Request Form for Adding Missing Books:** Users can request the addition of books that are not currently present in the system.
+- **Simple Administrator Panel:** The web application includes a basic administrator panel that allows administrators to manage books in the system. They can add new books, edit existing book details, review error reports submitted by users, and handle book requests. 
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+## Technologies
+- **Front-end:** HTML, CSS, JavaScript, jQuery, Bootstrap, Tailwind CSS. The interface is designed using a customized template from HTMLCodex. The administration panel is built using Tailwind CSS, a utility-first CSS framework.
+- **Back-end:** Laravel
+- **API Development**: The API for the mobile application is developed using the Laravel framework. It handles authentication, data retrieval, and other necessary endpoints to facilitate seamless communication between the mobile app and the web application.
+- **Database:** MySQL
+- **Additional Tools:** Laravel Jetstream, Font Awesome, SweetAlert2, Intervention Image
 
-## Learning Laravel
+## Mobile Application
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+A mobile application companion to this web application is also available.
 
-You may also try the [Laravel Bootcamp](https://bootcamp.laravel.com), where you will be guided through building a modern Laravel application from scratch.
+You can find the mobile application's source code and documentation in the following repository:
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains over 2000 video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+[Mobile Application Repository](https://github.com/ahmet-parlak/book-review-flutter)
 
-## Laravel Sponsors
+## Preview
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the Laravel [Patreon page](https://patreon.com/taylorotwell).
+<div align="center">
+<img src="project.gif" width="auto" width="300" height="300">
+</div>
 
-### Premium Partners
-
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Cubet Techno Labs](https://cubettech.com)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[Many](https://www.many.co.uk)**
-- **[Webdock, Fast VPS Hosting](https://www.webdock.io/en)**
-- **[DevSquad](https://devsquad.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel/)**
-- **[OP.GG](https://op.gg)**
-- **[WebReinvent](https://webreinvent.com/?utm_source=laravel&utm_medium=github&utm_campaign=patreon-sponsors)**
-- **[Lendio](https://lendio.com)**
-
-## Contributing
-
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
-
-## Code of Conduct
-
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
-
-## Security Vulnerabilities
-
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
-
-## License
-
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
