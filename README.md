@@ -14,7 +14,7 @@ This repository contains the code for a web application that allows users to rat
 ## Features
 - **User Registration and Authentication:** Users can create accounts and log in to the application using their credentials. This ensures that only registered users can rate books, write reviews, and create book lists.
 - **Book Database:** The application includes a comprehensive database of books, including their titles, authors, genres, and cover images.
-- **Search and Discovery:** The application includes a search functionality that allows users to find specific books by isbn, title, author, or publisher. 
+- **Search and Discovery:** The application includes a search functionality that allows users to find specific books by ISBN, title, author, or publisher. 
 - **Book Rating and Review:** Users can rate books on a scale and provide detailed reviews sharing their opinions and insights. This feedback helps other users make informed decisions about which books to read.
 - **Book Lists:**  Users have the option to create personal book lists, such as "Favorite Science Fiction Novels" or "Must-Read Classics." They can add books from the database to their lists and customize them according to their preferences.
 - **Public and Private Lists:** Users can choose whether to make their book lists public or private. Public lists are visible to other users, allowing for sharing and discovery, while private lists remain visible only to the creator.
